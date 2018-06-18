@@ -1,0 +1,3 @@
+/Users/ElenaFaillace/Desktop/BlackRose/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/ElenaFaillace/Desktop/BlackRose/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/ElenaFaillace/Desktop/BlackRose/cmake-build-debug/CMakeFiles/BlackRose.dir
