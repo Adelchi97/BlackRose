@@ -29,14 +29,14 @@ void Game::run() {
 void Game::update() {
     sf::Vector2f movement(0.f, 0.f);
     if (mIsMovingUp)
-        movement.y -= 1.f;
+        movement.y -= PlayerSpeed;
     if (mIsMovingDown)
-        movement.y += 1.f;
+        movement.y += PlayerSpeed;
     if (mIsMovingLeft)
-        movement.x -= 1.f;
+        movement.x -= PlayerSpeed;
     if (mIsMovingRight)
-        movement.x += 1.f;
-    mSprite.move(movement);
+        movement.x += PlayerSpeed;
+    mPlayer.move(movement * deltaTimeasSeconds());
 }
 
 void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
