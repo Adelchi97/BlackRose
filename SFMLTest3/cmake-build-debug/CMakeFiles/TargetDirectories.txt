@@ -1,3 +1,0 @@
-C:/Users/Ludovico/CLionProjects/SFMLTest3/cmake-build-debug/CMakeFiles/SFMLTest3.dir
-C:/Users/Ludovico/CLionProjects/SFMLTest3/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Ludovico/CLionProjects/SFMLTest3/cmake-build-debug/CMakeFiles/rebuild_cache.dir
