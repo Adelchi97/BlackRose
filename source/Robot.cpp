@@ -1,0 +1,1 @@
+//// Created by Elena Faillace on 26/06/2018.//#include "../include/Robot.h"Robot::Robot(Type type) : mType(type) {}
