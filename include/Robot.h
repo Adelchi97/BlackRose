@@ -1,0 +1,1 @@
+//// Created by Elena Faillace on 26/06/2018.//#ifndef BLACKROSE_ROBOT_H#define BLACKROSE_ROBOT_Hclass Robot {public:    enum Type {        Red,        Gray,    };    explicit Robot(Type type);private:    Type mType;};#endif //BLACKROSE_ROBOT_H
