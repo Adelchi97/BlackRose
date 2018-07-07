@@ -12,11 +12,39 @@ Textures::ID toTextureID(PlayerCharacter::Type type) {
             return Textures::HeroBlond;
     }
 }
-PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures): type(type), textures(textures), speed
-        (500.f), counter(0) {
+
+PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures): type(type), textures(textures), counter
+        (0), isMovingUp(false), isMovingDown(false), isMovingLeft(false), isMovingRight(false) {
+
+    speed = 300;
     texture = textures.get(toTextureID(type));
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0,0,32,32));
+}
+
+void PlayerCharacter::update(sf::Time dt) {
+    //now sprite is linked to rect's position
+    sprite.setPosition(rect.getPosition());
+
+    sf::Vector2f movements(0.f,0.f);
+    if(isMovingUp) {
+        movements.y-=speed;
+        setDirection(PlayerCharacter::up);
+    }
+    if(isMovingDown) {
+        movements.y+=speed;
+        setDirection(PlayerCharacter::down);
+    }
+    if(isMovingRight) {
+        movements.x+=speed;
+        setDirection(PlayerCharacter::right);
+    }
+    if(isMovingLeft) {
+        movements.x-=speed;
+        setDirection(PlayerCharacter::left);
+    }
+
+    setPosition(movements * dt.asSeconds());
 }
 
 bool PlayerCharacter::equip() {
@@ -32,11 +60,11 @@ void PlayerCharacter::die() {
 }
 
 void PlayerCharacter::setPosition(const sf::Vector2f &movement) {
-    sprite.move(movement);
+    rect.move(movement);
 }
 
 void PlayerCharacter::setPosition(float x, float y) {
-    sprite.move(x,y);
+    rect.move(x,y);
 }
 
 const sf::Sprite &PlayerCharacter::getSprite() const {
@@ -47,8 +75,8 @@ float PlayerCharacter::getSpeed() const {
     return speed;
 }
 
-void PlayerCharacter::setSpeed(float speed) {
-    PlayerCharacter::speed = speed;
+void PlayerCharacter::setSpeed(int speed) {
+    this->speed = speed;
 }
 
 void PlayerCharacter::setDirection(PlayerCharacter::Direction direction) {

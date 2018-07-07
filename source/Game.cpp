@@ -4,7 +4,7 @@
 
 #include "../include/Game.h"
 
-const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
+const sf::Time Game::TimePerFrame = sf::seconds(1.f/80.f);
 
 Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(800, 800), "BlackRose", sf::Style::Default)), mFont(),
                mStatisticsText(), mStatisticsUpdateTime(), mStatisticsNumFrames(0), world(nullptr) {

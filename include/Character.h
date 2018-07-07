@@ -10,8 +10,9 @@
 #include "Inventory.h"
 #include "Weapon.h"
 #include "Shield.h"
+#include "Entity.h"
 
-class Character {
+class Character: public Entity {
 public:
     Character();
     virtual void move();
@@ -21,9 +22,9 @@ public:
     virtual void die();
 
 protected:
-    float hp;
-    float resistance;
-    float speed;
+    int hp;
+    int resistance;
+    int speed;
     sf::Vector2f position;
     Inventory inventory;
 };

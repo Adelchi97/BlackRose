@@ -30,6 +30,7 @@ public:
     //a movement that covers several tiles thanks to the ProtoBelt
     void dash();
     virtual void die();
+    void update(sf::Time dt);
 
     void setPosition(const sf::Vector2f &movement);
     void setPosition(float x, float y);
@@ -38,18 +39,15 @@ public:
     void setDirection(PlayerCharacter::Direction direction);
 
     float getSpeed() const;
-    void setSpeed(float speed);
+    void setSpeed(int speed);
 
 public:
     std::string name;
+    bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
+    Type type;
 
 private:
     const TextureHolder& textures;
-    sf::Sprite sprite;
-    sf::Texture texture;
-    Type type;
-
-    float speed;
     int counter;
 
     std::shared_ptr<Weapon> rangedWeapon;

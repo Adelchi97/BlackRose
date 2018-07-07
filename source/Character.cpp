@@ -5,6 +5,9 @@
 #include "../include/Character.h"
 
 Character::Character() {
+    //all characters are this big
+    rect.setSize(sf::Vector2f(32,32));
+
     //TODO istanzia un inventory
 }
 

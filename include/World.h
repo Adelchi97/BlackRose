@@ -24,8 +24,6 @@ private:
     const TextureHolder& textures;
 
     std::shared_ptr<PlayerCharacter> player;
-    bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
-
 };
 
 

@@ -7,32 +7,14 @@
 #include "../include/ResourceIdentifier.h"
 
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
-        (textures), isMovingUp(false), isMovingDown(false), isMovingLeft(false), isMovingRight(false),
-        player(new PlayerCharacter(PlayerCharacter::blueHero,textures)) {
-    player->setPosition(window->getSize().x/2.f,window->getSize().y/2.f);
+        (textures), player(new PlayerCharacter(PlayerCharacter::blueHero,textures)) {
+
+    player->rect.setPosition(window->getSize().x/2.f,window->getSize().y/2.f);
 
 }
 
 void World::update(sf::Time dt) {
-    sf::Vector2f movements(0.f,0.f);
-    if(isMovingUp) {
-        movements.y-=player->getSpeed();
-        player->setDirection(PlayerCharacter::up);
-    }
-    if(isMovingDown) {
-        movements.y+=player->getSpeed();
-        player->setDirection(PlayerCharacter::down);
-    }
-    if(isMovingRight) {
-        movements.x+=player->getSpeed();
-        player->setDirection(PlayerCharacter::right);
-    }
-    if(isMovingLeft) {
-        movements.x-=player->getSpeed();
-        player->setDirection(PlayerCharacter::left);
-    }
-    player->setPosition(movements * dt.asSeconds());
-
+    player->update(dt);
 }
 
 void World::draw() {
@@ -42,11 +24,11 @@ void World::draw() {
 
 void World::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
     if (key == sf::Keyboard::W)
-        isMovingUp = isPressed;
+        player->isMovingUp = isPressed;
     else if (key == sf::Keyboard::S)
-        isMovingDown = isPressed;
+        player->isMovingDown = isPressed;
     else if (key == sf::Keyboard::A)
-        isMovingLeft = isPressed;
+        player->isMovingLeft = isPressed;
     else if (key == sf::Keyboard::D)
-        isMovingRight = isPressed;
+        player->isMovingRight = isPressed;
 }
