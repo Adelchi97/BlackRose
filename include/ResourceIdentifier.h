@@ -14,7 +14,6 @@ namespace Textures {
     enum ID {
         Floor,
         RobotGray,
-        RobotRed
         RobotRed,
         HeroBlue,
         HeroBlond
