@@ -5,7 +5,9 @@
 #ifndef BLACKROSE_INVENTORY_H
 #define BLACKROSE_INVENTORY_H
 
+#include "Objects/Object.h"
 
+//template <Object object>;
 class Inventory {
     //TODO
 };

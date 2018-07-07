@@ -1,0 +1,1 @@
+//// Created by Elena Faillace on 07/07/2018.//#ifndef BLACKROSE_CONSUMABLEOBJECT_H#define BLACKROSE_CONSUMABLEOBJECT_H#include "Object.h"class ConsumableObject: public Object {public:    int getQuantity() const;protected:    int quantity = 0;};#endif //BLACKROSE_CONSUMABLEOBJECT_H

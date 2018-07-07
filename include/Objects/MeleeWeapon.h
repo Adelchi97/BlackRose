@@ -1,0 +1,1 @@
+//// Created by Elena Faillace on 07/07/2018.//#ifndef BLACKROSE_MELEEWEAPON_H#define BLACKROSE_MELEEWEAPON_H#include "Object.h"class MeleeWeapon: public Object {public:    //return the damage calculated with critical    int critCalculate();    void callFightAnimation();private:    float criticalChance = 1.f;    bool effect;};#endif //BLACKROSE_MELEEWEAPON_H

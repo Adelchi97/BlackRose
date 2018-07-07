@@ -2,7 +2,7 @@
 // Created by Elena Faillace on 07/07/2018.
 //
 
-#include "../include/PlayerCharacter.h"
+#include "../../include/Characters/PlayerCharacter.h"
 
 Textures::ID toTextureID(PlayerCharacter::Type type) {
     switch(type) {
@@ -13,10 +13,10 @@ Textures::ID toTextureID(PlayerCharacter::Type type) {
     }
 }
 
-PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures): type(type), textures(textures), counter
-        (0), isMovingUp(false), isMovingDown(false), isMovingLeft(false), isMovingRight(false) {
+PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures): type(type), textures(textures), counter(0),
+    isMovingUp(false), isMovingDown(false), isMovingLeft(false), isMovingRight(false) {
 
-    speed = 300;
+    speed = 500;
     texture = textures.get(toTextureID(type));
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0,0,32,32));

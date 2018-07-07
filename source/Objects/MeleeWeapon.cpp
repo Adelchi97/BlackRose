@@ -1,0 +1,1 @@
+//// Created by Elena Faillace on 07/07/2018.//#include "../../include/Objects/MeleeWeapon.h"void MeleeWeapon::callFightAnimation() {}int MeleeWeapon::critCalculate() {    return (int)criticalChance;}

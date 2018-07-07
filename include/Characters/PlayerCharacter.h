@@ -7,11 +7,11 @@
 
 #include <string>
 #include "Character.h"
-#include "Shield.h"
-#include "ResourceHolder.h"
-#include "ResourceIdentifier.h"
+#include "../Objects/Shield.h"
+#include "../management/ResourceHolder.h"
+#include "../management/ResourceIdentifier.h"
 
-
+class Weapon;
 class PlayerCharacter : public Character {
 public:
     enum Direction {

@@ -7,9 +7,9 @@
 
 
 #include <SFML/Graphics.hpp>
-#include "ResourceHolder.h"
-#include "ResourceIdentifier.h"
-#include "PlayerCharacter.h"
+#include "management/ResourceHolder.h"
+#include "management/ResourceIdentifier.h"
+#include "Characters/PlayerCharacter.h"
 
 class World {
 public:
