@@ -9,7 +9,10 @@ const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
 Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(800, 800), "BlackRose", sf::Style::Default)), mFont(),
                mStatisticsText(), mStatisticsUpdateTime(), mStatisticsNumFrames(0), isMovingDown(false), isMovingUp(false),
                isMovingLeft(false), isMovingRight(false), world(mWindow,textureHolder) {
+               mStatisticsText(), mStatisticsUpdateTime(), mStatisticsNumFrames(0), world(nullptr) {
 
+    loadTextures();
+    world.reset(new World(mWindow,textureHolder));
 
     //sets the icon
     sf::Image icon;
@@ -17,6 +20,7 @@ Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(800, 800), "BlackRose"
         throw std::runtime_error("icon not loaded");
     mWindow->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
+    /*
     //Statistics text
     mFont.loadFromFile("Media/Sansation.ttf");
     mStatisticsText.setFont(mFont);
@@ -24,6 +28,7 @@ Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(800, 800), "BlackRose"
     mStatisticsText.setCharacterSize(50);
     //mStatisticsText.setColor(sf::Color::Cyan);
     mStatisticsText.setString("Hello");
+     */
 
 }
 
@@ -53,7 +58,7 @@ void Game::run() {
 void Game::render() {
     mWindow->clear();
 
-    mWindow->setView(mWindow->getDefaultView());
+    world->draw();
     mWindow->draw(mStatisticsText);
 
     mWindow->display();
@@ -69,9 +74,11 @@ void Game::processEvents() {
                 break;
             case sf::Event::KeyPressed:
                 handlePlayerInput(event.key.code, true);
+                world->handlePlayerInput(event.key.code, true);
                 break;
             case sf::Event::KeyReleased:
                 handlePlayerInput(event.key.code, false);
+                world->handlePlayerInput(event.key.code, false);
                 break;
             default:
                 break;
@@ -92,6 +99,7 @@ void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
 }
 
 void Game::update(sf::Time deltaTime) {
+    world->update(deltaTime);
 }
 
 
@@ -113,6 +121,10 @@ void Game::loadTextures() {
 
     textureHolder.load(Textures::RobotRed,"Media/Characters/Robot/red/redRobot.png");
     textureHolder.load(Textures::RobotGray,"Media/Characters/Robot/gray/grayRobot.png");
+    textureHolder.load(Textures::RobotRed,"Media/Characters/Robot/red.png");
+    textureHolder.load(Textures::RobotGray,"Media/Characters/Robot/gray.png");
+    textureHolder.load(Textures::HeroBlond,"Media/Characters/People/blond.png");
+    textureHolder.load(Textures::HeroBlue,"Media/Characters/People/blue.png");
 
     /*
     textureHolder.load(Textures::RobotGray, "Media/Characters/Robot/gray/tile009.png");

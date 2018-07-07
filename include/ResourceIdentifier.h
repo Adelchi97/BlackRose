@@ -15,6 +15,9 @@ namespace Textures {
         Floor,
         RobotGray,
         RobotRed
+        RobotRed,
+        HeroBlue,
+        HeroBlond
     };
 }
 

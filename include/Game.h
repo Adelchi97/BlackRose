@@ -28,6 +28,7 @@ private:
 
 private:
     World world;
+    std::shared_ptr<World> world;
 
     TextureHolder textureHolder;
     std::shared_ptr<sf::RenderWindow> mWindow;
