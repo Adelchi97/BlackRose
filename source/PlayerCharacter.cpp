@@ -12,7 +12,8 @@ Textures::ID toTextureID(PlayerCharacter::Type type) {
             return Textures::HeroBlond;
     }
 }
-PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures): type(type), textures(textures), speed(100) {
+PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures): type(type), textures(textures), speed
+        (500.f), counter(0) {
     texture = textures.get(toTextureID(type));
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0,0,32,32));
@@ -30,17 +31,12 @@ void PlayerCharacter::die() {
 
 }
 
-const sf::Vector2f &PlayerCharacter::getPosition() const {
-    return position;
-}
-
-void PlayerCharacter::setPosition(const sf::Vector2f &position) {
-    PlayerCharacter::position = position;
+void PlayerCharacter::setPosition(const sf::Vector2f &movement) {
+    sprite.move(movement);
 }
 
 void PlayerCharacter::setPosition(float x, float y) {
-    position.x = x;
-    position.y = y;
+    sprite.move(x,y);
 }
 
 const sf::Sprite &PlayerCharacter::getSprite() const {
@@ -53,4 +49,25 @@ float PlayerCharacter::getSpeed() const {
 
 void PlayerCharacter::setSpeed(float speed) {
     PlayerCharacter::speed = speed;
+}
+
+void PlayerCharacter::setDirection(PlayerCharacter::Direction direction) {
+    switch(direction) {
+        case up:
+            sprite.setTextureRect(sf::IntRect(counter*32,32*3,32,32));
+            counter = (counter+1)%2;
+            break;
+        case down:
+            sprite.setTextureRect(sf::IntRect(counter*32,0,32,32));
+            counter = (counter+1)%2;
+            break;
+        case left:
+            sprite.setTextureRect(sf::IntRect(counter*32,32,32,32));
+            counter = (counter+1)%2;
+            break;
+        case right:
+            sprite.setTextureRect(sf::IntRect(counter*32,32*2,32,32));
+            counter = (counter+1)%2;
+            break;
+    }
 }

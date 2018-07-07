@@ -8,26 +8,31 @@
 
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
         (textures), isMovingUp(false), isMovingDown(false), isMovingLeft(false), isMovingRight(false),
-        player(new PlayerCharacter(PlayerCharacter::blondHero,textures)) {
+        player(new PlayerCharacter(PlayerCharacter::blueHero,textures)) {
     player->setPosition(window->getSize().x/2.f,window->getSize().y/2.f);
 
 }
 
 void World::update(sf::Time dt) {
-    sf::Vector2f movements = player->getPosition();
+    sf::Vector2f movements(0.f,0.f);
     if(isMovingUp) {
         movements.y-=player->getSpeed();
+        player->setDirection(PlayerCharacter::up);
     }
     if(isMovingDown) {
         movements.y+=player->getSpeed();
+        player->setDirection(PlayerCharacter::down);
     }
     if(isMovingRight) {
         movements.x+=player->getSpeed();
+        player->setDirection(PlayerCharacter::right);
     }
     if(isMovingLeft) {
         movements.x-=player->getSpeed();
+        player->setDirection(PlayerCharacter::left);
     }
     player->setPosition(movements * dt.asSeconds());
+
 }
 
 void World::draw() {

@@ -14,6 +14,12 @@
 
 class PlayerCharacter : public Character {
 public:
+    enum Direction {
+        up,
+        down,
+        left,
+        right
+    };
     enum Type {
         blueHero,
         blondHero
@@ -25,10 +31,12 @@ public:
     void dash();
     virtual void die();
 
-    const sf::Vector2f &getPosition() const;
-    void setPosition(const sf::Vector2f &position);
+    void setPosition(const sf::Vector2f &movement);
     void setPosition(float x, float y);
+
     const sf::Sprite &getSprite() const;
+    void setDirection(PlayerCharacter::Direction direction);
+
     float getSpeed() const;
     void setSpeed(float speed);
 
@@ -41,8 +49,8 @@ private:
     sf::Texture texture;
     Type type;
 
-    sf::Vector2f position;
     float speed;
+    int counter;
 
     std::shared_ptr<Weapon> rangedWeapon;
     std::shared_ptr<Weapon> meleeWeapon;
