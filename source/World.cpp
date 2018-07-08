@@ -7,10 +7,24 @@
 #include "../include/management/ResourceIdentifier.h"
 
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
-        (textures), player(new PlayerCharacter(PlayerCharacter::blueHero,textures)) {
+        (textures), player(new PlayerCharacter(PlayerCharacter::blueHero,textures)), rangedWeapon(new RangedWeapon()) {
 
     player->rect.setPosition(window->getSize().x/2.f,window->getSize().y/2.f);
 
+    createWeapon();
+    //equipe it
+    player->equip(rangedWeapon);
+
+}
+
+void World::createWeapon() {
+    //remove projectiles from the world and put them into the weapon
+    for(int i=0; i<100; i++) {
+        projectileArray.emplace_back(Projectile());
+        auto p = projectileArray.back();
+        projectileArray.pop_back();
+        rangedWeapon->addProjectile(p);
+    }
 }
 
 void World::update(sf::Time dt) {
@@ -20,6 +34,7 @@ void World::update(sf::Time dt) {
 void World::draw() {
     window->setView(window->getDefaultView());
     window->draw(player->getSprite());
+    drawProjectiles();
 }
 
 void World::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
@@ -31,4 +46,21 @@ void World::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
         player->isMovingLeft = isPressed;
     else if (key == sf::Keyboard::D)
         player->isMovingRight = isPressed;
+    else if (key == sf::Keyboard::Space && isPressed)
+        useProjectile();
+}
+
+//gets the projectile back in the array of the world and setes the right position
+void World::useProjectile() {
+    auto p = player->shoot();
+    p.rect.setPosition(player->rect.getPosition());
+    projectileArray.push_back(p);
+}
+
+void World::drawProjectiles() {
+    int counter = 0;
+    for(auto i=projectileArray.begin(); i!=projectileArray.end(); i++) {
+        window->draw(projectileArray[ counter ].rect);
+        counter++;
+    }
 }

@@ -10,6 +10,8 @@
 #include "../Objects/Shield.h"
 #include "../management/ResourceHolder.h"
 #include "../management/ResourceIdentifier.h"
+#include "../Objects/RangedWeapon.h"
+#include "../Objects/MeleeWeapon.h"
 
 class Weapon;
 class PlayerCharacter : public Character {
@@ -22,11 +24,16 @@ public:
     };
     enum Type {
         blueHero,
-        blondHero
+        blondHero,
+        whiteHero,
+        grayHero,
+        starLord
     };
 
     PlayerCharacter(Type type, const TextureHolder& textures);
-    bool equip();
+    bool equip(std::shared_ptr<RangedWeapon>& w);
+    bool equip(std::shared_ptr<MeleeWeapon>& w);
+    Projectile& shoot();
     //a movement that covers several tiles thanks to the ProtoBelt
     void dash();
     virtual void die();
@@ -44,6 +51,7 @@ public:
 public:
     std::string name;
     bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
+    bool shooting;
     Type type;
 
 private:
@@ -51,7 +59,7 @@ private:
     int counterWalk;
     bool delayWalk, delayMoreWalk;
 
-    std::shared_ptr<Weapon> rangedWeapon;
+    std::shared_ptr<RangedWeapon> rangedWeapon;
     std::shared_ptr<Weapon> meleeWeapon;
     std::shared_ptr<Shield> slotShield;
 

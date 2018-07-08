@@ -104,5 +104,7 @@ void Game::loadTextures() {
     textureHolder.load(Textures::RobotGray,"Media/Characters/Robot/gray.png");
     textureHolder.load(Textures::HeroBlond,"Media/Characters/People/blond.png");
     textureHolder.load(Textures::HeroBlue,"Media/Characters/People/blue.png");
-
+    textureHolder.load(Textures::HeroWhite,"Media/Characters/People/white.png");
+    textureHolder.load(Textures::HeroGray,"Media/Characters/People/gray.png");
+    textureHolder.load(Textures::StarLord,"Media/Characters/People/starlord_mask.png");
 }

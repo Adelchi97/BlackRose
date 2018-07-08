@@ -16,7 +16,10 @@ namespace Textures {
         RobotGray,
         RobotRed,
         HeroBlue,
-        HeroBlond
+        HeroBlond,
+        HeroWhite,
+        HeroGray,
+        StarLord
     };
 }
 

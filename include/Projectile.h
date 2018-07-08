@@ -1,0 +1,1 @@
+//// Created by Elena Faillace on 08/07/2018.//#ifndef BLACKROSE_PROJECTILE_H#define BLACKROSE_PROJECTILE_H#include "Entity.h"class Projectile: public Entity {public:    Projectile();private:    int movementSpeed = 10;    int attackDamage = 5;};#endif //BLACKROSE_PROJECTILE_H

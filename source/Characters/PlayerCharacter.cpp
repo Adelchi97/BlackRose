@@ -10,14 +10,20 @@ Textures::ID toTextureID(PlayerCharacter::Type type) {
             return Textures::HeroBlue;
         case PlayerCharacter::Type::blondHero:
             return Textures::HeroBlond;
+        case PlayerCharacter::Type::whiteHero:
+            return Textures::HeroWhite;
+        case PlayerCharacter::Type::grayHero:
+            return Textures::HeroGray;
+        case PlayerCharacter::Type::starLord:
+            return Textures::StarLord;
     }
 }
 
 PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures): type(type), textures(textures), counterWalk(0),
     isMovingUp(false), isMovingDown(false), isMovingLeft(false), isMovingRight(false), delayWalk(false),
-    delayMoreWalk(false) {
+    delayMoreWalk(false), shooting(false) {
 
-    speed = 500;
+    speed = 2;
     texture = textures.get(toTextureID(type));
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0,0,32,32));
@@ -45,18 +51,32 @@ void PlayerCharacter::update(sf::Time dt) {
         setDirection(PlayerCharacter::left);
     }
 
-    if(delayWalk) {
-        if(delayMoreWalk)
-            counterWalk = (counterWalk + 1) % 3;
-        delayMoreWalk = !delayMoreWalk;
+    //controls the walking animation
+    if(!((isMovingLeft && isMovingRight) || (isMovingUp && isMovingDown))) {
+        if ( delayWalk ) {
+            if ( delayMoreWalk )
+                counterWalk = (counterWalk + 1) % 3;
+            delayMoreWalk = !delayMoreWalk;
+        }
+        delayWalk = !delayWalk;
     }
-    delayWalk = !delayWalk;
 
-    setPosition(movements * dt.asSeconds());
+    setPosition(movements /* *dt.asSeconds()*/);
 }
 
-bool PlayerCharacter::equip() {
+bool PlayerCharacter::equip(std::shared_ptr<RangedWeapon>& weapon) {
+    rangedWeapon = weapon;
     return true;
+}
+bool PlayerCharacter::equip(std::shared_ptr<MeleeWeapon>& weapon) {
+
+    return true;
+}
+
+Projectile& PlayerCharacter::shoot() {
+    //TODO it will dipend on the weapon equipped
+    return rangedWeapon->shootProjectile();
+
 }
 
 void PlayerCharacter::dash() {
