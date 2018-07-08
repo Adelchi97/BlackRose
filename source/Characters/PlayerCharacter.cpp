@@ -13,8 +13,9 @@ Textures::ID toTextureID(PlayerCharacter::Type type) {
     }
 }
 
-PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures): type(type), textures(textures), counter(0),
-    isMovingUp(false), isMovingDown(false), isMovingLeft(false), isMovingRight(false) {
+PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures): type(type), textures(textures), counterWalk(0),
+    isMovingUp(false), isMovingDown(false), isMovingLeft(false), isMovingRight(false), delayWalk(false),
+    delayMoreWalk(false) {
 
     speed = 500;
     texture = textures.get(toTextureID(type));
@@ -43,6 +44,13 @@ void PlayerCharacter::update(sf::Time dt) {
         movements.x-=speed;
         setDirection(PlayerCharacter::left);
     }
+
+    if(delayWalk) {
+        if(delayMoreWalk)
+            counterWalk = (counterWalk + 1) % 3;
+        delayMoreWalk = !delayMoreWalk;
+    }
+    delayWalk = !delayWalk;
 
     setPosition(movements * dt.asSeconds());
 }
@@ -82,20 +90,16 @@ void PlayerCharacter::setSpeed(int speed) {
 void PlayerCharacter::setDirection(PlayerCharacter::Direction direction) {
     switch(direction) {
         case up:
-            sprite.setTextureRect(sf::IntRect(counter*32,32*3,32,32));
-            counter = (counter+1)%2;
+            sprite.setTextureRect(sf::IntRect(counterWalk*32,32*3,32,32));
             break;
         case down:
-            sprite.setTextureRect(sf::IntRect(counter*32,0,32,32));
-            counter = (counter+1)%2;
+            sprite.setTextureRect(sf::IntRect(counterWalk*32,0,32,32));
             break;
         case left:
-            sprite.setTextureRect(sf::IntRect(counter*32,32,32,32));
-            counter = (counter+1)%2;
+            sprite.setTextureRect(sf::IntRect(counterWalk*32,32,32,32));
             break;
         case right:
-            sprite.setTextureRect(sf::IntRect(counter*32,32*2,32,32));
-            counter = (counter+1)%2;
+            sprite.setTextureRect(sf::IntRect(counterWalk*32,32*2,32,32));
             break;
     }
 }

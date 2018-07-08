@@ -48,7 +48,8 @@ public:
 
 private:
     const TextureHolder& textures;
-    int counter;
+    int counterWalk;
+    bool delayWalk, delayMoreWalk;
 
     std::shared_ptr<Weapon> rangedWeapon;
     std::shared_ptr<Weapon> meleeWeapon;
