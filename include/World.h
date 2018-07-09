@@ -33,14 +33,6 @@ private:
     std::shared_ptr<RangedWeapon> rangedWeapon;
     //these are in the world
     std::vector<Projectile> projectileArray;
-    /*
-    //TODO non so se questi vengono copiati o messi in vector, credo la prima
-    Projectile projectile1;
-    Projectile projectile2;
-    Projectile projectile3;
-    Projectile projectile4;
-    Projectile projectile5;
-     */
 };
 
 

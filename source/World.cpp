@@ -19,8 +19,8 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
 
 void World::createWeapon() {
     //remove projectiles from the world and put them into the weapon
-    for(int i=0; i<100; i++) {
-        projectileArray.emplace_back(Projectile());
+    for(int i=0; i<20; i++) {
+        projectileArray.push_back(Projectile());
         auto p = projectileArray.back();
         projectileArray.pop_back();
         rangedWeapon->addProjectile(p);
@@ -58,9 +58,11 @@ void World::useProjectile() {
 }
 
 void World::drawProjectiles() {
-    int counter = 0;
-    for(auto i=projectileArray.begin(); i!=projectileArray.end(); i++) {
-        window->draw(projectileArray[ counter ].rect);
-        counter++;
+    if(!projectileArray.empty()) {
+        int counter = 0;
+        for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
+            window->draw(projectileArray[ counter ].rect);
+            counter++;
+        }
     }
 }
