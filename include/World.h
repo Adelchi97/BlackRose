@@ -21,8 +21,9 @@ public:
 
 private:
     void createWeapon();
-    void useProjectile();
+    void useWeapon();
     void drawProjectiles();
+    void updateProjectiles();
 
 
 private:

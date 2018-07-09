@@ -16,12 +16,7 @@
 class Weapon;
 class PlayerCharacter : public Character {
 public:
-    enum Direction {
-        up,
-        down,
-        left,
-        right
-    };
+
     enum Type {
         blueHero,
         blondHero,
@@ -42,7 +37,7 @@ public:
     void setPosition(const sf::Vector2f &movement);
     void setPosition(float x, float y);
 
-    const sf::Sprite &getSprite() const;
+    virtual const sf::Sprite &getSprite();
     void setDirection(PlayerCharacter::Direction direction);
 
     float getSpeed() const;

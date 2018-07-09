@@ -95,8 +95,8 @@ void PlayerCharacter::setPosition(float x, float y) {
     rect.move(x,y);
 }
 
-const sf::Sprite &PlayerCharacter::getSprite() const {
-    return sprite;
+const sf::Sprite &PlayerCharacter::getSprite() {
+    return Entity::getSprite();
 }
 
 float PlayerCharacter::getSpeed() const {
@@ -110,15 +110,19 @@ void PlayerCharacter::setSpeed(int speed) {
 void PlayerCharacter::setDirection(PlayerCharacter::Direction direction) {
     switch(direction) {
         case up:
+            this->direction = up;
             sprite.setTextureRect(sf::IntRect(counterWalk*32,32*3,32,32));
             break;
         case down:
+            this->direction = down;
             sprite.setTextureRect(sf::IntRect(counterWalk*32,0,32,32));
             break;
         case left:
+            this->direction = left;
             sprite.setTextureRect(sf::IntRect(counterWalk*32,32,32,32));
             break;
         case right:
+            this->direction = right;
             sprite.setTextureRect(sf::IntRect(counterWalk*32,32*2,32,32));
             break;
     }

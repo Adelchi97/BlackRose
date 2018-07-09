@@ -29,6 +29,15 @@ void World::createWeapon() {
 
 void World::update(sf::Time dt) {
     player->update(dt);
+    updateProjectiles();
+}
+
+void World::updateProjectiles() {
+    int counter = 0;
+    for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
+        projectileArray[counter]->update();
+        counter++;
+    }
 }
 
 void World::draw() {
@@ -47,13 +56,13 @@ void World::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
     else if (key == sf::Keyboard::D)
         player->isMovingRight = isPressed;
     else if (key == sf::Keyboard::Space && isPressed)
-        useProjectile();
+        useWeapon();
 }
 
 //gets the projectile back in the array of the world and sets the right position
-void World::useProjectile() {
+void World::useWeapon() {
     auto p = player->shoot();
-    p->setPosition(player->rect.getPosition());
+    p->setPosition(player->rect.getPosition(), player->direction);
     projectileArray.push_back(p);
 }
 
@@ -61,7 +70,7 @@ void World::drawProjectiles() {
     if(!projectileArray.empty()) {
         int counter = 0;
         for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
-            window->draw(projectileArray[ counter ]->sprite);
+            window->draw(projectileArray[ counter ]->getSprite());
             counter++;
         }
     }

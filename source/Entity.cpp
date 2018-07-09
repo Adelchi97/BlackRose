@@ -1,1 +1,1 @@
-//// Created by Elena Faillace on 07/07/2018.//#include "../include/Entity.h"
+//// Created by Elena Faillace on 07/07/2018.//#include "../include/Entity.h"const sf::Sprite &Entity::getSprite() {    return sprite;}
