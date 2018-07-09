@@ -32,7 +32,7 @@ private:
     std::shared_ptr<PlayerCharacter> player;
     std::shared_ptr<RangedWeapon> rangedWeapon;
     //these are in the world
-    std::vector<Projectile> projectileArray;
+    std::vector<std::shared_ptr<Projectile>> projectileArray;
 };
 
 

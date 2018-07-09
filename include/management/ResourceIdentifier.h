@@ -19,7 +19,8 @@ namespace Textures {
         HeroBlond,
         HeroWhite,
         HeroGray,
-        StarLord
+        StarLord,
+        ShootingEnergy
     };
 }
 

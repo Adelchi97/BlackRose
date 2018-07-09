@@ -73,7 +73,7 @@ bool PlayerCharacter::equip(std::shared_ptr<MeleeWeapon>& weapon) {
     return true;
 }
 
-Projectile& PlayerCharacter::shoot() {
+std::shared_ptr<Projectile> PlayerCharacter::shoot() {
     //TODO it will dipend on the weapon equipped
     return rangedWeapon->shootProjectile();
 

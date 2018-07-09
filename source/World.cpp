@@ -20,7 +20,7 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
 void World::createWeapon() {
     //remove projectiles from the world and put them into the weapon
     for(int i=0; i<20; i++) {
-        projectileArray.push_back(Projectile());
+        projectileArray.emplace_back(std::make_shared<Projectile>(textures));
         auto p = projectileArray.back();
         projectileArray.pop_back();
         rangedWeapon->addProjectile(p);
@@ -33,8 +33,8 @@ void World::update(sf::Time dt) {
 
 void World::draw() {
     window->setView(window->getDefaultView());
-    window->draw(player->getSprite());
     drawProjectiles();
+    window->draw(player->getSprite());
 }
 
 void World::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
@@ -50,10 +50,10 @@ void World::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
         useProjectile();
 }
 
-//gets the projectile back in the array of the world and setes the right position
+//gets the projectile back in the array of the world and sets the right position
 void World::useProjectile() {
     auto p = player->shoot();
-    p.rect.setPosition(player->rect.getPosition());
+    p->setPosition(player->rect.getPosition());
     projectileArray.push_back(p);
 }
 
@@ -61,7 +61,7 @@ void World::drawProjectiles() {
     if(!projectileArray.empty()) {
         int counter = 0;
         for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
-            window->draw(projectileArray[ counter ].rect);
+            window->draw(projectileArray[ counter ]->sprite);
             counter++;
         }
     }
