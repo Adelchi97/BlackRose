@@ -5,7 +5,7 @@
 #ifndef BLACKROSE_ENEMY_H
 #define BLACKROSE_ENEMY_H
 
-
+#include <memory>
 #include "Character.h"
 
 class Enemy : public Character {
