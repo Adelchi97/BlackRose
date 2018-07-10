@@ -43,9 +43,12 @@ private:
     const int chanceRoom;
     const int chanceCorridor;
 
-    const int minRoomWidth;
-    const int minRoomHeight;
+    const int minRoomSide;
+
+    bool bossRoom = false;
     const int minBossRoomSide = 10;
+
+    bool mapFilled = false;
 };
 
 
