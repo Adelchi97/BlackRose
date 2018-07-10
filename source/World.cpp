@@ -35,7 +35,10 @@ void World::update(sf::Time dt) {
 void World::updateProjectiles() {
     int counter = 0;
     for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
-        projectileArray[counter]->update();
+        projectileArray[counter]->update(window->getSize());
+        if (!projectileArray[counter]->active) {
+            projectileArray.erase(projectileArray.begin() + counter);
+        }
         counter++;
     }
 }
