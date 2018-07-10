@@ -2,17 +2,17 @@
 // Created by Ludovico on 28/06/2018.
 //
 
-#include "ProceduralMap.h"
 #include "time.h"
+#include "../include/ProceduralMap.h"
 
 ProceduralMap::ProceduralMap(): xsize(800), ysize(800), objects(10), oldSeed(0), chanceRoom(80), chanceCorridor(20),
-minRoomHeight(5), minRoomWidth(5), maxRoomSide(xsize/4) {
+                                minRoomSide(5), maxRoomSide(xsize/10) {
     levelMap = 0;
 }
 
 ProceduralMap::~ProceduralMap() {
-if(levelMap)
-    delete [] levelMap;
+    if(levelMap)
+        delete [] levelMap;
 }
 
 int ProceduralMap::getRand(int x, int y){
@@ -79,14 +79,26 @@ void ProceduralMap::setCell(int x, int y, TileType tile) {
 
 
 bool ProceduralMap::makeBossRoom(int x, int y) {
+
     //TODO
+    bossRoom = true;
+    return true;
 }
 
 
 bool ProceduralMap::makeRoom(int x, int y, int xlength, int ylength, int direction) {
+
+    //check if a bossRoom is needed
+    if (!bossRoom){
+        //I want bossRoom will be build only in a central part of the map
+        if((x >= xsize/4 && x <= (xsize/4)*3) && (y >= ysize/4 && y <= (ysize/4)*3)){
+            makeBossRoom(x, y);
+        }
+    }
+
 // rooms will respect the min and max width and length, the walkable tiles will be 2 less for length and 2 less for width
-    int xLength = getRand(minRoomWidth, maxRoomSide);
-    int yLength = getRand(minRoomHeight, maxRoomSide);
+    int xLength = getRand(minRoomSide, maxRoomSide);
+    int yLength = getRand(minRoomSide, maxRoomSide);
     //two cases in room creation. I'll manage what tile version of wall or floor to take in SetCell
     TileType wall = TileType::Wall;
     TileType floor = TileType ::Floor;
@@ -325,8 +337,9 @@ bool ProceduralMap::makeCorridor(int x, int y, int lenght, int direction) {
 
 bool ProceduralMap::createLevel(int inx, int iny) {
     towerLevel++;
-    objects = getRand(5, 2*towerLevel);
+    objects = getRand(10, 100);
     levelMap = new TileType[xsize * ysize];
+
     for (int y = 0; y < ysize; y++) {
         for (int x = 0; x < xsize; x++) {
             // making the borders of unwalkable walls
@@ -343,6 +356,17 @@ bool ProceduralMap::createLevel(int inx, int iny) {
             else
                 setCell(x, y, TileType::Unused);
         }
+    }
+
+    //start with creating a room in a random location, all its features are random
+    makeRoom(getRand(0, xsize), getRand(0, ysize), getRand(minRoomSide, maxRoomSide), getRand(minRoomSide, maxRoomSide), getRand(0, 3)  );
+
+    //now we have a room (or a bossRoom)
+    int buildSpace = getRand(0, 100);
+    int vaildTile = -1;
+
+    while(mapFilled){
+        //TODO
     }
 
     //TODO
