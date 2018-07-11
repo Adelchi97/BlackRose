@@ -28,7 +28,7 @@ public:
     PlayerCharacter(Type type, const TextureHolder& textures);
     bool equip(std::shared_ptr<RangedWeapon>& w);
     bool equip(std::shared_ptr<MeleeWeapon>& w);
-    std::shared_ptr<Projectile> shoot();
+    bool shoot();
     //a movement that covers several tiles thanks to the ProtoBelt
     void dash();
     virtual void die();

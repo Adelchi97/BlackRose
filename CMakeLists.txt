@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 project(BlackRose)
 
+set(SFML_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/Libraries/SFML")
 set(CMAKE_CXX_STANDARD 11)
 
 set(SOURCE_FILES source/main.cpp source/Game.cpp include/Game.h include/management/ResourceHolder.h
@@ -8,7 +9,7 @@ set(SOURCE_FILES source/main.cpp source/Game.cpp include/Game.h include/manageme
 add_executable(BlackRose ${SOURCE_FILES} source/Game.cpp include/Game.h)
 
 
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/sfml_cmake")
+set(CMAKE_MODULE_PATH "${SFML_ROOT}/sfml_cmake")
 find_package(SFML REQUIRED system window graphics network audio) #cerca i file header
 include_directories(${SFML_INCLUDE_DIR})
 target_link_libraries(BlackRose ${SFML_LIBRARIES})

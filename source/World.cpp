@@ -7,8 +7,7 @@
 #include "../include/management/ResourceIdentifier.h"
 
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
-        (textures), player(new PlayerCharacter(PlayerCharacter::blueHero,textures)), rangedWeapon(new RangedWeapon
-                                                                                                                                                                                                                    ()) {
+        (textures), player(new PlayerCharacter(PlayerCharacter::blueHero,textures)), rangedWeapon(new RangedWeapon()) {
 
     player->rect.setPosition(window->getSize().x/2.f,window->getSize().y/2.f);
 
@@ -19,13 +18,7 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
 }
 
 void World::createWeapon() {
-    //remove projectiles from the world and put them into the weapon
-    for(int i=0; i<20; i++) {
-        projectileArray.emplace_back(std::make_shared<Projectile>(textures));
-        auto p = projectileArray.back();
-        projectileArray.pop_back();
-        rangedWeapon->addProjectile(p);
-    }
+    rangedWeapon->addProjectile(20);
 }
 
 void World::update(sf::Time dt) {
@@ -34,13 +27,15 @@ void World::update(sf::Time dt) {
 }
 
 void World::updateProjectiles() {
-    int counter = 0;
-    for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
-        projectileArray[counter]->update(window->getSize());
-        if (!projectileArray[counter]->active) {
-            projectileArray.erase(projectileArray.begin() + counter);
+    if(!projectileArray.empty()) {
+        int counter = 0;
+        for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
+            projectileArray[ counter ]->update(window->getSize());
+            if ( !projectileArray[ counter ]->active ) {
+                projectileArray.erase(projectileArray.begin() + counter);
+            }
+            counter++;
         }
-        counter++;
     }
 }
 
@@ -65,9 +60,11 @@ void World::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
 
 //gets the projectile back in the array of the world and sets the right position
 void World::useWeapon() {
-    auto p = player->shoot();
-    p->setPosition(player->rect.getPosition(), player->direction);
-    projectileArray.push_back(p);
+    if(player->shoot()) {
+        projectileArray.emplace_back(std::make_shared<Projectile>(textures));
+        projectileArray.back()->setPosition(player->rect.getPosition(), player->direction);
+    } else
+        std::cout<<"non puo sparare "<<std::endl;
 }
 
 void World::drawProjectiles() {
