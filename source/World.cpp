@@ -7,9 +7,11 @@
 #include "../include/management/ResourceIdentifier.h"
 
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
-        (textures), player(new PlayerCharacter(PlayerCharacter::blueHero,textures)), rangedWeapon(new RangedWeapon()) {
+        (textures), player(new PlayerCharacter(PlayerCharacter::blueHero,textures)), rangedWeapon(new RangedWeapon())
+        , enemy(new Enemy(Enemy::robotRed,textures)) {
 
     player->rect.setPosition(window->getSize().x/2.f,window->getSize().y/2.f);
+    enemy->rect.setPosition(window->getSize().x/2.f,window->getSize().y/3.f);
 
     createWeapon();
     //equipe it
@@ -23,7 +25,9 @@ void World::createWeapon() {
 
 void World::update(sf::Time dt) {
     player->update(dt);
+    enemy->update(dt);
     updateProjectiles();
+
 }
 
 void World::updateProjectiles() {
@@ -42,6 +46,7 @@ void World::updateProjectiles() {
 void World::draw() {
     window->setView(window->getDefaultView());
     drawProjectiles();
+    window->draw(enemy->getSprite());
     window->draw(player->getSprite());
 }
 

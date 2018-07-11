@@ -1,0 +1,1 @@
+//// Created by Elena Faillace on 11/07/2018.//#include "../include/Random.h"int generateRandom(int max) {    int random = (rand() % max)+1;    return random;}int generateRandom0(int max) {    int random = (rand() % max);    return random;}bool generateRandBool() {    int random = (rand() % 2) + 1;    //if 1 returns true else false    return random==1;}

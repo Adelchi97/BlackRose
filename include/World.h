@@ -11,6 +11,7 @@
 #include "management/ResourceIdentifier.h"
 #include "Characters/PlayerCharacter.h"
 #include "Objects/RangedWeapon.h"
+#include "Characters/Enemy.h"
 
 class World {
 public:
@@ -31,6 +32,7 @@ private:
     const TextureHolder& textures;
 
     std::shared_ptr<PlayerCharacter> player;
+    std::shared_ptr<Enemy> enemy;
     std::shared_ptr<RangedWeapon> rangedWeapon;
     //these are in the world
     std::vector<std::shared_ptr<Projectile>> projectileArray;
