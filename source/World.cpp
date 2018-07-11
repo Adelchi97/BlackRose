@@ -7,8 +7,10 @@
 #include "../include/management/ResourceIdentifier.h"
 
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
-        (textures), player(new PlayerCharacter(PlayerCharacter::blueHero,textures)), rangedWeapon(new RangedWeapon())
-        , enemy(new Enemy(Enemy::robotRed,textures)) {
+        (textures), player(new PlayerCharacter(PlayerCharacter::blueHero,textures, window->getSize())),
+                           rangedWeapon(new
+                                                                                                                                                                                                                      RangedWeapon())
+        , enemy(new Enemy(Enemy::robotRed,textures, window->getSize())) {
 
     player->rect.setPosition(window->getSize().x/2.f,window->getSize().y/2.f);
     enemy->rect.setPosition(window->getSize().x/2.f,window->getSize().y/3.f);

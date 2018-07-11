@@ -25,7 +25,7 @@ public:
         starLord
     };
 
-    PlayerCharacter(Type type, const TextureHolder& textures);
+    PlayerCharacter(Type type, const TextureHolder& textures, sf::Vector2u windowSize);
     bool equip(std::shared_ptr<RangedWeapon>& w);
     bool equip(std::shared_ptr<MeleeWeapon>& w);
     bool shoot();
@@ -34,7 +34,7 @@ public:
     virtual void die();
     void update(sf::Time dt);
 
-    void setPosition(const sf::Vector2f &movement);
+    void setPosition(sf::Vector2f &movement);
     void setPosition(float x, float y);
 
     virtual const sf::Sprite &getSprite();
@@ -53,6 +53,7 @@ private:
     const TextureHolder& textures;
     int counterWalk;
     bool delayWalk, delayMoreWalk;
+    sf::Vector2u windowSize;
 
     std::shared_ptr<RangedWeapon> rangedWeapon;
     std::shared_ptr<Weapon> meleeWeapon;

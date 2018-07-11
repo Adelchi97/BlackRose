@@ -23,7 +23,7 @@ public:
         robotGray
     };
 
-    explicit Enemy(Type type, const TextureHolder& textures);
+    explicit Enemy(Type type, const TextureHolder& textures, sf::Vector2u windowSize);
     void update(sf::Time dt);
     void setPosition(const sf::Vector2f &movement);
     void setPosition(float x, float y);
@@ -36,6 +36,9 @@ public:
     void useSkill(SkillType type);
     virtual void die();
 
+private:
+    void changeDirection();
+
 public:
     Type type;
 
@@ -44,6 +47,8 @@ private:
     std::shared_ptr<Shield> shield;
 
     const TextureHolder& textures;
+    sf::Vector2f windowSize;
+
     int counterWalk;
     int changeDirectionTime, counterDirection = 0;
     bool delayWalk, delayMoreWalk;

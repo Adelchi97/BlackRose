@@ -13,10 +13,14 @@ Textures::ID toTextureID(Enemy::Type type) {
     }
 }
 
-Enemy::Enemy(Type type, const TextureHolder& textures) : type(type), textures(textures), isMovingDown(false),
-                                                         isMovingUp(false), isMovingLeft(false), isMovingRight(false) {
+Enemy::Enemy(Type type, const TextureHolder& textures, sf::Vector2u windowSize) : type(type), textures(textures),
+         isMovingDown(false), isMovingUp(false), isMovingLeft(false), isMovingRight(false) {
+
+    this->windowSize.x = (int)windowSize.x;
+    this->windowSize.y = (int)windowSize.y;
+
     changeDirectionTime = 100;
-    speed = 1;
+    speed = 2;
     texture = textures.get(toTextureID(type));
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0,0,32,32));
@@ -37,15 +41,7 @@ void Enemy::update(sf::Time dt) {
     }
 
     if(counterDirection==0) {
-        isMovingUp= false;
-        isMovingDown= false;
-        isMovingLeft= false;
-        isMovingRight= false;
-        int randDirection = generateRandom(4);
-        if(randDirection==1) isMovingUp=true;
-        if(randDirection==2) isMovingDown=true;
-        if(randDirection==3) isMovingLeft=true;
-        if(randDirection==4) isMovingRight=true;
+        changeDirection();
     }
     counterDirection = (counterDirection+1)%changeDirectionTime;
 
@@ -71,8 +67,38 @@ void Enemy::update(sf::Time dt) {
 
 }
 
+void Enemy::changeDirection() {
+    isMovingUp= false;
+    isMovingDown= false;
+    isMovingLeft= false;
+    isMovingRight= false;
+    int randDirection = generateRandom(4);
+    if(randDirection==1) isMovingUp=true;
+    if(randDirection==2) isMovingDown=true;
+    if(randDirection==3) isMovingLeft=true;
+    if(randDirection==4) isMovingRight=true;
+}
+
 void Enemy::setPosition(const sf::Vector2f &movement) {
     rect.move(movement);
+
+    if((rect.getPosition().x)+32>windowSize.x) {
+        rect.setPosition(windowSize.x - 32, rect.getPosition().y);
+        changeDirection();
+    }
+    else if(rect.getPosition().x<0) {
+        rect.setPosition(0, rect.getPosition().y);
+        changeDirection();
+    }
+    if((rect.getPosition().y)+32>windowSize.y) {
+        rect.setPosition(rect.getPosition().x, windowSize.y - 32);
+        changeDirection();
+    }
+    else if(rect.getPosition().y<0) {
+        rect.setPosition(rect.getPosition().x, 0);
+        changeDirection();
+    }
+
 }
 void Enemy::setPosition(float x, float y) {
     rect.move(x,y);
