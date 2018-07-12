@@ -35,13 +35,17 @@ void World::update(sf::Time dt) {
 void World::updateProjectiles() {
     if(!projectileArray.empty()) {
         int counter = 0;
+        int deleted = -1;
         for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
-            projectileArray[ counter ]->update(window->getSize());
+            projectileArray[ counter ]->update();
+
             if ( !projectileArray[ counter ]->active ) {
-                projectileArray.erase(projectileArray.begin() + counter);
+                deleted = counter;
             }
             counter++;
         }
+        if(deleted>=0)
+            projectileArray.erase(projectileArray.begin() + deleted);
     }
 }
 
@@ -70,6 +74,7 @@ void World::useWeapon() {
     if(player->shoot()) {
         projectileArray.emplace_back(std::make_shared<Projectile>(textures));
         projectileArray.back()->setPosition(player->rect.getPosition(), player->direction);
+        projectileArray.back()->range = player->rangedWeapon->range;
     } else
         std::cout<<"non puo sparare "<<std::endl;
 }

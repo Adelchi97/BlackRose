@@ -47,6 +47,8 @@ public:
     std::string name;
     bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
     bool shooting;
+    std::shared_ptr<RangedWeapon> rangedWeapon;
+
     Type type;
 
 private:
@@ -55,7 +57,6 @@ private:
     bool delayWalk, delayMoreWalk;
     sf::Vector2u windowSize;
 
-    std::shared_ptr<RangedWeapon> rangedWeapon;
     std::shared_ptr<Weapon> meleeWeapon;
     std::shared_ptr<Shield> slotShield;
 

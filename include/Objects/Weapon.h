@@ -12,9 +12,9 @@ class Character;
 class Weapon : public Object {
 public:
     Weapon();
+    int range;
 
 protected:
-    int range;
     int power;
 };
 
