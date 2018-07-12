@@ -22,17 +22,22 @@ public:
 
 private:
     void createWeapon();
-    void useWeapon();
-    void drawProjectiles();
-    void updateProjectiles();
+    void createEnemies();
 
+    void useWeapon();
+
+    void drawProjectiles();
+    void drawEnemies();
+
+    void updateProjectiles();
+    void updateEnemies();
 
 private:
     std::shared_ptr<sf::RenderWindow> window;
     const TextureHolder& textures;
 
     std::shared_ptr<PlayerCharacter> player;
-    std::shared_ptr<Enemy> enemy;
+    std::vector<std::shared_ptr<Enemy>> enemyArray;
     std::shared_ptr<RangedWeapon> rangedWeapon;
     //these are in the world
     std::vector<std::shared_ptr<Projectile>> projectileArray;

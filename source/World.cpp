@@ -8,17 +8,22 @@
 
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
         (textures), player(new PlayerCharacter(PlayerCharacter::blueHero,textures, window->getSize())),
-                           rangedWeapon(new
-                                                                                                                                                                                                                      RangedWeapon())
-        , enemy(new Enemy(Enemy::robotRed,textures, window->getSize())) {
+                           rangedWeapon(new RangedWeapon()) {
 
     player->rect.setPosition(window->getSize().x/2.f,window->getSize().y/2.f);
-    enemy->rect.setPosition(window->getSize().x/2.f,window->getSize().y/3.f);
 
+    createEnemies();
     createWeapon();
+
     //equipe it
     player->equip(rangedWeapon);
 
+}
+
+void World::createEnemies() {
+    for(int i=0; i<5; i++) {
+        enemyArray.emplace_back(std::make_shared<Enemy>(textures, window->getSize()));
+    }
 }
 
 void World::createWeapon() {
@@ -27,9 +32,26 @@ void World::createWeapon() {
 
 void World::update(sf::Time dt) {
     player->update(dt);
-    enemy->update(dt);
+    updateEnemies();
     updateProjectiles();
 
+}
+
+void World::updateEnemies() {
+    if(!enemyArray.empty()) {
+        int counter = 0;
+        int deleted = -1;
+        for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
+            enemyArray[ counter ]->update();
+
+            if ( !enemyArray[ counter ]->active ) {
+                deleted = counter;
+            }
+            counter++;
+        }
+        if(deleted>=0)
+            enemyArray.erase(enemyArray.begin() + deleted);
+    }
 }
 
 void World::updateProjectiles() {
@@ -52,8 +74,18 @@ void World::updateProjectiles() {
 void World::draw() {
     window->setView(window->getDefaultView());
     drawProjectiles();
-    window->draw(enemy->getSprite());
+    drawEnemies();
     window->draw(player->getSprite());
+}
+
+void World::drawEnemies() {
+    if(!enemyArray.empty()) {
+        int counter = 0;
+        for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
+            window->draw(enemyArray[ counter ]->getSprite());
+            counter++;
+        }
+    }
 }
 
 void World::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {

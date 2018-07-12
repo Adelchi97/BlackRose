@@ -13,8 +13,9 @@ Textures::ID toTextureID(Enemy::Type type) {
     }
 }
 
-Enemy::Enemy(Type type, const TextureHolder& textures, sf::Vector2u windowSize) : type(type), textures(textures),
-         isMovingDown(false), isMovingUp(false), isMovingLeft(false), isMovingRight(false) {
+Enemy::Enemy(Type type, const TextureHolder& textures, sf::Vector2u windowSize) : type(type), textures
+        (textures),
+         isMovingDown(false), isMovingUp(false), isMovingLeft(false), isMovingRight(false), active(true) {
 
     this->windowSize.x = (int)windowSize.x;
     this->windowSize.y = (int)windowSize.y;
@@ -26,7 +27,31 @@ Enemy::Enemy(Type type, const TextureHolder& textures, sf::Vector2u windowSize) 
     sprite.setTextureRect(sf::IntRect(0,0,32,32));
 }
 
-void Enemy::update(sf::Time dt) {
+
+Enemy::Enemy(const TextureHolder &textures, sf::Vector2u windowSize): textures(textures), isMovingDown(false),
+          isMovingUp(false), isMovingLeft(false), isMovingRight(false), active(true) {
+
+    setRandomType();
+
+    this->windowSize.x = (int)windowSize.x;
+    this->windowSize.y = (int)windowSize.y;
+
+    changeDirectionTime = 100;
+    speed = 2;
+    texture = textures.get(toTextureID(type));
+    sprite.setTexture(texture);
+    sprite.setTextureRect(sf::IntRect(0,0,32,32));
+}
+
+void Enemy::setRandomType() {
+    int rand = generateRandom(2);
+    if(rand==1)
+        type = Type::robotRed;
+    if(rand==2)
+        type = Type ::robotGray;
+}
+
+void Enemy::update() {
     //now sprite is linked to rect's position
     sprite.setPosition(rect.getPosition());
 
@@ -145,4 +170,3 @@ void Enemy::useSkill(Enemy::SkillType type) {
 void Enemy::die() {
 
 }
-

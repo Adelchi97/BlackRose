@@ -24,7 +24,9 @@ public:
     };
 
     explicit Enemy(Type type, const TextureHolder& textures, sf::Vector2u windowSize);
-    void update(sf::Time dt);
+    explicit Enemy(const TextureHolder& textures, sf::Vector2u windowSize);
+
+    void update();
     void setPosition(const sf::Vector2f &movement);
     void setPosition(float x, float y);
     virtual const sf::Sprite &getSprite();
@@ -38,9 +40,11 @@ public:
 
 private:
     void changeDirection();
+    void setRandomType();
 
 public:
     Type type;
+    bool active;
 
 private:
     std::shared_ptr<Weapon> weapon;

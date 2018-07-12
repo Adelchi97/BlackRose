@@ -59,7 +59,6 @@ private:
     }
 
     std::map<Identifier, std::unique_ptr<Resource>> mResourceMap;
-
 };
 
 #endif //BLACKROSE_WORLD_H
