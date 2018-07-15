@@ -22,8 +22,10 @@ public:
     virtual bool interactWithObject();
     virtual void die();
 
-protected:
+public:
     int hp;
+
+protected:
     int resistance;
     int speed;
     sf::Vector2f position;

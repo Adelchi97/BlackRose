@@ -32,6 +32,8 @@ private:
     void updateProjectiles();
     void updateEnemies();
 
+    void checkCollision();
+
 private:
     std::shared_ptr<sf::RenderWindow> window;
     const TextureHolder& textures;

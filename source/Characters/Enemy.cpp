@@ -22,6 +22,8 @@ Enemy::Enemy(Type type, const TextureHolder& textures, sf::Vector2u windowSize) 
 
     changeDirectionTime = 100;
     speed = 2;
+    hp = 20;
+
     texture = textures.get(toTextureID(type));
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0,0,32,32));
@@ -38,6 +40,8 @@ Enemy::Enemy(const TextureHolder &textures, sf::Vector2u windowSize): textures(t
 
     changeDirectionTime = 100;
     speed = 2;
+    hp = 20;
+
     texture = textures.get(toTextureID(type));
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0,0,32,32));
@@ -88,7 +92,10 @@ void Enemy::update() {
         setDirection(Enemy::left);
     }
 
-    setPosition(movements /* *dt.asSeconds()*/);
+    if(hp<=0)
+        active = false;
+
+    setPositionMovement(movements /* *dt.asSeconds()*/);
 
 }
 
@@ -104,7 +111,7 @@ void Enemy::changeDirection() {
     if(randDirection==4) isMovingRight=true;
 }
 
-void Enemy::setPosition(const sf::Vector2f &movement) {
+void Enemy::setPositionMovement(const sf::Vector2f &movement) {
     rect.move(movement);
 
     if((rect.getPosition().x)+32>windowSize.x) {
@@ -125,8 +132,13 @@ void Enemy::setPosition(const sf::Vector2f &movement) {
     }
 
 }
+
 void Enemy::setPosition(float x, float y) {
     rect.move(x,y);
+}
+
+void Enemy::setPosition() {
+
 }
 
 const sf::Sprite &Enemy::getSprite() {

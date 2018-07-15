@@ -27,8 +27,9 @@ public:
     explicit Enemy(const TextureHolder& textures, sf::Vector2u windowSize);
 
     void update();
-    void setPosition(const sf::Vector2f &movement);
+    void setPositionMovement(const sf::Vector2f &movement);
     void setPosition(float x, float y);
+    void setPosition();
     virtual const sf::Sprite &getSprite();
     void setDirection(Enemy::Direction direction);
 

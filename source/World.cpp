@@ -21,20 +21,41 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
 }
 
 void World::createEnemies() {
-    for(int i=0; i<5; i++) {
+    for(int i=0; i<generateRandom(4); i++) {
         enemyArray.emplace_back(std::make_shared<Enemy>(textures, window->getSize()));
     }
 }
 
 void World::createWeapon() {
-    rangedWeapon->addProjectile(20);
+    rangedWeapon->addProjectile(50);
 }
 
 void World::update(sf::Time dt) {
+
     player->update(dt);
     updateEnemies();
     updateProjectiles();
 
+    checkCollision();
+
+}
+
+void World::checkCollision() {
+    if(!projectileArray.empty() && !enemyArray.empty()) {
+        int counterProjectiles = 0;
+        for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
+            int counterEnemy = 0;
+            for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
+                if ( projectileArray[ counterProjectiles ]->rect.getGlobalBounds().
+                        intersects(enemyArray[ counterEnemy ]->rect.getGlobalBounds())) {
+                    std::cout << "Collision!" << std::endl;
+                    enemyArray[counterEnemy]->hp--;
+                }
+                counterEnemy++;
+            }
+            counterProjectiles++;
+        }
+    }
 }
 
 void World::updateEnemies() {
@@ -99,6 +120,8 @@ void World::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
         player->isMovingRight = isPressed;
     else if (key == sf::Keyboard::Space && isPressed)
         useWeapon();
+    else if (key == sf::Keyboard::Escape && isPressed)
+        window->close();
 }
 
 //gets the projectile back in the array of the world and sets the right position
