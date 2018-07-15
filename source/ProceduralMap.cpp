@@ -2,48 +2,68 @@
 // Created by Ludovico on 28/06/2018.
 //
 
-#include "time.h"
+#include "ctime"
 #include "../include/ProceduralMap.h"
 
-ProceduralMap::ProceduralMap(): xsize(800), ysize(800), objects(10), oldSeed(0), chanceRoom(80), chanceCorridor(20),
-                                minRoomSide(5), maxRoomSide(xsize/10) {
-    levelMap = 0;
+Textures::ID toTextureID( ProceduralMap::TileType type) {
+    switch(type) {
+        case ProceduralMap::Floor:
+            return Textures::FFloor;
+        case ProceduralMap::Wall:
+            return Textures::FFloor;
+        case ProceduralMap::Unused:
+            return Textures::FFloor;
+        default:
+            return Textures::FFloor;
+/*
+        case TileType::Door:
+            return Textures::HeroWhite;
+        case TileType::dirtFloor:
+            return Textures::HeroGray;
+        case TileType::dir:
+            return Textures::StarLord;
+ */
+    }
 }
 
-ProceduralMap::~ProceduralMap() {
-    if(levelMap)
-        delete [] levelMap;
+
+ProceduralMap::ProceduralMap(): xsize(800), ysize(800), objects(10), oldSeed(0), chanceRoom(80), chanceCorridor(20),
+                                minRoomSide(5), maxRoomSide(xsize/10), textures(textures) {
+  //  levelMap = 0; // 0 is TileType::Unused, see the enum class TipeTyle
+    createLevel(xsize,ysize);
 }
+
+ProceduralMap::~ProceduralMap() = default;
 
 int ProceduralMap::getRand(int x, int y){
-    long seed = time(NULL) + oldSeed;
+    long seed = time(nullptr) + oldSeed;
     oldSeed = seed;
 }
-
-TileType ProceduralMap::getCell(int x, int y) const {
+int ProceduralMap::getCell(int x, int y) const {
     return levelMap[x + xsize * y];
+
 }
 
 void ProceduralMap::setCell(int x, int y, TileType tile) {
-    int rand;
-    if(tile == TileType::Wall){
-        rand = getRand(1,3);
-        switch (rand){
-            case 1:
-                levelMap[x + xsize * y] = TileType::Wall;
-                break;
-            case 2:
-                levelMap[x + xsize * y] = TileType::dirtWall;
-                break;
-            case 3:
-                levelMap[x + xsize * y] = TileType::brokenWall;
-                break;
-            default:
-                levelMap[x + xsize * y] = TileType::Wall;
-                break;
-        }
+//    int rand;
+    tileSprite.setPosition(x*32, y*32);
+    if(tile == Floor){
+        tileSprite.setTextureRect(sf::IntRect(0,0,32,32));
+        mapWindow->draw(tileSprite);
+        levelMap[x + xsize*y] = 1;
     }
-    else if (tile == TileType::Floor){
+    if (tile == Unused){
+        tileSprite.setTextureRect(sf::IntRect(32,0,32*2,32));
+        mapWindow->draw(tileSprite);
+        levelMap[x + xsize*y] = 0;
+    }
+    if(tile == Wall){
+        tileSprite.setTextureRect(sf::IntRect(32,32,32*2,32*2));
+        mapWindow->draw(tileSprite);
+        levelMap[x + xsize*y] = 2;
+    }
+    /*
+    if (tile == TileType::Floor){
         rand = getRand(1,3);
         switch (rand){
             case 1:
@@ -57,6 +77,24 @@ void ProceduralMap::setCell(int x, int y, TileType tile) {
                 break;
             default:
                 levelMap[x + xsize * y] = TileType::Floor;
+                break;
+        }
+    }
+
+    else if (tile == TileType::Wall){
+        rand = getRand(1,3);
+        switch (rand){
+            case 1:
+                levelMap[x + xsize * y] = TileType::Wall;
+                break;
+            case 2:
+                levelMap[x + xsize * y] = TileType::dirtWall;
+                break;
+            case 3:
+                levelMap[x + xsize * y] = TileType::brokenWall;
+                break;
+            default:
+                levelMap[x + xsize * y] = TileType::Wall;
                 break;
         }
 
@@ -75,6 +113,7 @@ void ProceduralMap::setCell(int x, int y, TileType tile) {
                 break;
         }
     }
+*/
 }
 
 
@@ -86,8 +125,8 @@ bool ProceduralMap::makeBossRoom(int x, int y) {
 }
 
 
-bool ProceduralMap::makeRoom(int x, int y, int xlength, int ylength, int direction) {
-
+bool ProceduralMap::makeRoom(int x, int y, int direction) {
+/*
     //check if a bossRoom is needed
     if (!bossRoom){
         //I want bossRoom will be build only in a central part of the map
@@ -95,7 +134,7 @@ bool ProceduralMap::makeRoom(int x, int y, int xlength, int ylength, int directi
             makeBossRoom(x, y);
         }
     }
-
+*/
 // rooms will respect the min and max width and length, the walkable tiles will be 2 less for length and 2 less for width
     int xLength = getRand(minRoomSide, maxRoomSide);
     int yLength = getRand(minRoomSide, maxRoomSide);
@@ -110,14 +149,14 @@ bool ProceduralMap::makeRoom(int x, int y, int xlength, int ylength, int directi
         case 0:
             //north
             //Check if there's enough space left for it. It checks a row and a column more than what we need
-            for (int ytemp = y; ytemp > (y - yLength); ytemp--) {  //decrementing y means to go north
-                if (ytemp < 0 || ytemp > ysize)
+            for (int yTemp = y; yTemp > (y - yLength); yTemp--) {  //decrementing y means to go north
+                if (yTemp < 0 || yTemp > ysize)
                     return false;
                 //if xLength is odd the room will be one more in the right half
-                for (int xtemp = (x - xLength / 2); xtemp < (x + (xLength + 1) / 2); xtemp++) {
-                    if (xtemp < 0 || xtemp > xsize)
+                for (int xTemp = (x - xLength / 2); xTemp < (x + (xLength + 1) / 2); xTemp++) {
+                    if (xTemp < 0 || xTemp > xsize)
                         return false;
-                    if (getCell(xtemp, ytemp) != TileType::Unused)
+                    if (getCell(xTemp, yTemp) != TileType::Unused)
                         return false; //no space left
                 }
             }
@@ -135,8 +174,13 @@ bool ProceduralMap::makeRoom(int x, int y, int xlength, int ylength, int directi
                     else if (ytemp == (y - yLength + 1))
                         setCell(xtemp, ytemp, wall);
                         //and then fill with the floor
-                    else
+                    else {
+                        tileTexture = textures.get(toTextureID(floor));
+                        tileSprite.setTexture(tileTexture);
+                        tileSprite.setTextureRect(sf::IntRect(0,0,32,32));
                         setCell(xtemp, ytemp, floor);
+
+                    }
                 }
             }
             break;
@@ -338,29 +382,29 @@ bool ProceduralMap::makeCorridor(int x, int y, int lenght, int direction) {
 bool ProceduralMap::createLevel(int inx, int iny) {
     towerLevel++;
     objects = getRand(10, 100);
-    levelMap = new TileType[xsize * ysize];
+
 
     for (int y = 0; y < ysize; y++) {
         for (int x = 0; x < xsize; x++) {
             // making the borders of unwalkable walls
             if (y == 0)
-                setCell(x, y, TileType::Wall);
+                setCell(x, y, Wall);
             else if (y == ysize - 1)
-                setCell(x, y, TileType::Wall);
+                setCell(x, y, Wall);
             else if (x == 0)
-                setCell(x, y, TileType::Wall);
+                setCell(x, y, Wall);
             else if (x == xsize - 1)
-                setCell(x, y, TileType::Wall);
+                setCell(x, y, Wall);
 
                 //and fill the rest with unused
             else
-                setCell(x, y, TileType::Unused);
+                setCell(x, y, Unused);
         }
     }
 
     //start with creating a room in a random location, all its features are random
-    makeRoom(getRand(0, xsize), getRand(0, ysize), getRand(minRoomSide, maxRoomSide), getRand(minRoomSide, maxRoomSide), getRand(0, 3)  );
-
+    makeRoom(getRand(0, xsize), getRand(0, ysize), getRand(0, 3));
+    /*
     //now we have a room (or a bossRoom)
     int buildSpace = getRand(0, 100);
     int vaildTile = -1;
@@ -370,5 +414,7 @@ bool ProceduralMap::createLevel(int inx, int iny) {
     }
 
     //TODO
+    */
+
 }
 
