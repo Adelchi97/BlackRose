@@ -7,47 +7,106 @@
 #include "../include/management/ResourceIdentifier.h"
 
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
-        (textures), player(new PlayerCharacter(PlayerCharacter::blueHero,textures)), rangedWeapon(new RangedWeapon
-                                                                                                                                                                                                                    ()) {
+        (textures), player(new PlayerCharacter(PlayerCharacter::blueHero,textures, window->getSize())),
+                           rangedWeapon(new RangedWeapon()) {
 
     player->rect.setPosition(window->getSize().x/2.f,window->getSize().y/2.f);
 
+    createEnemies();
     createWeapon();
+
     //equipe it
     player->equip(rangedWeapon);
 
 }
 
-void World::createWeapon() {
-    //remove projectiles from the world and put them into the weapon
-    for(int i=0; i<20; i++) {
-        projectileArray.emplace_back(std::make_shared<Projectile>(textures));
-        auto p = projectileArray.back();
-        projectileArray.pop_back();
-        rangedWeapon->addProjectile(p);
+void World::createEnemies() {
+    for(int i=0; i<generateRandom(4); i++) {
+        enemyArray.emplace_back(std::make_shared<Enemy>(textures, window->getSize()));
     }
 }
 
+void World::createWeapon() {
+    rangedWeapon->addProjectile(50);
+}
+
 void World::update(sf::Time dt) {
+
     player->update(dt);
+    updateEnemies();
     updateProjectiles();
+
+    checkCollision();
+
+}
+
+void World::checkCollision() {
+    if(!projectileArray.empty() && !enemyArray.empty()) {
+        int counterProjectiles = 0;
+        for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
+            int counterEnemy = 0;
+            for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
+                if ( projectileArray[ counterProjectiles ]->rect.getGlobalBounds().
+                        intersects(enemyArray[ counterEnemy ]->rect.getGlobalBounds())) {
+                    std::cout << "Collision!" << std::endl;
+                    enemyArray[counterEnemy]->hp--;
+                }
+                counterEnemy++;
+            }
+            counterProjectiles++;
+        }
+    }
+}
+
+void World::updateEnemies() {
+    if(!enemyArray.empty()) {
+        int counter = 0;
+        int deleted = -1;
+        for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
+            enemyArray[ counter ]->update();
+
+            if ( !enemyArray[ counter ]->active ) {
+                deleted = counter;
+            }
+            counter++;
+        }
+        if(deleted>=0)
+            enemyArray.erase(enemyArray.begin() + deleted);
+    }
 }
 
 void World::updateProjectiles() {
-    int counter = 0;
-    for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
-        projectileArray[counter]->update(window->getSize());
-        if (!projectileArray[counter]->active) {
-            projectileArray.erase(projectileArray.begin() + counter);
+    if(!projectileArray.empty()) {
+        int counter = 0;
+        int deleted = -1;
+        for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
+            projectileArray[ counter ]->update();
+
+            if ( !projectileArray[ counter ]->active ) {
+                deleted = counter;
+            }
+            counter++;
         }
-        counter++;
+        if(deleted>=0)
+            projectileArray.erase(projectileArray.begin() + deleted);
     }
 }
 
 void World::draw() {
     window->setView(window->getDefaultView());
     drawProjectiles();
+    drawEnemies();
     window->draw(player->getSprite());
+}
+
+void World::drawEnemies() {
+    if(!enemyArray.empty()) {
+        int counter = 0;
+        for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
+            window->draw(enemyArray[ counter ]->getSprite());
+            counter++;
+        }
+    }
 }
 
 void World::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
@@ -61,13 +120,18 @@ void World::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
         player->isMovingRight = isPressed;
     else if (key == sf::Keyboard::Space && isPressed)
         useWeapon();
+    else if (key == sf::Keyboard::Escape && isPressed)
+        window->close();
 }
 
 //gets the projectile back in the array of the world and sets the right position
 void World::useWeapon() {
-    auto p = player->shoot();
-    p->setPosition(player->rect.getPosition(), player->direction);
-    projectileArray.push_back(p);
+    if(player->shoot()) {
+        projectileArray.emplace_back(std::make_shared<Projectile>(textures));
+        projectileArray.back()->setPosition(player->rect.getPosition(), player->direction);
+        projectileArray.back()->range = player->rangedWeapon->range;
+    } else
+        std::cout<<"non puo sparare "<<std::endl;
 }
 
 void World::drawProjectiles() {

@@ -19,9 +19,12 @@ Textures::ID toTextureID(PlayerCharacter::Type type) {
     }
 }
 
-PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures): type(type), textures(textures), counterWalk(0),
-    isMovingUp(false), isMovingDown(false), isMovingLeft(false), isMovingRight(false), delayWalk(false),
-    delayMoreWalk(false), shooting(false) {
+PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures, sf::Vector2u windowSize): type(type),
+     textures(textures), counterWalk(0), isMovingUp(false), isMovingDown(false), isMovingLeft(false), isMovingRight
+     (false), delayWalk(false), delayMoreWalk(false), shooting(false) {
+
+    this->windowSize.x = (int)windowSize.x;
+    this->windowSize.y = (int)windowSize.y;
 
     speed = 2;
     texture = textures.get(toTextureID(type));
@@ -73,10 +76,12 @@ bool PlayerCharacter::equip(std::shared_ptr<MeleeWeapon>& weapon) {
     return true;
 }
 
-std::shared_ptr<Projectile> PlayerCharacter::shoot() {
+bool PlayerCharacter::shoot() {
     //TODO it will dipend on the weapon equipped
-    return rangedWeapon->shootProjectile();
+    if(rangedWeapon->shootProjectile())
+        return true;
 
+    return false;
 }
 
 void PlayerCharacter::dash() {
@@ -87,8 +92,19 @@ void PlayerCharacter::die() {
 
 }
 
-void PlayerCharacter::setPosition(const sf::Vector2f &movement) {
+void PlayerCharacter::setPosition(sf::Vector2f &movement) {
+
     rect.move(movement);
+
+    if((rect.getPosition().x)+32>windowSize.x)
+        rect.setPosition(windowSize.x-32, rect.getPosition().y);
+    else if(rect.getPosition().x<0)
+        rect.setPosition(0, rect.getPosition().y);
+    if((rect.getPosition().y)+32>windowSize.y)
+        rect.setPosition(rect.getPosition().x, windowSize.y-32);
+    else if(rect.getPosition().y<0)
+        rect.setPosition(rect.getPosition().x, 0);
+
 }
 
 void PlayerCharacter::setPosition(float x, float y) {
