@@ -12,7 +12,7 @@ namespace sf {
 
 namespace Textures {
     enum ID {
-        Floor,
+        FFloor,
         RobotGray,
         RobotRed,
         HeroBlue,

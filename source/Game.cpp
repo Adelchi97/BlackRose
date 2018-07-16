@@ -8,7 +8,6 @@ const sf::Time Game::TimePerFrame = sf::seconds(1.f/80.f);
 
 Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(800, 800), "BlackRose", sf::Style::Default)), mFont(),
                mStatisticsText(), mStatisticsUpdateTime(), mStatisticsNumFrames(0), world(nullptr) {
-
     loadTextures();
     world.reset(new World(mWindow,textureHolder));
 
@@ -108,4 +107,5 @@ void Game::loadTextures() {
     textureHolder.load(Textures::HeroGray,"Media/Characters/People/gray.png");
     textureHolder.load(Textures::StarLord,"Media/Characters/People/starlord_mask.png");
     textureHolder.load(Textures::ShootingEnergy,"Media/Objects/shootingEnergy.png");
+    textureHolder.load(Textures::FFloor, "Media/Tiles/lab.png");
 }

@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "../include/World.h"
 #include "../include/management/ResourceIdentifier.h"
+#include "../include/ProceduralMap.h"
 
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
         (textures), player(new PlayerCharacter(PlayerCharacter::blueHero,textures, window->getSize())),

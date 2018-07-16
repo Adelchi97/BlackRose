@@ -4,31 +4,51 @@
 
 #ifndef SFMLTEST3_PROCEDURALMAP_H
 #define SFMLTEST3_PROCEDURALMAP_H
-//il dado sarà chiamato in modo puntuale, definendo il range di valori adatti a ciò che si vuole come risultato, non c'è bisogno di dividerli
-enum class TileType {
-    Unused = 0, Wall, dirtWall, brokenWall, Floor, dirtFloor, brokenFloor, Door, BrokenDoor,  UpStairs, DownStairs, Chest
-}; //BrokenFloor e BrokenWall costituiscono dei passaggi come Door, Upstairs e DownStairs
+
+#include "SFML/Graphics.hpp"
+#include "management/ResourceIdentifier.h"
+#include "management/ResourceHolder.h"
+#include "../include/World.h"
+
+
 
 class ProceduralMap {
 public:
+
+    //il dado sarà chiamato in modo puntuale, definendo il range di valori adatti a ciò che si vuole come risultato, non c'è bisogno di dividerli
+    enum TileType {
+        Unused = 0, Wall = 2, dirtWall, brokenWall, Floor = 1, dirtFloor, brokenFloor, Door, BrokenDoor,  UpStairs, DownStairs, Chest
+    }; //BrokenFloor e BrokenWall costituiscono dei passaggi come Door, Upstairs e DownStairs
+
 
     ProceduralMap();
     ~ProceduralMap();
 
     bool createLevel(int inx, int iny);
-    TileType getCell (int x, int y) const;
+    int getCell (int x, int y) const;
 
 private:
 
     bool makeCorridor(int x, int y, int lenght, int direction);
     //
-    bool makeRoom(int x, int y, int xlength, int ylength, int direction); //ci può essere soltanto una bossroom per livello
+    bool makeRoom(int x, int y, int direction); //ci può essere soltanto una bossroom per livello
     bool makeBossRoom(int x, int y);
     int getRand(int min, int max);
-    void setCell(int x, int y, TileType tile);
+    void setCell(int x, int y, TileType tile);  //disegna il tile richiesto e riempie l'array levelMap con gli interi corrispondenti agli enum
 
-    TileType* levelMap;
 
+public:
+    TileType type;
+
+private:
+
+    std::shared_ptr<sf::RenderWindow> mapWindow;
+
+    int levelMap[800*800]; //contiene interi che corrispondono a TileTYpe enum
+
+    const TextureHolder& textures;
+    sf::Texture tileTexture;
+    sf::Sprite tileSprite;
     //la misura della mappa sarà costante per ogni livello essendo in un torre
     const int xsize; //800 perchè sono 100 colonne da 8 pixel
     const int ysize; // stessa cosa, è una torre a pianta quadrata
@@ -42,6 +62,7 @@ private:
     //rooms have priority, define rooms and corridors chance to be created
     const int chanceRoom;
     const int chanceCorridor;
+
 
     const int minRoomSide;
 
