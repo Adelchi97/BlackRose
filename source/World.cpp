@@ -51,6 +51,7 @@ void World::checkCollision() {
                         intersects(enemyArray[ counterEnemy ]->rect.getGlobalBounds())) {
                     std::cout << "Collision!" << std::endl;
                     enemyArray[counterEnemy]->hp--;
+                    projectileArray[counterProjectiles]->active = false;
                 }
                 counterEnemy++;
             }
@@ -110,7 +111,7 @@ void World::drawEnemies() {
     }
 }
 
-void World::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
+void World::handlePlayerInput(sf::Keyboard::Key key, bool isPressed, sf::Clock& shootingClock) {
     if (key == sf::Keyboard::W)
         player->isMovingUp = isPressed;
     else if (key == sf::Keyboard::S)
@@ -119,8 +120,12 @@ void World::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
         player->isMovingLeft = isPressed;
     else if (key == sf::Keyboard::D)
         player->isMovingRight = isPressed;
-    else if (key == sf::Keyboard::Space && isPressed)
-        useWeapon();
+    else if (key == sf::Keyboard::Space && isPressed) {
+        if(shootingClock.getElapsedTime().asSeconds() >= 0.2) {
+            useWeapon();
+            shootingClock.restart();
+        }
+    }
     else if (key == sf::Keyboard::Escape && isPressed)
         window->close();
 }

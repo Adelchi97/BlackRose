@@ -8,12 +8,13 @@ set(SFML_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/Libreries/SFML)
 
 set(CMAKE_CXX_STANDARD 11)
 
-
-
-set(SOURCE_FILES source/main.cpp source/Game.cpp source/Characters/Character.cpp source/Characters/Enemy.cpp source/ProceduralMap.cpp source/Characters/PlayerCharacter.cpp source/Objects/Shield.cpp source/World.cpp source/Objects/Weapon.cpp source/Objects/ConsumableObject.cpp source/Objects/MeleeWeapon.cpp source/Objects/Object.cpp source/Objects/RangedWeapon.cpp include/Game.h include/Entity.h include/Characters/Character.h include/Characters/Enemy.h include/ProceduralMap.h include/Inventory.h include/Characters/PlayerCharacter.h include/management/ResourceHolder.h include/management/ResourceIdentifier.h include/Objects/Shield.h include/Objects/Weapon.h include/Objects/ConsumableObject.h include/Objects/MeleeWeapon.h include/Objects/Object.h include/Objects/RangedWeapon.h include/World.h source/Projectile.cpp include/Projectile.h source/Random.cpp include/Random.h source/Entity.cpp )
-add_executable(BlackRose  ${SOURCE_FILES} source/Game.cpp include/Game.h)
+set(SOURCE_FILES source/Game.cpp include/Game.h include/management/ResourceHolder.h
+        include/management/ResourceIdentifier.h source/World.cpp include/World.h source/Characters/Character.cpp include/Characters/Character.h include/Inventory.h source/Characters/PlayerCharacter.cpp include/Characters/PlayerCharacter.h source/Objects/Weapon.cpp include/Objects/Weapon.h source/Objects/Shield.cpp include/Objects/Shield.h source/Characters/Enemy.cpp include/Characters/Enemy.h source/Entity.cpp include/Entity.h source/Objects/Object.cpp include/Objects/Object.h source/Objects/ConsumableObject.cpp include/Objects/ConsumableObject.h source/Objects/RangedWeapon.cpp include/Objects/RangedWeapon.h source/Objects/MeleeWeapon.cpp include/Objects/MeleeWeapon.h source/Projectile.cpp include/Projectile.h include/Random.h source/Random.cpp test/TestPlayerCharacter.h test/RunAllTests.cpp)
+add_executable(BlackRose ${SOURCE_FILES} source/main.cpp)
 
 set(CMAKE_MODULE_PATH ${SFML_ROOT}/sfml_cmake)
 find_package(SFML REQUIRED system window graphics network audio)
 include_directories(${SFML_INCLUDE_DIR})
 target_link_libraries(BlackRose ${SFML_LIBRARIES})
+
+

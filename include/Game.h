@@ -17,7 +17,7 @@ public:
     void run();
 
 private:
-    void processEvents();
+    void processEvents(sf::Clock& shootingClock);
     void update(sf::Time);
     void render();
 

@@ -24,6 +24,8 @@ Enemy::Enemy(Type type, const TextureHolder& textures, sf::Vector2u windowSize) 
     speed = 2;
     hp = 20;
 
+    rect.setOrigin(32/2,32/2);
+    sprite.setOrigin(32/2,32/2);
     texture = textures.get(toTextureID(type));
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0,0,32,32));

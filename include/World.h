@@ -18,7 +18,7 @@ public:
     World(std::shared_ptr<sf::RenderWindow> window, const TextureHolder& textures);
     void update(sf::Time dt);
     void draw();
-    void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
+    void handlePlayerInput(sf::Keyboard::Key key, bool isPressed, sf::Clock& shootingClock);
 
 private:
     void createWeapon();
