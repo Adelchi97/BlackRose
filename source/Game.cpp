@@ -10,7 +10,7 @@ Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(800, 800), "BlackRose"
                mStatisticsText(), mStatisticsUpdateTime(), mStatisticsNumFrames(0), world(nullptr) {
 
     loadTextures();
-    world.reset(new World(mWindow,textureHolder));
+    world = std::make_shared<World>(mWindow,textureHolder);
 
     //sets the icon
     sf::Image icon;
@@ -32,6 +32,8 @@ Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(800, 800), "BlackRose"
 
 void Game::run() {
     sf::Clock clock;
+    sf::Clock shootingClock;
+    sf::Time shootingTime = shootingClock.restart();
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
     while (mWindow->isOpen()) {
@@ -41,7 +43,7 @@ void Game::run() {
         //If rendering is slow, it may happen that processEvents() and update() are called multiple times before one render()
         while (timeSinceLastUpdate > TimePerFrame) {
             timeSinceLastUpdate -= TimePerFrame;
-            processEvents();
+            processEvents(shootingClock);
             update(elapsedTime);
         }
 
@@ -59,7 +61,7 @@ void Game::render() {
     mWindow->display();
 }
 
-void Game::processEvents() {
+void Game::processEvents(sf::Clock& shootingClock) {
 
     sf::Event event;
     while (mWindow->pollEvent(event)) {
@@ -68,10 +70,10 @@ void Game::processEvents() {
                 mWindow->close();
                 break;
             case sf::Event::KeyPressed:
-                world->handlePlayerInput(event.key.code, true);
+                world->handlePlayerInput(event.key.code, true, shootingClock);
                 break;
             case sf::Event::KeyReleased:
-                world->handlePlayerInput(event.key.code, false);
+                world->handlePlayerInput(event.key.code, false, shootingClock);
                 break;
             default:
                 break;

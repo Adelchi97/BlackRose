@@ -27,6 +27,9 @@ PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures, sf::V
     this->windowSize.y = (int)windowSize.y;
 
     speed = 2;
+
+    rect.setOrigin(32/2,32/2);
+    sprite.setOrigin(32/2,32/2);
     texture = textures.get(toTextureID(type));
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0,0,32,32));
