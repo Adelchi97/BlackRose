@@ -13,6 +13,7 @@
 #include "Objects/RangedWeapon.h"
 #include "Characters/Enemy.h"
 
+
 class World {
 public:
     World(std::shared_ptr<sf::RenderWindow> window, const TextureHolder& textures);

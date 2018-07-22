@@ -13,8 +13,6 @@ Textures::ID toTextureID( ProceduralMap::TileType type) {
             return Textures::FFloor;
         case ProceduralMap::Unused:
             return Textures::FFloor;
-        default:
-            return Textures::FFloor;
 /*
         case TileType::Door:
             return Textures::HeroWhite;
@@ -30,7 +28,7 @@ Textures::ID toTextureID( ProceduralMap::TileType type) {
 ProceduralMap::ProceduralMap(): xsize(800), ysize(800), objects(10), oldSeed(0), chanceRoom(80), chanceCorridor(20),
                                 minRoomSide(5), maxRoomSide(xsize/10), textures(textures) {
   //  levelMap = 0; // 0 is TileType::Unused, see the enum class TipeTyle
-    createLevel(xsize,ysize);
+  //  createLevel(xsize,ysize);
 }
 
 ProceduralMap::~ProceduralMap() = default;
@@ -39,6 +37,9 @@ int ProceduralMap::getRand(int x, int y){
     long seed = time(nullptr) + oldSeed;
     oldSeed = seed;
 }
+
+
+
 int ProceduralMap::getCell(int x, int y) const {
     return levelMap[x + xsize * y];
 
@@ -403,7 +404,7 @@ bool ProceduralMap::createLevel(int inx, int iny) {
     }
 
     //start with creating a room in a random location, all its features are random
-    makeRoom(getRand(0, xsize), getRand(0, ysize), getRand(0, 3));
+    //makeRoom(getRand(0, xsize), getRand(0, ysize), getRand(0, 3));
     /*
     //now we have a room (or a bossRoom)
     int buildSpace = getRand(0, 100);

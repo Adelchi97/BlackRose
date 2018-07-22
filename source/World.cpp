@@ -16,6 +16,7 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
     createEnemies();
     createWeapon();
 
+
     //equipe it
     player->equip(rangedWeapon);
 
