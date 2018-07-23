@@ -10,7 +10,7 @@
 
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
         (textures), player(new PlayerCharacter(PlayerCharacter::blueHero,textures, window->getSize())),
-                           rangedWeapon(new RangedWeapon()), wall(std::make_shared<Wall>()) {
+                           rangedWeapon(new RangedWeapon()), wall(new Wall(textures)) {
 
     player->rect.setPosition(window->getSize().x/2.f,window->getSize().y/2.f);
 
@@ -25,7 +25,7 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
 }
 
 void World::createEnemies() {
-    for(int i=0; i<generateRandom(4); i++) {
+    for(int i=0; i<generateRandom(5); i++) {
         enemyArray.emplace_back(std::make_shared<Enemy>(textures, window->getSize()));
     }
 }

@@ -7,6 +7,7 @@
 
 
 #include <SFML/Graphics.hpp>
+
 #include "management/ResourceHolder.h"
 #include "management/ResourceIdentifier.h"
 #include "Characters/PlayerCharacter.h"
@@ -46,6 +47,7 @@ private:
     std::shared_ptr<RangedWeapon> rangedWeapon;
     //these are in the world
     std::vector<std::shared_ptr<Projectile>> projectileArray;
+
 };
 
 

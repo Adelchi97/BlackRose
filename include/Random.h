@@ -1,1 +1,1 @@
-//// Created by Elena Faillace on 11/07/2018.//#ifndef BLACKROSE_RANDOM_H#define BLACKROSE_RANDOM_H#include <random>int generateRandom(int max);int generateRandom0(int max);bool generateRandBool();#endif //BLACKROSE_RANDOM_H
+//// Created by Elena Faillace on 11/07/2018.//#ifndef BLACKROSE_RANDOM_H#define BLACKROSE_RANDOM_H#include <random>#include <ctime>int generateRandom(int max);int generateRandom0(int max);bool generateRandBool();#endif //BLACKROSE_RANDOM_H

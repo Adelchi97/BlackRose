@@ -1,1 +1,13 @@
-#cmake_minimum_required(VERSION 3.8)add_subdirectory(./lib/googletest)set(gtest_SOURCE_DIR, ./lib/googletest)include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})set(TEST_SOURCE_FILES RunAllTests.cpp TestPlayerCharacter.h)add_executable(RunAllTests ${SOURCE_TEST_FILES})target_link_libraries(RunAllTests gtest gtest_main core)###find_package(GTest REQUIRED)#include_directories(${GTEST_INCLUDE_DIRS}) ##add_subdirectory(./lib/googletest)##set(SOURCE_FILES TestPlayerCharacter.h, RunAllTests.cpp)##add_executable(runAllTests ${SOURCE_FILES}) #target_link_libraries(runAllTests ${GTEST_BOTH_LIBRARIES}  core)##set(gtest_SOURCE_DIR, ./lib/googletest)#include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})###add_executable(RunAllTests.cpp ${TEST_SOURCE_FILES})#target_link_libraries(RunAllTests.cpp gtest gtest_main core)##
+cmake_minimum_required(VERSION 3.10)
+
+add_subdirectory(lib/googletest)
+set(gtest_SOURCE_DIR lib/googletest/googletest)
+
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} ../include)
+set(SOURCE_TEST_FILES RunAllTests.cpp)
+
+get_directory_property(output INCLUDE_DIRECTORIES)
+message("Included directories test:" ${output})
+
+add_executable(RunAllTests ${SOURCE_TEST_FILES})
+target_link_libraries(RunAllTests gtest gtest_main core)
