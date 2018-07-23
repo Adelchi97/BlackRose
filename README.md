@@ -1,2 +1,2 @@
 # BlackRose
-requirements: a folder called Libreries/SFML  in the working directory
+requirements: a folder called Libraries/SFML  in the working directory

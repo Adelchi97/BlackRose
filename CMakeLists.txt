@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.8)
 project(BlackRose)
 
 
-set(SFML_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/Libreries/SFML)
+set(SFML_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/Libraries/SFML)
 #set(GTEST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/Libraries/googletest)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -19,8 +19,8 @@ set(CMAKE_MODULE_PATH ${SFML_ROOT}/sfml_cmake)
 find_package(SFML REQUIRED system window graphics network audio)
 include_directories(${SFML_INCLUDE_DIR})
 
-add_library(core ${SOURCE_FILES})
-target_link_libraries(BlackRose ${SFML_LIBRARIES} core )
+#add_library(core ${SOURCE_FILES})
+target_link_libraries(BlackRose ${SFML_LIBRARIES}  )
 
 #target_link_libraries(BlackRose ${SOURCE_LIBRARIES})
 
