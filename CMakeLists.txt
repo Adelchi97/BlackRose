@@ -17,7 +17,7 @@ set(SOURCE_FILES source/Game.cpp include/Game.h include/management/ResourceHolde
         include/Objects/ConsumableObject.h source/Objects/RangedWeapon.cpp include/Objects/RangedWeapon.h source/Objects/MeleeWeapon.cpp
         include/Objects/MeleeWeapon.h source/Projectile.cpp include/Projectile.h include/Random.h source/Random.cpp test/TestPlayerCharacter.h
         test/RunAllTests.cpp)
-add_executable(BlackRose ${SOURCE_FILES} source/main.cpp )
+add_executable(BlackRose ${SOURCE_FILES} source/main.cpp source/Wall.cpp include/Wall.h)
 
 
 set(CMAKE_MODULE_PATH ${SFML_ROOT}/sfml_cmake)

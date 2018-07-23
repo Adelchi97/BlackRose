@@ -10,12 +10,13 @@
 
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
         (textures), player(new PlayerCharacter(PlayerCharacter::blueHero,textures, window->getSize())),
-                           rangedWeapon(new RangedWeapon()) {
+                           rangedWeapon(new RangedWeapon()), wall(std::make_shared<Wall>()) {
 
     player->rect.setPosition(window->getSize().x/2.f,window->getSize().y/2.f);
 
     createEnemies();
     createWeapon();
+
 
 
     //equipe it
@@ -98,6 +99,7 @@ void World::updateProjectiles() {
 
 void World::draw() {
     window->setView(window->getDefaultView());
+    window->draw(wall->sprite);
     drawProjectiles();
     drawEnemies();
     window->draw(player->getSprite());

@@ -1,7 +1,6 @@
 //
 // Created by Elena Faillace on 27/06/2018.
 //
-
 #ifndef BLACKROSE_RESOURCEIDENTIFIER_H
 #define BLACKROSE_RESOURCEIDENTIFIER_H
 

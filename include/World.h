@@ -12,6 +12,7 @@
 #include "Characters/PlayerCharacter.h"
 #include "Objects/RangedWeapon.h"
 #include "Characters/Enemy.h"
+#include "Wall.h"
 
 
 class World {
@@ -39,6 +40,7 @@ private:
     std::shared_ptr<sf::RenderWindow> window;
     const TextureHolder& textures;
 
+    std::shared_ptr<Wall> wall;
     std::shared_ptr<PlayerCharacter> player;
     std::vector<std::shared_ptr<Enemy>> enemyArray;
     std::shared_ptr<RangedWeapon> rangedWeapon;
