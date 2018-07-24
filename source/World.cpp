@@ -9,14 +9,13 @@
 #include "../include/ProceduralMap.h"
 
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
-        (textures), player(new PlayerCharacter(PlayerCharacter::blueHero,textures, window->getSize())),
-                           rangedWeapon(new RangedWeapon()), wall(new Wall(textures)) {
+        (textures), player(new PlayerCharacter(PlayerCharacter::blondHero,textures, window->getSize())),
+                           rangedWeapon(new RangedWeapon()), map(new ProceduralMap(textures)) {
 
     player->rect.setPosition(window->getSize().x/2.f,window->getSize().y/2.f);
 
     createEnemies();
     createWeapon();
-
 
 
     //equipe it
@@ -99,10 +98,16 @@ void World::updateProjectiles() {
 
 void World::draw() {
     window->setView(window->getDefaultView());
-    window->draw(wall->sprite);
+    drawMap();
     drawProjectiles();
     drawEnemies();
     window->draw(player->getSprite());
+}
+
+void World::drawMap() {
+    for(int i=0; i<25*25; i++) {
+        window->draw(map->tileMap[i]->sprite);
+    }
 }
 
 void World::drawEnemies() {

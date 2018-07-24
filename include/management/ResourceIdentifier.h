@@ -11,7 +11,9 @@ namespace sf {
 
 namespace Textures {
     enum ID {
-        FFloor,
+        lab,
+        wood,
+        metal,
         RobotGray,
         RobotRed,
         HeroBlue,

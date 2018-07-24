@@ -5,14 +5,15 @@
 #include "ctime"
 #include "../include/ProceduralMap.h"
 
+/*
 Textures::ID toTextureID( ProceduralMap::TileType type) {
     switch(type) {
         case ProceduralMap::Floor:
-            return Textures::FFloor;
+            return Textures::lab;
         case ProceduralMap::Wall:
-            return Textures::FFloor;
+            return Textures::lab;
         case ProceduralMap::Unused:
-            return Textures::FFloor;
+            return Textures::lab;
 /*
         case TileType::Door:
             return Textures::HeroWhite;
@@ -20,18 +21,25 @@ Textures::ID toTextureID( ProceduralMap::TileType type) {
             return Textures::HeroGray;
         case TileType::dir:
             return Textures::StarLord;
- */
+
     }
 }
+*/
 
-
-ProceduralMap::ProceduralMap(): xsize(800), ysize(800), objects(10), oldSeed(0), chanceRoom(80), chanceCorridor(20),
+ProceduralMap::ProceduralMap(const TextureHolder &textures): xsize(800), ysize(800), objects(10), oldSeed(0), chanceRoom(80), chanceCorridor(20),
                                 minRoomSide(5), maxRoomSide(xsize/10), textures(textures) {
+    for (int i=0; i<25; i++) {
+        for  (int j=0; j<25; j++) {
+            tileMap.emplace_back(std::make_shared<Tile>(textures, sf::Vector2f(i,j), Tile::BackGroungType ::lab));
+        }
+    }
   //  levelMap = 0; // 0 is TileType::Unused, see the enum class TipeTyle
   //  createLevel(xsize,ysize);
 }
 
-ProceduralMap::~ProceduralMap() = default;
+ProceduralMap::~ProceduralMap() {
+
+}
 
 int ProceduralMap::getRand(int x, int y){
     long seed = time(nullptr) + oldSeed;
@@ -45,6 +53,8 @@ int ProceduralMap::getCell(int x, int y) const {
 
 }
 
+//TODO questa funzione va modificata affinché lavori interfacciandosi con tileMap[i].coordinate
+/*
 void ProceduralMap::setCell(int x, int y, TileType tile) {
 //    int rand;
     tileSprite.setPosition(x*32, y*32);
@@ -114,9 +124,9 @@ void ProceduralMap::setCell(int x, int y, TileType tile) {
                 break;
         }
     }
-*/
-}
 
+}
+*/
 
 bool ProceduralMap::makeBossRoom(int x, int y) {
 
@@ -125,7 +135,8 @@ bool ProceduralMap::makeBossRoom(int x, int y) {
     return true;
 }
 
-
+//TODO va adattata alla struttura dati scelta
+/*
 bool ProceduralMap::makeRoom(int x, int y, int direction) {
 /*
     //check if a bossRoom is needed
@@ -135,7 +146,7 @@ bool ProceduralMap::makeRoom(int x, int y, int direction) {
             makeBossRoom(x, y);
         }
     }
-*/
+
 // rooms will respect the min and max width and length, the walkable tiles will be 2 less for length and 2 less for width
     int xLength = getRand(minRoomSide, maxRoomSide);
     int yLength = getRand(minRoomSide, maxRoomSide);
@@ -283,8 +294,10 @@ bool ProceduralMap::makeRoom(int x, int y, int direction) {
     // successful build
     return true;
 }
+*/
 
-
+//TODO va adattata alla struttura dati
+/*
 bool ProceduralMap::makeCorridor(int x, int y, int lenght, int direction) {
 //define the dimensions of the corridor (er.. only the width and height..)
     int len = getRand(2, lenght);
@@ -378,8 +391,10 @@ bool ProceduralMap::makeCorridor(int x, int y, int lenght, int direction) {
     // Successful build
     return true;
 }
+*/
 
-
+//TODO va dattata alla struttura dati
+/*
 bool ProceduralMap::createLevel(int inx, int iny) {
     towerLevel++;
     objects = getRand(10, 100);
@@ -415,7 +430,7 @@ bool ProceduralMap::createLevel(int inx, int iny) {
     }
 
     //TODO
-    */
+
 
 }
-
+*/
