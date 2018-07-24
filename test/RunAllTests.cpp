@@ -1,1 +1,1 @@
-//// Created by Elena Faillace on 21/07/2018.//#include "gtest/gtest.h"
+//// Created by Elena Faillace on 21/07/2018.//#include "gtest/gtest.h"int main(int argc, char **argv){    ::testing::InitGoogleTest(&argc,argv);    return RUN_ALL_TESTS();}

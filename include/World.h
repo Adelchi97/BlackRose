@@ -23,7 +23,7 @@ public:
     void draw();
     void handlePlayerInput(sf::Keyboard::Key key, bool isPressed, sf::Clock& shootingClock);
 
-private:
+//private:
     void createWeapon();
     void createEnemies();
 
@@ -37,7 +37,7 @@ private:
 
     void checkCollision();
 
-private:
+//private:
     std::shared_ptr<sf::RenderWindow> window;
     const TextureHolder& textures;
 
