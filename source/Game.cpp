@@ -35,6 +35,8 @@ void Game::run() {
     sf::Time shootingTime = shootingClock.restart();
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
+    //mWindow->setFramerateLimit(60);
+
     while (mWindow->isOpen()) {
 
         sf::Time elapsedTime = clock.restart();

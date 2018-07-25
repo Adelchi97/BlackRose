@@ -20,9 +20,13 @@ Enemy::Enemy(Type type, const TextureHolder& textures, sf::Vector2u windowSize) 
     this->windowSize.x = (int)windowSize.x;
     this->windowSize.y = (int)windowSize.y;
 
-    changeDirectionTime = 100;
+    changeDirectionTime = generateRandom(200);
     speed = 2;
-    hp = 20;
+    if(type == robotRed)
+        hp = 40;
+    else if(type == robotGray)
+        hp = 20;
+
 
     rect.setOrigin(32/2,32/2);
     sprite.setOrigin(32/2,32/2);
@@ -71,8 +75,10 @@ void Enemy::update() {
         delayWalk = !delayWalk;
     }
 
+    //change direction every x frames
     if(counterDirection==0) {
         changeDirection();
+        changeDirectionTime = generateRandom(200);
     }
     counterDirection = (counterDirection+1)%changeDirectionTime;
 

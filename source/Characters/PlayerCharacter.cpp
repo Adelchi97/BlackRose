@@ -98,16 +98,23 @@ void PlayerCharacter::die() {
 void PlayerCharacter::setPosition(sf::Vector2f &movement) {
 
     rect.move(movement);
+    checkWorldBounds();
 
-    if((rect.getPosition().x)+32>windowSize.x)
-        rect.setPosition(windowSize.x-32, rect.getPosition().y);
-    else if(rect.getPosition().x<0)
-        rect.setPosition(0, rect.getPosition().y);
-    if((rect.getPosition().y)+32>windowSize.y)
-        rect.setPosition(rect.getPosition().x, windowSize.y-32);
-    else if(rect.getPosition().y<0)
-        rect.setPosition(rect.getPosition().x, 0);
+}
 
+void PlayerCharacter::checkWorldBounds() {
+    //check right bound
+    if((rect.getPosition().x+16)>windowSize.x)
+        rect.setPosition(windowSize.x-16, rect.getPosition().y);
+        //check left bound;
+    else if(rect.getPosition().x-16<0)
+        rect.setPosition(16, rect.getPosition().y);
+    //check button bound
+    if((rect.getPosition().y)+16>windowSize.y)
+        rect.setPosition(rect.getPosition().x, windowSize.y-16);
+        //check upper bound
+    else if(rect.getPosition().y-16<0)
+        rect.setPosition(rect.getPosition().x, 16);
 }
 
 void PlayerCharacter::setPosition(float x, float y) {

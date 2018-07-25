@@ -24,7 +24,7 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
 }
 
 void World::createEnemies() {
-    for(int i=0; i<generateRandom(5); i++) {
+    for(int i=0; i<10; i++) {
         enemyArray.emplace_back(std::make_shared<Enemy>(textures, window->getSize()));
     }
 }
@@ -46,13 +46,15 @@ void World::update(sf::Time dt) {
 void World::checkCollision() {
     if(!projectileArray.empty() && !enemyArray.empty()) {
         int counterProjectiles = 0;
+        //go through all projectiles
         for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
             int counterEnemy = 0;
+            //go through all enemies
             for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
                 if ( projectileArray[ counterProjectiles ]->rect.getGlobalBounds().
                         intersects(enemyArray[ counterEnemy ]->rect.getGlobalBounds())) {
                     std::cout << "Collision!" << std::endl;
-                    enemyArray[counterEnemy]->hp--;
+                    enemyArray[counterEnemy]->hp -= projectileArray[counterProjectiles]->attackDamage;
                     projectileArray[counterProjectiles]->active = false;
                 }
                 counterEnemy++;

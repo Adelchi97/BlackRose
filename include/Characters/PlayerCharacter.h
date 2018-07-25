@@ -43,6 +43,9 @@ public:
     float getSpeed() const;
     void setSpeed(int speed);
 
+private:
+    void checkWorldBounds();
+
 public:
     std::string name;
     bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
