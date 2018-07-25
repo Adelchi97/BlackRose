@@ -13,9 +13,10 @@ class Tile : public Entity {
 public:
 
     enum BackGroungType {
-        lab,
-        metal,
-        wood
+        labFloor,
+        metalFloor,
+        woodFloor,
+        metalWall
     };
 
     enum TileType {

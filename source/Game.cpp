@@ -109,7 +109,8 @@ void Game::loadTextures() {
     textureHolder.load(Textures::HeroGray,"Media/Characters/People/gray.png");
     textureHolder.load(Textures::StarLord,"Media/Characters/People/starlord_mask.png");
     textureHolder.load(Textures::ShootingEnergy,"Media/Objects/shootingEnergy.png");
-    textureHolder.load(Textures::lab, "Media/Tiles/lab.png");
-    textureHolder.load(Textures::wood, "Media/Tiles/wood.png");
-    textureHolder.load(Textures::metal, "Media/Tiles/metal.png");
+    textureHolder.load(Textures::labTile, "Media/Tiles/labTile.png");
+    textureHolder.load(Textures::woodTile, "Media/Tiles/woodTile.png");
+    textureHolder.load(Textures::metalTile, "Media/Tiles/metalTile.png");
+    textureHolder.load(Textures::metalWall, "Media/Walls/metalWall.png");
 }

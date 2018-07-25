@@ -9,11 +9,11 @@
 Textures::ID toTextureID( ProceduralMap::TileType type) {
     switch(type) {
         case ProceduralMap::Floor:
-            return Textures::lab;
+            return Textures::labTile;
         case ProceduralMap::Wall:
-            return Textures::lab;
+            return Textures::labTile;
         case ProceduralMap::Unused:
-            return Textures::lab;
+            return Textures::labTile;
 /*
         case TileType::Door:
             return Textures::HeroWhite;
@@ -30,7 +30,7 @@ ProceduralMap::ProceduralMap(const TextureHolder &textures): xsize(800), ysize(8
                                 minRoomSide(5), maxRoomSide(xsize/10), textures(textures) {
     for (int i=0; i<25; i++) {
         for  (int j=0; j<25; j++) {
-            tileMap.emplace_back(std::make_shared<Tile>(textures, sf::Vector2f(i,j), Tile::BackGroungType ::lab));
+            tileMap.emplace_back(std::make_shared<Tile>(textures, sf::Vector2f(i,j), Tile::BackGroungType ::labFloor));
         }
     }
   //  levelMap = 0; // 0 is TileType::Unused, see the enum class TipeTyle
