@@ -70,21 +70,25 @@ void PlayerCharacter::update(sf::Time dt) {
     setPosition(movements /* *dt.asSeconds()*/);
 }
 
-bool PlayerCharacter::equip(std::shared_ptr<RangedWeapon>& weapon) {
-    rangedWeapon = weapon;
-    return true;
-}
-bool PlayerCharacter::equip(std::shared_ptr<MeleeWeapon>& weapon) {
+bool PlayerCharacter::equip(std::shared_ptr<Object>& object) {
 
+    rangedWeapon = std::dynamic_pointer_cast<RangedWeapon>(object);
+    if(rangedWeapon.get() != nullptr) {
+        rangedWeapon->equipped = true;
+        std::cout<<"Weapon equipped"<<std::endl;
+    }
     return true;
 }
+
 
 bool PlayerCharacter::shoot() {
     //TODO it will dipend on the weapon equipped
-    if(rangedWeapon->shootProjectile())
-        return true;
+    if(rangedWeapon.get() == nullptr) {
+        std::cout<<"you don't have a weapon"<<std::endl;
+        return false;
+    }
 
-    return false;
+    return true;
 }
 
 void PlayerCharacter::dash() {

@@ -20,9 +20,9 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
     createEnemies();
     createWeapons();
 
-
-    //equipe it
+    /*
     player->equip(rangedWeapon);
+    */
 
 }
 
@@ -40,6 +40,7 @@ void World::createWeapons() {
     rangedWeapon->addProjectile(50);
     rangedWeapon->setPosition(sf::Vector2f(50,100));
     rangedWeapon->update();
+    collectableObject.emplace_back(rangedWeapon);
 }
 
 void World::update(sf::Time dt) {
@@ -148,6 +149,8 @@ void World::handlePlayerInput(sf::Keyboard::Key key, bool isPressed, sf::Clock& 
         player->isMovingLeft = isPressed;
     else if (key == sf::Keyboard::D)
         player->isMovingRight = isPressed;
+    else if (key == sf::Keyboard::Q)
+        checkCollection();
     else if (key == sf::Keyboard::Space && isPressed) {
         if(shootingClock.getElapsedTime().asSeconds() >= 0.2) {
             useWeapon();
@@ -156,6 +159,21 @@ void World::handlePlayerInput(sf::Keyboard::Key key, bool isPressed, sf::Clock& 
     }
     else if (key == sf::Keyboard::Escape && isPressed)
         window->close();
+}
+
+void World::checkCollection() {
+    if(!collectableObject.empty()) {
+        int counterObject = 0;
+        //go through all objects
+        for ( auto iter = collectableObject.begin(); iter != collectableObject.end(); iter++ ) {
+            if ( collectableObject[ counterObject ]->rect.getGlobalBounds().
+                    intersects(player->rect.getGlobalBounds())) {
+                std::cout << "collecting object" << std::endl;
+                player->equip(collectableObject[counterObject]);
+            }
+            counterObject++;
+        }
+    }
 }
 
 //gets the projectile back in the array of the world and sets the right position

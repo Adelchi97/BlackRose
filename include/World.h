@@ -38,6 +38,7 @@ public:
     void updateEnemies();
 
     void checkCollision();
+    void checkCollection();
 
 private:
     std::shared_ptr<sf::RenderWindow> window;
@@ -50,6 +51,7 @@ private:
     std::shared_ptr<RangedWeapon> rangedWeapon;
     //these are in the world
     std::vector<std::shared_ptr<Projectile>> projectileArray;
+    std::vector<std::shared_ptr<Object>> collectableObject;
 
     std::shared_ptr<ProceduralMap> map;
 
