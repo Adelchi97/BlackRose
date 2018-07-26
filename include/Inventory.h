@@ -7,7 +7,7 @@
 
 #include "Objects/Object.h"
 
-//template <Object object>;
+//template <typename object>
 class Inventory {
     //TODO
 };

@@ -21,7 +21,7 @@ Tile::Tile(const TextureHolder &textures, sf::Vector2f coordinates, BackGroungTy
                                                                                     coordinates(coordinates) {
     texture = textures.get(toTextureID(backGroung));
     sprite.setTexture(texture);
-    sprite.setTextureRect(sf::IntRect(32*0,32*0,32,32));
+    sprite.setTextureRect(sf::IntRect(32*(rand()%2),32*(rand()%3),32,32));
     rect.setPosition(coordinates.x * 32, coordinates.y * 32);
     sprite.setPosition(rect.getPosition());
 }
