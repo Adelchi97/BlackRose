@@ -33,9 +33,23 @@ ProceduralMap::ProceduralMap(const TextureHolder &textures): xsize(800), ysize(8
             tileMap.emplace_back(std::make_shared<Tile>(textures, sf::Vector2f(i,j), Tile::BackGroungType ::labFloor));
         }
     }
-  //  levelMap = 0; // 0 is TileType::Unused, see the enum class TipeTyle
-  //  createLevel(xsize,ysize);
+    //  levelMap = 0; // 0 is TileType::Unused, see the enum class TipeTyle
+    //  createLevel(xsize,ysize);
 }
+
+ProceduralMap::ProceduralMap(const TextureHolder &textures, Tile::BackGroungType backGroungType): xsize(800), ysize(800),
+               objects(10), oldSeed(0), chanceRoom(80), chanceCorridor(20), minRoomSide(5), maxRoomSide(xsize/10),
+               textures(textures) {
+
+    for (int i=0; i<25; i++) {
+        for  (int j=0; j<25; j++) {
+            tileMap.emplace_back(std::make_shared<Tile>(textures, sf::Vector2f(i,j), backGroungType));
+        }
+    }
+    //  levelMap = 0; // 0 is TileType::Unused, see the enum class TipeTyle
+    //  createLevel(xsize,ysize);
+}
+
 
 ProceduralMap::~ProceduralMap() {
 

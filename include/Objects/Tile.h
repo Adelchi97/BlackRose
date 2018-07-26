@@ -5,6 +5,7 @@
 #ifndef BLACKROSE_TILE_H
 #define BLACKROSE_TILE_H
 
+#include <random>
 #include "../management/ResourceHolder.h"
 #include "../management/ResourceIdentifier.h"
 #include "../Entity.h"
@@ -16,6 +17,8 @@ public:
         labFloor,
         metalFloor,
         woodFloor,
+        cementFloor,
+
         metalWall
     };
 
@@ -43,6 +46,8 @@ public:
 
 private:
     const TextureHolder& textures;
+    std::random_device rd;
+    std::uniform_real_distribution<> distribution;
 };
 
 

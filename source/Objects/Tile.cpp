@@ -13,17 +13,24 @@ Textures::ID toTextureID(Tile::BackGroungType type) {
             return Textures::ID ::woodTile;
         case Tile::BackGroungType ::metalFloor:
             return Textures::ID::metalTile;
+        case Tile::BackGroungType::cementFloor:
+            return Textures::ID::cementTile;
     }
 };
 
-Tile::Tile(const TextureHolder &textures, sf::Vector2f coordinates, BackGroungType btype): textures(textures),
-                                                                                           backGroung(btype),
-                                                                                    coordinates(coordinates) {
+Tile::Tile(const TextureHolder &textures, sf::Vector2f coordinates, BackGroungType btype): textures(textures), type
+        (TileType::Floor), backGroung(btype), coordinates(coordinates) {
+
+    //distribution = std::uniform_real_distribution<>(0,3);
+
     texture = textures.get(toTextureID(backGroung));
     sprite.setTexture(texture);
-    sprite.setTextureRect(sf::IntRect(32*(rand()%2),32*(rand()%3),32,32));
+    //used for random numbers
+    //std::mt19937 mt(rd());
+    sprite.setTextureRect(sf::IntRect(32*0,32*0,32,32));
     rect.setPosition(coordinates.x * 32, coordinates.y * 32);
     sprite.setPosition(rect.getPosition());
+
 }
 
 Tile::Tile(const TextureHolder &textures, sf::Vector2f coordiantes): textures(textures), type(TileType::Floor),

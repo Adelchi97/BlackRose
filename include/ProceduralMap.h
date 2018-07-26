@@ -24,6 +24,8 @@ public:
 
 
     ProceduralMap(const TextureHolder &textures);
+    ProceduralMap(const TextureHolder &textures, Tile::BackGroungType backGroungType);
+
     ~ProceduralMap();
 
     bool createLevel(int inx, int iny);

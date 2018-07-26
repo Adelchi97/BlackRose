@@ -12,9 +12,12 @@ namespace sf {
 namespace Textures {
     enum ID {
         metalWall,
+
         labTile,
         woodTile,
         metalTile,
+        cementTile,
+
         RobotGray,
         RobotRed,
         HeroBlue,
@@ -22,7 +25,9 @@ namespace Textures {
         HeroWhite,
         HeroGray,
         StarLord,
-        ShootingEnergy
+
+        ShootingEnergy,
+        energyShooter
     };
 }
 

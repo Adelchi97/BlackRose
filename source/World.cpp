@@ -10,12 +10,15 @@
 
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
         (textures), player(new PlayerCharacter(PlayerCharacter::blondHero,textures, window->getSize())),
-                           rangedWeapon(new RangedWeapon()), map(new ProceduralMap(textures)) {
+                           rangedWeapon(new RangedWeapon(textures,RangedWeapon::Type::energyShooter)), map(new ProceduralMap
+                                                                                                      (textures,
+                                                                                   Tile::BackGroungType::cementFloor)) {
 
+    distribution = std::uniform_real_distribution<>(0.f,800.f);
     player->rect.setPosition(window->getSize().x/2.f,window->getSize().y/2.f);
 
     createEnemies();
-    createWeapon();
+    createWeapons();
 
 
     //equipe it
@@ -24,13 +27,19 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
 }
 
 void World::createEnemies() {
+    std::mt19937 mt(rd());
+
     for(int i=0; i<10; i++) {
         enemyArray.emplace_back(std::make_shared<Enemy>(textures, window->getSize()));
+        enemyArray.back()->setPosition(distribution(mt),(distribution(mt)));
     }
 }
 
-void World::createWeapon() {
+void World::createWeapons() {
+
     rangedWeapon->addProjectile(50);
+    rangedWeapon->setPosition(sf::Vector2f(50,100));
+    rangedWeapon->update();
 }
 
 void World::update(sf::Time dt) {
@@ -101,9 +110,17 @@ void World::updateProjectiles() {
 void World::draw() {
     window->setView(window->getDefaultView());
     drawMap();
+
     drawProjectiles();
+    drawObjects();
     drawEnemies();
+
     window->draw(player->getSprite());
+}
+
+void World::drawObjects() {
+    if(!rangedWeapon->equipped)
+        window->draw(rangedWeapon->getSprite());
 }
 
 void World::drawMap() {

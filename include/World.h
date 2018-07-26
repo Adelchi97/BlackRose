@@ -24,7 +24,7 @@ public:
     void handlePlayerInput(sf::Keyboard::Key key, bool isPressed, sf::Clock& shootingClock);
 
 //private:
-    void createWeapon();
+    void createWeapons();
     void createEnemies();
 
     void useWeapon();
@@ -32,6 +32,7 @@ public:
     void drawProjectiles();
     void drawEnemies();
     void drawMap();
+    void drawObjects();
 
     void updateProjectiles();
     void updateEnemies();
@@ -41,6 +42,8 @@ public:
 private:
     std::shared_ptr<sf::RenderWindow> window;
     const TextureHolder& textures;
+    std::random_device rd;
+    std::uniform_real_distribution<> distribution;
 
     std::shared_ptr<PlayerCharacter> player;
     std::vector<std::shared_ptr<Enemy>> enemyArray;

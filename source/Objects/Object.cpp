@@ -1,1 +1,1 @@
-//// Created by Elena Faillace on 07/07/2018.//#include "../../include/Objects/Object.h"Object::Object(): equipped(false) {}void Object::get() {}void Object::use() {}void Object::leave() {}
+//// Created by Elena Faillace on 07/07/2018.//#include "../../include/Objects/Object.h"Object::Object(): equipped(false) {}void Object::get() {}void Object::use() {}void Object::leave() {}void Object::setPosition(sf::Vector2f vector) {    position = vector;}void Object::update() {}
