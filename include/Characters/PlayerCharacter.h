@@ -53,6 +53,8 @@ public:
 
     Type type;
 
+    bool dead;
+
 private:
     const TextureHolder& textures;
     int counterWalk;

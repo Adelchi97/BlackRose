@@ -24,6 +24,7 @@ public:
 
 public:
     int hp;
+    int attackDamage;
 
 protected:
     int resistance;

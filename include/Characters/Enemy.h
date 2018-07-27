@@ -59,6 +59,9 @@ private:
     bool delayWalk, delayMoreWalk;
     bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
 
+    std::random_device rd;
+    std::uniform_real_distribution<> distribution;
+
 };
 
 

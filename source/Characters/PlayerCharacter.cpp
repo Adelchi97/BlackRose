@@ -21,18 +21,21 @@ Textures::ID toTextureID(PlayerCharacter::Type type) {
 
 PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures, sf::Vector2u windowSize): type(type),
      textures(textures), counterWalk(0), isMovingUp(false), isMovingDown(false), isMovingLeft(false), isMovingRight
-     (false), delayWalk(false), delayMoreWalk(false), shooting(false) {
+     (false), delayWalk(false), delayMoreWalk(false), shooting(false), dead(false) {
 
     this->windowSize.x = (int)windowSize.x;
     this->windowSize.y = (int)windowSize.y;
 
+    rect.setPosition(windowSize.x/2.f,windowSize.y/2.f);
     speed = 2;
+    hp = 100;
 
     rect.setOrigin(32/2,32/2);
     sprite.setOrigin(32/2,32/2);
     texture = textures.get(toTextureID(type));
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0,0,32,32));
+
 }
 
 void PlayerCharacter::update(sf::Time dt) {
@@ -68,6 +71,11 @@ void PlayerCharacter::update(sf::Time dt) {
     }
 
     setPosition(movements /* *dt.asSeconds()*/);
+
+    if(hp<=0) {
+        dead = true;
+        std::cout<<"GAME OVER"<<std::endl;
+    }
 }
 
 bool PlayerCharacter::equip(std::shared_ptr<Object>& object) {

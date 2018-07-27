@@ -14,9 +14,6 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
                                                                                                       (textures,
                                                                                    Tile::BackGroungType::cementFloor)) {
 
-    distribution = std::uniform_real_distribution<>(0.f,800.f);
-    player->rect.setPosition(window->getSize().x/2.f,window->getSize().y/2.f);
-
     createEnemies();
     createWeapons();
 
@@ -27,11 +24,8 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
 }
 
 void World::createEnemies() {
-    std::mt19937 mt(rd());
-
     for(int i=0; i<10; i++) {
         enemyArray.emplace_back(std::make_shared<Enemy>(textures, window->getSize()));
-        enemyArray.back()->setPosition(distribution(mt),(distribution(mt)));
     }
 }
 
@@ -71,6 +65,25 @@ void World::updateObjects() {
 }
 
 void World::checkCollision() {
+
+    //Projectiles and Enemies
+    collisionProjectiles();
+    collisionPlayerEnemy();
+}
+
+void World::collisionPlayerEnemy() {
+    //Enemies and Player
+    int counterEnemy = 0;
+    for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
+        if ( player->rect.getGlobalBounds().intersects(enemyArray[counterEnemy]->rect.getGlobalBounds())) {
+            std::cout << "GOT HIT!" << std::endl;
+            player->hp -= enemyArray[counterEnemy]->attackDamage;
+        }
+        counterEnemy++;
+    }
+}
+
+void World::collisionProjectiles() {
     if(!projectileArray.empty() && !enemyArray.empty()) {
         int counterProjectiles = 0;
         //go through all projectiles
@@ -133,7 +146,8 @@ void World::draw() {
     drawObjects();
     drawEnemies();
 
-    window->draw(player->getSprite());
+    if(!player->dead)
+        window->draw(player->getSprite());
 }
 
 void World::drawObjects() {

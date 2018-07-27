@@ -46,11 +46,21 @@ Enemy::Enemy(const TextureHolder &textures, sf::Vector2u windowSize): textures(t
 
     changeDirectionTime = 100;
     speed = 2;
-    hp = 20;
+    if(type==robotRed)
+        hp = 40, attackDamage = 2;
+    else if(type==robotGray)
+        hp = 20, attackDamage = 1;
+
 
     texture = textures.get(toTextureID(type));
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0,0,32,32));
+
+    std::mt19937 mt(rd());
+    distribution = std::uniform_real_distribution<>(0.f,800.f);
+    position.x = distribution(mt);
+    position.y = distribution(mt);
+    rect.setPosition(position);
 }
 
 void Enemy::setRandomType() {

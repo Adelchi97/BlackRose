@@ -39,13 +39,13 @@ public:
     void updateObjects();
 
     void checkCollision();
+    void collisionProjectiles();
+    void collisionPlayerEnemy();
     void checkCollection();
 
 private:
     std::shared_ptr<sf::RenderWindow> window;
     const TextureHolder& textures;
-    std::random_device rd;
-    std::uniform_real_distribution<> distribution;
 
     std::shared_ptr<PlayerCharacter> player;
     std::vector<std::shared_ptr<Enemy>> enemyArray;
