@@ -39,6 +39,7 @@ public:
     Tile(const TextureHolder& textures, sf::Vector2f coordinates, BackGroungType type);
     Tile(const TextureHolder& textures, sf::Vector2f coordinates);
 
+
 public:
     TileType type;
     BackGroungType backGroung;

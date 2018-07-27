@@ -87,7 +87,10 @@ bool PlayerCharacter::shoot() {
         std::cout<<"you don't have a weapon"<<std::endl;
         return false;
     }
-
+    if(!rangedWeapon->shootProjectile()) {
+        std::cout<<"out of projectiles"<<std::endl;
+        return false;
+    }
     return true;
 }
 

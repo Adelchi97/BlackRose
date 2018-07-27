@@ -48,9 +48,26 @@ void World::update(sf::Time dt) {
     player->update(dt);
     updateEnemies();
     updateProjectiles();
-
+    updateObjects();
     checkCollision();
 
+}
+
+void World::updateObjects() {
+    if(!collectableObject.empty()) {
+        int counter = 0;
+        int deleted = -1;
+        for ( auto iter = collectableObject.begin(); iter != collectableObject.end(); iter++ ) {
+            collectableObject[ counter ]->update();
+
+            if ( collectableObject[ counter ]->counterLifeTime < 0 ) {
+                deleted = counter;
+            }
+            counter++;
+        }
+        if(deleted>=0)
+            collectableObject.erase(collectableObject.begin() + deleted);
+    }
 }
 
 void World::checkCollision() {
@@ -120,8 +137,14 @@ void World::draw() {
 }
 
 void World::drawObjects() {
-    if(!rangedWeapon->equipped)
-        window->draw(rangedWeapon->getSprite());
+    if(!collectableObject.empty()) {
+        int counter = 0;
+        for ( auto iter = collectableObject.begin(); iter != collectableObject.end(); iter++ ) {
+            if(!collectableObject[counter]->equipped)
+                window->draw(collectableObject[ counter ]->getSprite());
+            counter++;
+        }
+    }
 }
 
 void World::drawMap() {

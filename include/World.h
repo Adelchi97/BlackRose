@@ -36,6 +36,7 @@ public:
 
     void updateProjectiles();
     void updateEnemies();
+    void updateObjects();
 
     void checkCollision();
     void checkCollection();
