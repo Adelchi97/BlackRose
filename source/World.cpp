@@ -3,10 +3,8 @@
 // Created by Elena Faillace on 07/07/2018.
 //
 
-#include <SFML/Graphics.hpp>
 #include "../include/World.h"
-#include "../include/management/ResourceIdentifier.h"
-#include "../include/ProceduralMap.h"
+
 
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
         (textures), player(new PlayerCharacter(PlayerCharacter::blondHero,textures, window->getSize())),
@@ -17,11 +15,10 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
     createEnemies();
     createWeapons();
 
-    /*
-    player->equip(rangedWeapon);
-    */
+    textureDisplayArray.emplace_back(std::make_shared<TextureDisplay>(player->getPosition()));
 
 }
+
 
 void World::createEnemies() {
     for(int i=0; i<10; i++) {
@@ -40,11 +37,21 @@ void World::createWeapons() {
 void World::update(sf::Time dt) {
 
     player->update(dt);
+    textureDisplayArray[0]->bar.setPosition(player->rect.getPosition().x-16, player->rect.getPosition().y-16);
     updateEnemies();
     updateProjectiles();
     updateObjects();
     checkCollision();
+    updateTextureDisplayed();
 
+}
+
+void World::updateTextureDisplayed() {
+    int counter = 0;
+    for ( auto iter = textureDisplayArray.begin(); iter != textureDisplayArray.end(); iter++ ) {
+        textureDisplayArray[ counter ]->update();
+        counter++;
+    }
 }
 
 void World::updateObjects() {
@@ -76,6 +83,8 @@ void World::collisionPlayerEnemy() {
     int counterEnemy = 0;
     for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
         if ( player->rect.getGlobalBounds().intersects(enemyArray[counterEnemy]->rect.getGlobalBounds())) {
+            textureDisplayArray[0]->display();
+            textureDisplayArray[0]->bar.setPosition(player->rect.getPosition().x-16, player->rect.getPosition().y-16);
             player->hp -= enemyArray[counterEnemy]->getAttackDamage();
         }
         counterEnemy++;
@@ -144,9 +153,20 @@ void World::draw() {
     drawProjectiles();
     drawObjects();
     drawEnemies();
-
     if(!player->dead)
         window->draw(player->getSprite());
+    drawTextureDisplayed();
+}
+
+void World::drawTextureDisplayed() {
+    if(!textureDisplayArray.empty()) {
+        int counter = 0;
+        for ( auto iter = textureDisplayArray.begin(); iter != textureDisplayArray.end(); iter++ ) {
+            if(textureDisplayArray[counter]->displayed)
+                window->draw(textureDisplayArray[ counter ]->bar);
+            counter++;
+        }
+    }
 }
 
 void World::drawObjects() {
@@ -177,13 +197,13 @@ void World::drawEnemies() {
 }
 
 void World::handlePlayerInput(sf::Keyboard::Key key, bool isPressed, sf::Clock& shootingClock) {
-    if (key == sf::Keyboard::W)
+    if (key == sf::Keyboard::W || key == sf::Keyboard::Up)
         player->isMovingUp = isPressed;
-    else if (key == sf::Keyboard::S)
+    else if (key == sf::Keyboard::S || key == sf::Keyboard::Down)
         player->isMovingDown = isPressed;
-    else if (key == sf::Keyboard::A)
+    else if (key == sf::Keyboard::A || key == sf::Keyboard::Left)
         player->isMovingLeft = isPressed;
-    else if (key == sf::Keyboard::D)
+    else if (key == sf::Keyboard::D || key == sf::Keyboard::Right)
         player->isMovingRight = isPressed;
     else if (key == sf::Keyboard::Q)
         checkCollection();

@@ -28,7 +28,7 @@ PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures, sf::V
 
     rect.setPosition(windowSize.x/2.f,windowSize.y/2.f);
     speed = 2;
-    hp = 100;
+    hp = 200;
 
     rect.setOrigin(32/2,32/2);
     sprite.setOrigin(32/2,32/2);
@@ -134,6 +134,10 @@ void PlayerCharacter::checkWorldBounds() {
 
 void PlayerCharacter::setPosition(float x, float y) {
     rect.move(x,y);
+}
+
+sf::Vector2f PlayerCharacter::getPosition() {
+    return sf::Vector2f(rect.getPosition().x, rect.getPosition().y);
 }
 
 const sf::Sprite &PlayerCharacter::getSprite() {

@@ -35,6 +35,7 @@ public:
 
     void setPosition(sf::Vector2f &movement);
     void setPosition(float x, float y);
+    sf::Vector2f getPosition();
 
     virtual const sf::Sprite &getSprite();
     void setDirection(PlayerCharacter::Direction direction);
