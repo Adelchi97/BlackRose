@@ -47,9 +47,9 @@ Enemy::Enemy(const TextureHolder &textures, sf::Vector2u windowSize): textures(t
     changeDirectionTime = 100;
     speed = 2;
     if(type==robotRed)
-        hp = 40, attackDamage = 2;
+        hp = 40, attackDamage = 20;
     else if(type==robotGray)
-        hp = 20, attackDamage = 1;
+        hp = 20, attackDamage = 10;
 
 
     texture = textures.get(toTextureID(type));
@@ -63,6 +63,14 @@ Enemy::Enemy(const TextureHolder &textures, sf::Vector2u windowSize): textures(t
     rect.setPosition(position);
 }
 
+int Enemy::getAttackDamage() {
+    if(attackClock.getElapsedTime().asSeconds() > .5) {
+        std::cout << "GOT HIT!" << std::endl;
+        attackClock.restart();
+        return attackDamage;
+    }
+    else return 0;
+}
 void Enemy::setRandomType() {
     int rand = generateRandom(2);
     if(rand==1)

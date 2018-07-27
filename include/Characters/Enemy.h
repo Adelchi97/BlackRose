@@ -32,7 +32,7 @@ public:
     void setPosition();
     virtual const sf::Sprite &getSprite();
     void setDirection(Enemy::Direction direction);
-
+    int getAttackDamage();
 
     void seek();
     void patrol();
@@ -54,6 +54,7 @@ private:
     const TextureHolder& textures;
     sf::Vector2f windowSize;
 
+    sf::Clock attackClock;
     int counterWalk;
     int changeDirectionTime, counterDirection = 0;
     bool delayWalk, delayMoreWalk;

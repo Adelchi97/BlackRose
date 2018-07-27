@@ -76,8 +76,7 @@ void World::collisionPlayerEnemy() {
     int counterEnemy = 0;
     for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
         if ( player->rect.getGlobalBounds().intersects(enemyArray[counterEnemy]->rect.getGlobalBounds())) {
-            std::cout << "GOT HIT!" << std::endl;
-            player->hp -= enemyArray[counterEnemy]->attackDamage;
+            player->hp -= enemyArray[counterEnemy]->getAttackDamage();
         }
         counterEnemy++;
     }
