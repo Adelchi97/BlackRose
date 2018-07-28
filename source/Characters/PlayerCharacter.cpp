@@ -41,6 +41,7 @@ PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures, sf::V
 void PlayerCharacter::update(sf::Time dt) {
     //now sprite is linked to rect's position
     sprite.setPosition(rect.getPosition());
+    position = sprite.getPosition();
 
     sf::Vector2f movements(0.f,0.f);
     if(isMovingUp) {
@@ -72,13 +73,20 @@ void PlayerCharacter::update(sf::Time dt) {
 
     setPosition(movements /* *dt.asSeconds()*/);
 
+    //life bar
+    bar.setPosition(position.x-16,position.y-32);
+    if(timerTextures.getElapsedTime().asSeconds() > .5) {
+        barDisplayed = false;
+    }
+
+    //if dead
     if(hp<=0) {
         dead = true;
         std::cout<<"GAME OVER"<<std::endl;
     }
 }
 
-bool PlayerCharacter::equip(std::shared_ptr<Object>& object) {
+bool PlayerCharacter::interactWithObject(std::shared_ptr<Object> &object) {
 
     rangedWeapon = std::dynamic_pointer_cast<RangedWeapon>(object);
     if(rangedWeapon.get() != nullptr) {

@@ -15,7 +15,6 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
     createEnemies();
     createWeapons();
 
-    textureDisplayArray.emplace_back(std::make_shared<TextureDisplay>(player->getPosition()));
 
 }
 
@@ -37,7 +36,6 @@ void World::createWeapons() {
 void World::update(sf::Time dt) {
 
     player->update(dt);
-    textureDisplayArray[0]->bar.setPosition(player->rect.getPosition().x-16, player->rect.getPosition().y-16);
     updateEnemies();
     updateProjectiles();
     updateObjects();
@@ -83,8 +81,7 @@ void World::collisionPlayerEnemy() {
     int counterEnemy = 0;
     for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
         if ( player->rect.getGlobalBounds().intersects(enemyArray[counterEnemy]->rect.getGlobalBounds())) {
-            textureDisplayArray[0]->display();
-            textureDisplayArray[0]->bar.setPosition(player->rect.getPosition().x-16, player->rect.getPosition().y-16);
+            player->display();
             player->hp -= enemyArray[counterEnemy]->getAttackDamage();
         }
         counterEnemy++;
@@ -102,6 +99,7 @@ void World::collisionProjectiles() {
                 if ( projectileArray[ counterProjectiles ]->rect.getGlobalBounds().
                         intersects(enemyArray[ counterEnemy ]->rect.getGlobalBounds())) {
                     std::cout << "Collision!" << std::endl;
+                    enemyArray[counterEnemy]->display();
                     enemyArray[counterEnemy]->hp -= projectileArray[counterProjectiles]->attackDamage;
                     projectileArray[counterProjectiles]->active = false;
                 }
@@ -153,17 +151,24 @@ void World::draw() {
     drawProjectiles();
     drawObjects();
     drawEnemies();
-    if(!player->dead)
-        window->draw(player->getSprite());
-    drawTextureDisplayed();
+    drawPlayer();
+
+    drawTextDisplayed();
 }
 
-void World::drawTextureDisplayed() {
+void World::drawPlayer() {
+    if(!player->dead) {
+        window->draw(player->getSprite());
+        if(player->barDisplayed)
+            window->draw(player->bar);
+    }
+}
+
+void World::drawTextDisplayed() {
     if(!textureDisplayArray.empty()) {
         int counter = 0;
         for ( auto iter = textureDisplayArray.begin(); iter != textureDisplayArray.end(); iter++ ) {
-            if(textureDisplayArray[counter]->displayed)
-                window->draw(textureDisplayArray[ counter ]->bar);
+                window->draw(textureDisplayArray[ counter ]->text);
             counter++;
         }
     }
@@ -191,6 +196,8 @@ void World::drawEnemies() {
         int counter = 0;
         for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
             window->draw(enemyArray[ counter ]->getSprite());
+            if(enemyArray[counter]->barDisplayed)
+                        window->draw(enemyArray[counter]->bar);
             counter++;
         }
     }
@@ -225,7 +232,7 @@ void World::checkCollection() {
             if ( collectableObject[ counterObject ]->rect.getGlobalBounds().
                     intersects(player->rect.getGlobalBounds())) {
                 std::cout << "collecting object" << std::endl;
-                player->equip(collectableObject[counterObject]);
+                player->interactWithObject(collectableObject[ counterObject ]);
             }
             counterObject++;
         }

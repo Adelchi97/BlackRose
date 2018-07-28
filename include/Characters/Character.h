@@ -19,18 +19,24 @@ public:
     virtual void move();
     virtual void fight();
     //basic interaction with the world, it will be associated with a key
-    virtual bool interactWithObject();
+    virtual bool interactWithObject(std::shared_ptr<Object> &object);
     virtual void die();
+    void update();
+    void display();
 
 public:
     int hp;
     int attackDamage;
+
+    bool barDisplayed = false;
+    sf::RectangleShape bar;
 
 protected:
     int resistance;
     int speed;
     sf::Vector2f position;
     Inventory inventory;
+    sf::Clock timerTextures;
 };
 
 

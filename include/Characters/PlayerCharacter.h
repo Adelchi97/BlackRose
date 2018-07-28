@@ -26,7 +26,7 @@ public:
     };
 
     PlayerCharacter(Type type, const TextureHolder& textures, sf::Vector2u windowSize);
-    bool equip(std::shared_ptr<Object>& object);
+    virtual bool interactWithObject(std::shared_ptr<Object> &object);
     bool shoot();
     //a movement that covers several tiles thanks to the ProtoBelt
     void dash();

@@ -52,6 +52,8 @@ Enemy::Enemy(const TextureHolder &textures, sf::Vector2u windowSize): textures(t
         hp = 20, attackDamage = 10;
 
 
+    rect.setOrigin(32/2,32/2);
+    sprite.setOrigin(32/2,32/2);
     texture = textures.get(toTextureID(type));
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0,0,32,32));
@@ -82,6 +84,7 @@ void Enemy::setRandomType() {
 void Enemy::update() {
     //now sprite is linked to rect's position
     sprite.setPosition(rect.getPosition());
+    position = sprite.getPosition();
 
     //controls the walking animation
     if(!((isMovingLeft && isMovingRight) || (isMovingUp && isMovingDown))) {
@@ -120,6 +123,12 @@ void Enemy::update() {
 
     if(hp<=0)
         active = false;
+
+    //life bar
+    bar.setPosition(position.x-16,position.y-32);
+    if(timerTextures.getElapsedTime().asSeconds() > .5) {
+        barDisplayed = false;
+    }
 
     setPositionMovement(movements /* *dt.asSeconds()*/);
 

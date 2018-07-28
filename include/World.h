@@ -14,7 +14,7 @@
 #include "Objects/RangedWeapon.h"
 #include "Characters/Enemy.h"
 #include "ProceduralMap.h"
-#include "TextureDisplay.h"
+#include "textDisplay.h"
 
 class World {
 public:
@@ -33,7 +33,8 @@ public:
     void drawEnemies();
     void drawMap();
     void drawObjects();
-    void drawTextureDisplayed();
+    void drawTextDisplayed();
+    void drawPlayer();
 
     void updateProjectiles();
     void updateEnemies();
@@ -48,7 +49,7 @@ public:
 private:
     std::shared_ptr<sf::RenderWindow> window;
     const TextureHolder& textures;
-    std::vector<std::shared_ptr<TextureDisplay>> textureDisplayArray;
+    std::vector<std::shared_ptr<textDisplay>> textureDisplayArray;
     sf::Clock textureTimer;
 
     std::shared_ptr<PlayerCharacter> player;
