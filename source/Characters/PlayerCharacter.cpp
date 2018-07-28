@@ -29,6 +29,7 @@ PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures, sf::V
     rect.setPosition(windowSize.x/2.f,windowSize.y/2.f);
     speed = 2;
     hp = 200;
+    hpMax = hp;
 
     rect.setOrigin(32/2,32/2);
     sprite.setOrigin(32/2,32/2);
@@ -73,11 +74,7 @@ void PlayerCharacter::update(sf::Time dt) {
 
     setPosition(movements /* *dt.asSeconds()*/);
 
-    //life bar
-    bar.setPosition(position.x-16,position.y-32);
-    if(timerTextures.getElapsedTime().asSeconds() > .5) {
-        barDisplayed = false;
-    }
+    Character::update();
 
     //if dead
     if(hp<=0) {

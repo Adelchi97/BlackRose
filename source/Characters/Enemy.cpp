@@ -27,6 +27,7 @@ Enemy::Enemy(Type type, const TextureHolder& textures, sf::Vector2u windowSize) 
     else if(type == robotGray)
         hp = 20;
 
+    hpMax = hp;
 
     rect.setOrigin(32/2,32/2);
     sprite.setOrigin(32/2,32/2);
@@ -51,6 +52,7 @@ Enemy::Enemy(const TextureHolder &textures, sf::Vector2u windowSize): textures(t
     else if(type==robotGray)
         hp = 20, attackDamage = 10;
 
+    hpMax = hp;
 
     rect.setOrigin(32/2,32/2);
     sprite.setOrigin(32/2,32/2);
@@ -124,11 +126,7 @@ void Enemy::update() {
     if(hp<=0)
         active = false;
 
-    //life bar
-    bar.setPosition(position.x-16,position.y-32);
-    if(timerTextures.getElapsedTime().asSeconds() > .5) {
-        barDisplayed = false;
-    }
+   Character::update();
 
     setPositionMovement(movements /* *dt.asSeconds()*/);
 

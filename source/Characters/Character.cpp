@@ -10,10 +10,16 @@ Character::Character() {
 
     //life bar
     bar = sf::RectangleShape(sf::Vector2f(32,5));
+    lifeBar = sf::RectangleShape(sf::Vector2f(32,5));
     bar.setOutlineThickness(3);
     bar.setOutlineColor(sf::Color::Black);
-    bar.setFillColor(sf::Color::Green);
+    bar.setFillColor(sf::Color::Black);
+    lifeBar.setFillColor(sf::Color::Green);
+    /*
     bar.setPosition(position.x, position.y-16);
+    lifeBar.setPosition(position.x, position.y-16);
+     */
+
 
     //TODO istanzia un inventory
 }
@@ -40,5 +46,15 @@ void Character::display() {
 }
 
 void Character::update() {
-
+    //life bar
+    bar.setPosition(position.x-16,position.y-32);
+    lifeBar.setPosition(position.x-16,position.y-32);
+    lifeBar.setSize(sf::Vector2f(32*hp/hpMax,5));
+    if(lifeBar.getSize().x <= 16)
+        lifeBar.setFillColor(sf::Color::Yellow);
+    if(lifeBar.getSize().x <= 8)
+        lifeBar.setFillColor(sf::Color::Red);
+    if(timerTextures.getElapsedTime().asSeconds() > .5) {
+        barDisplayed = false;
+    }
 }

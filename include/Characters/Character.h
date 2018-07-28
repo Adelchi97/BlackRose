@@ -26,10 +26,12 @@ public:
 
 public:
     int hp;
+    int hpMax;
     int attackDamage;
 
     bool barDisplayed = false;
     sf::RectangleShape bar;
+    sf::RectangleShape lifeBar;
 
 protected:
     int resistance;

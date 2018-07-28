@@ -159,8 +159,10 @@ void World::draw() {
 void World::drawPlayer() {
     if(!player->dead) {
         window->draw(player->getSprite());
-        if(player->barDisplayed)
+        if(player->barDisplayed) {
             window->draw(player->bar);
+            window->draw(player->lifeBar);
+        }
     }
 }
 
@@ -196,8 +198,10 @@ void World::drawEnemies() {
         int counter = 0;
         for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
             window->draw(enemyArray[ counter ]->getSprite());
-            if(enemyArray[counter]->barDisplayed)
-                        window->draw(enemyArray[counter]->bar);
+            if(enemyArray[counter]->barDisplayed) {
+                window->draw(enemyArray[ counter ]->bar);
+                window->draw(enemyArray[counter]->lifeBar);
+            }
             counter++;
         }
     }
