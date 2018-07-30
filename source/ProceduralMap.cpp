@@ -4,7 +4,6 @@
 
 #include "ctime"
 #include "../include/ProceduralMap.h"
-
 /*
 Textures::ID toTextureID( ProceduralMap::TileType type) {
     switch(type) {

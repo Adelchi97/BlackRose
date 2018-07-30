@@ -6,8 +6,6 @@
 #define SFMLTEST3_PROCEDURALMAP_H
 
 #include "SFML/Graphics.hpp"
-#include "management/ResourceIdentifier.h"
-#include "management/ResourceHolder.h"
 #include "Objects/Tile.h"
 
 

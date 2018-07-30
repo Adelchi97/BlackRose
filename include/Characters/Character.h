@@ -10,7 +10,8 @@
 #include "../Inventory.h"
 #include "../Objects/Weapon.h"
 #include "../Objects/Shield.h"
-#include "../Entity.h"
+#include "../management/ResourceHolder.h"
+#include "../management/ResourceIdentifier.h"
 
 class Character: public Entity {
 public:
@@ -19,7 +20,7 @@ public:
     virtual void move();
     virtual void fight();
     //basic interaction with the world, it will be associated with a key
-    virtual bool interactWithObject(std::shared_ptr<Object> &object);
+    virtual bool interactWithObject(std::shared_ptr <Object> &object);
     virtual void die();
     void update();
     void display();

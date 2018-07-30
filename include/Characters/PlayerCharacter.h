@@ -7,9 +7,6 @@
 
 #include <string>
 #include "Character.h"
-#include "../Objects/Shield.h"
-#include "../management/ResourceHolder.h"
-#include "../management/ResourceIdentifier.h"
 #include "../Objects/RangedWeapon.h"
 #include "../Objects/MeleeWeapon.h"
 

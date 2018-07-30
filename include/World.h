@@ -5,13 +5,7 @@
 #ifndef BLACKROSE_WORLD_H
 #define BLACKROSE_WORLD_H
 
-
-#include <SFML/Graphics.hpp>
-
-#include "management/ResourceHolder.h"
-#include "management/ResourceIdentifier.h"
 #include "Characters/PlayerCharacter.h"
-#include "Objects/RangedWeapon.h"
 #include "Characters/Enemy.h"
 #include "ProceduralMap.h"
 #include "textDisplay.h"

@@ -4,6 +4,8 @@
 
 #include "../../include/Characters/Character.h"
 
+
+
 Character::Character() {
     //all characters are this big
     rect.setSize(sf::Vector2f(32,32));
@@ -32,7 +34,7 @@ void Character::fight() {
 
 }
 
-bool Character::interactWithObject(std::shared_ptr<Object> &object) {
+bool Character::interactWithObject(std::shared_ptr <Object> &object) {
     return true;
 }
 

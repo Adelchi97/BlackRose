@@ -6,9 +6,7 @@
 #define BLACKROSE_WEAPON_H
 
 #include "Object.h"
-#include "../Characters/Character.h"
 
-class Character;
 class Weapon : public Object {
 public:
     Weapon();

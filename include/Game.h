@@ -5,10 +5,6 @@
 #ifndef BLACKROSE_GAME_H
 #define BLACKROSE_GAME_H
 
-#include <iostream>
-#include <string>
-
-#include "SFML/Graphics.hpp"
 #include "World.h"
 
 class Game : private sf::NonCopyable {

@@ -8,8 +8,6 @@
 #include <memory>
 #include "Character.h"
 #include "../Random.h"
-#include "../management/ResourceIdentifier.h"
-#include "../management/ResourceHolder.h"
 
 class Enemy : public Character {
 public:
