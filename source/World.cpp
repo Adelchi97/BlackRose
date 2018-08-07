@@ -10,7 +10,7 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
         (textures), player(new PlayerCharacter(PlayerCharacter::blondHero,textures, window->getSize())),
                            rangedWeapon(new RangedWeapon(textures,RangedWeapon::Type::energyShooter)), map(new ProceduralMap
                                                                                                       (textures,
-                                                                                   Tile::BackGroungType::cementFloor)) {
+                                                                                   Tile::BackGroundType::baseFloor)) {
 
     createEnemies();
     createWeapons();
@@ -71,7 +71,7 @@ void World::updateObjects() {
 
 void World::checkCollision() {
 
-    //Projectiles and Enemies
+    //Projectiles and Enemiesx
     collisionProjectiles();
     collisionPlayerEnemy();
 }

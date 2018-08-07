@@ -27,7 +27,9 @@ namespace Textures {
         StarLord,
 
         ShootingEnergy,
-        energyShooter
+        energyShooter,
+
+        baseTile
     };
 }
 

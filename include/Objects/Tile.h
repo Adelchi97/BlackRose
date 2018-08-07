@@ -13,13 +13,15 @@
 class Tile : public Entity {
 public:
 
-    enum BackGroungType {
+    enum BackGroundType {
         labFloor,
         metalFloor,
         woodFloor,
         cementFloor,
 
-        metalWall
+        metalWall,
+
+        baseFloor
     };
 
     enum TileType {
@@ -36,13 +38,13 @@ public:
         Chest
     }; //BrokenFloor e BrokenWall costituiscono dei passaggi come Door, Upstairs e DownStairs
 
-    Tile(const TextureHolder& textures, sf::Vector2f coordinates, BackGroungType type);
+    Tile(const TextureHolder& textures, sf::Vector2f coordinates, BackGroundType type);
     Tile(const TextureHolder& textures, sf::Vector2f coordinates);
 
 
 public:
     TileType type;
-    BackGroungType backGroung;
+    BackGroundType backGround;
     sf::Vector2f coordinates;
 
 private:

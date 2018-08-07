@@ -121,4 +121,6 @@ void Game::loadTextures() {
 
     textureHolder.load(Textures::metalWall, "Media/Walls/metalWall.png");
 
+    textureHolder.load(Textures::baseTile, "Media/Tiles/BaseTile.png");
+
 }

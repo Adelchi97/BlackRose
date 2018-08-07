@@ -29,22 +29,24 @@ ProceduralMap::ProceduralMap(const TextureHolder &textures): xsize(800), ysize(8
                                 minRoomSide(5), maxRoomSide(xsize/10), textures(textures) {
     for (int i=0; i<25; i++) {
         for  (int j=0; j<25; j++) {
-            tileMap.emplace_back(std::make_shared<Tile>(textures, sf::Vector2f(i,j), Tile::BackGroungType ::labFloor));
+            tileMap.emplace_back(std::make_shared<Tile>(textures, sf::Vector2f(i,j), Tile::BackGroundType::labFloor));
         }
     }
     //  levelMap = 0; // 0 is TileType::Unused, see the enum class TipeTyle
     //  createLevel(xsize,ysize);
 }
 
-ProceduralMap::ProceduralMap(const TextureHolder &textures, Tile::BackGroungType backGroungType): xsize(800), ysize(800),
+ProceduralMap::ProceduralMap(const TextureHolder &textures, Tile::BackGroundType backGroundType): xsize(800), ysize(800),
                objects(10), oldSeed(0), chanceRoom(80), chanceCorridor(20), minRoomSide(5), maxRoomSide(xsize/10),
                textures(textures) {
 
     for (int i=0; i<25; i++) {
         for  (int j=0; j<25; j++) {
-            tileMap.emplace_back(std::make_shared<Tile>(textures, sf::Vector2f(i,j), backGroungType));
+            tileMap.emplace_back(std::make_shared<Tile>(textures, sf::Vector2f(i,j), backGroundType));
         }
     }
+    //tileMap.emplace_back(std::make_shared<Tile>(textures, sf::Vector2f(2,2),Tile::BackGroundType::labFloor ));
+    setCell(0,0, Tile::BackGroundType::labFloor);
     //  levelMap = 0; // 0 is TileType::Unused, see the enum class TipeTyle
     //  createLevel(xsize,ysize);
 }
@@ -60,16 +62,40 @@ int ProceduralMap::getRand(int x, int y){
 }
 
 
-
-int ProceduralMap::getCell(int x, int y) const {
-    return levelMap[x + xsize * y];
+/*
+Tile::BackGroundType ProceduralMap::getCell(int x, int y) const {
+    Tile::BackGroundType tmp = *tileMap[x*y]::Tile::BackGroundType ;
+    return tmp;
 
 }
-
+*/
 //TODO questa funzione va modificata affinché lavori interfacciandosi con tileMap[i].coordinate
-/*
-void ProceduralMap::setCell(int x, int y, TileType tile) {
+
+void ProceduralMap::setCell(int x, int y, Tile::BackGroundType inputTile) {
+
+    //Tile(textures, tileMap[x+y*25]->coordinates, inputTile);
+
+    std::shared_ptr<Tile> tmp = std::make_shared<Tile>(textures, sf::Vector2f(x,y), inputTile);
+    //std::shared_ptr<Tile>(std::move(tileMap[x+y*25]).swap(tmp));
+
+    //std::shared_ptr& operator=(const std::shared_ptr<Tile>& tileMap[x+y*25]) noexcept;
+
+    std::shared_ptr<Tile>(tmp).swap(tileMap[x+y*25]);
+
+    //tileMap[x+y*25]->coordinates.x = x;
+    //tileMap[x+y*25]->coordinates.y = y;
+    //tileMap[x+y*25] = std::make_shared<Tile>(textures, sf::Vector2f(x,y), inputTile);
+
+    //tileMap.at(x*y) = (std::make_shared<Tile>(textures, sf::Vector2f(x,y), inputTile));
+
+
+    //tileMap.insert(tileMap[(x*y)+1],  );
+    //std::shared_ptr<Tile> tmp = std::make_shared<Tile>(textures, sf::Vector2f(x,y), inputTile);
+    //tileMap[x*y].swap(tmp);
+}
+
 //    int rand;
+/*
     tileSprite.setPosition(x*32, y*32);
     if(tile == Floor){
         tileSprite.setTextureRect(sf::IntRect(0,0,32,32));
@@ -86,7 +112,7 @@ void ProceduralMap::setCell(int x, int y, TileType tile) {
         mapWindow->draw(tileSprite);
         levelMap[x + xsize*y] = 2;
     }
-    /*
+
     if (tile == TileType::Floor){
         rand = getRand(1,3);
         switch (rand){
@@ -151,7 +177,7 @@ bool ProceduralMap::makeBossRoom(int x, int y) {
 //TODO va adattata alla struttura dati scelta
 /*
 bool ProceduralMap::makeRoom(int x, int y, int direction) {
-/*
+
     //check if a bossRoom is needed
     if (!bossRoom){
         //I want bossRoom will be build only in a central part of the map
@@ -176,28 +202,28 @@ bool ProceduralMap::makeRoom(int x, int y, int direction) {
             //Check if there's enough space left for it. It checks a row and a column more than what we need
             for (int yTemp = y; yTemp > (y - yLength); yTemp--) {  //decrementing y means to go north
                 if (yTemp < 0 || yTemp > ysize)
-                    return false;
+                    return false; // not enough lenght space, out from makeroom and the calling function will call again makeroom avoiding the same direction
                 //if xLength is odd the room will be one more in the right half
-                for (int xTemp = (x - xLength / 2); xTemp < (x + (xLength + 1) / 2); xTemp++) {
+                for (int xTemp = (x - xLength / 2); xTemp < (x + ((xLength + 1) / 2)); xTemp++) {
                     if (xTemp < 0 || xTemp > xsize)
-                        return false;
-                    if (getCell(xTemp, yTemp) != TileType::Unused)
+                        return false;  //not enough width space
+                    if (getCell(xTemp, yTemp) != Tile::BackGroundType::woodFloor)
                         return false; //no space left
                 }
             }
 
             //we're still here, build
             for (int ytemp = y; ytemp > (y - yLength); ytemp--) {
-                for (int xtemp = (x - xLength / 2); xtemp < (x + (xLength + 1) / 2); xtemp++) {
+                for (int xtemp = (x - xLength / 2); xtemp < (x + ((xLength + 1) / 2)); xtemp++) {
                     //start with the walls
                     if (xtemp == (x - xLength / 2))
-                        setCell(xtemp, ytemp, wall);
+                        setCell(xtemp, ytemp, Tile::BackGroundType::metalWall);
                     else if (xtemp == (x + (xLength - 1) / 2))
-                        setCell(xtemp, ytemp, wall);
+                        setCell(xtemp, ytemp, Tile::BackGroundType::metalWall);
                     else if (ytemp == y)
-                        setCell(xtemp, ytemp, wall);
+                        setCell(xtemp, ytemp, Tile::BackGroundType::metalWall);
                     else if (ytemp == (y - yLength + 1))
-                        setCell(xtemp, ytemp, wall);
+                        setCell(xtemp, ytemp, Tile::BackGroundType::metalWall);
                         //and then fill with the floor
                     else {
                         tileTexture = textures.get(toTextureID(floor));
@@ -307,7 +333,7 @@ bool ProceduralMap::makeRoom(int x, int y, int direction) {
     // successful build
     return true;
 }
-*/
+
 
 //TODO va adattata alla struttura dati
 /*

@@ -22,12 +22,13 @@ public:
 
 
     ProceduralMap(const TextureHolder &textures);
-    ProceduralMap(const TextureHolder &textures, Tile::BackGroungType backGroungType);
+    ProceduralMap(const TextureHolder &textures, Tile::BackGroundType backGroundType);
 
     ~ProceduralMap();
 
     bool createLevel(int inx, int iny);
-    int getCell (int x, int y) const;
+    Tile::BackGroundType getCell (int x, int y) const;
+    void setCell (int x, int y, Tile::BackGroundType inputTile);
 
 private:
 
@@ -46,8 +47,6 @@ public:
 private:
 
     std::shared_ptr<sf::RenderWindow> mapWindow;
-
-    int levelMap[800*800]; //contiene interi che corrispondono a TileTYpe enum
 
     const TextureHolder& textures;
     sf::Texture tileTexture;
