@@ -60,6 +60,7 @@ private:
     int towerLevel = 0;
     int objects; //chest, loot on the map
 
+
     //rooms have priority, define rooms and corridors chance to be created
     const int chanceRoom;
     const int chanceCorridor;

@@ -27,6 +27,7 @@ void World::createEnemies() {
 
 void World::createWeapons() {
     //TODO the weapon lasts 25 seconds on the ground. make it permanent
+
     rangedWeapon->addProjectile(50);
     rangedWeapon->setPosition(sf::Vector2f(50,100));
     rangedWeapon->update();

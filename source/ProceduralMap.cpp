@@ -54,6 +54,7 @@ ProceduralMap::ProceduralMap(const TextureHolder &textures, Tile::BackGroundType
     }
     */
     srand(time(NULL));
+    
     for(int i=0; i<5; i++){
         int a = getRand(0,24);
         int b = getRand(0,24);
