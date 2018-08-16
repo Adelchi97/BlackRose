@@ -21,14 +21,15 @@ public:
      */
 
 
-    ProceduralMap(const TextureHolder &textures);
+    //ProceduralMap(const TextureHolder &textures);
     ProceduralMap(const TextureHolder &textures, Tile::BackGroundType backGroundType);
 
     ~ProceduralMap();
 
     bool createLevel(int inx, int iny);
-    Tile::BackGroundType getCell (int x, int y) const;
+    //Tile::BackGroundType getCell (int x, int y) const;
     void setCell (int x, int y, Tile::BackGroundType inputTile);
+    Tile getCell (int x, int y);
 
 private:
 
@@ -58,8 +59,6 @@ private:
     const int maxRoomSide;
     int towerLevel = 0;
     int objects; //chest, loot on the map
-
-    long oldSeed; //old seed for Random number generation
 
     //rooms have priority, define rooms and corridors chance to be created
     const int chanceRoom;

@@ -23,7 +23,7 @@ Textures::ID toTextureID( ProceduralMap::TileType type) {
 
     }
 }
-*/
+
 
 ProceduralMap::ProceduralMap(const TextureHolder &textures): xsize(800), ysize(800), objects(10), oldSeed(0), chanceRoom(80), chanceCorridor(20),
                                 minRoomSide(5), maxRoomSide(xsize/10), textures(textures) {
@@ -35,9 +35,9 @@ ProceduralMap::ProceduralMap(const TextureHolder &textures): xsize(800), ysize(8
     //  levelMap = 0; // 0 is TileType::Unused, see the enum class TipeTyle
     //  createLevel(xsize,ysize);
 }
-
+*/
 ProceduralMap::ProceduralMap(const TextureHolder &textures, Tile::BackGroundType backGroundType): xsize(800), ysize(800),
-               objects(10), oldSeed(0), chanceRoom(80), chanceCorridor(20), minRoomSide(5), maxRoomSide(xsize/10),
+               objects(10), chanceRoom(80), chanceCorridor(20), minRoomSide(5), maxRoomSide(xsize/10),
                textures(textures) {
 
     for (int i=0; i<25; i++) {
@@ -46,7 +46,22 @@ ProceduralMap::ProceduralMap(const TextureHolder &textures, Tile::BackGroundType
         }
     }
     //tileMap.emplace_back(std::make_shared<Tile>(textures, sf::Vector2f(2,2),Tile::BackGroundType::labFloor ));
-    setCell(0,0, Tile::BackGroundType::labFloor);
+    /*
+    for(int i = 0; i<10; i++){
+        int a = 10+i;
+        int b = 2*i;
+        setCell(a, b, Tile::BackGroundType::labFloor);
+    }
+    */
+    srand(time(NULL));
+    for(int i=0; i<5; i++){
+        int a = getRand(0,24);
+        int b = getRand(0,24);
+        setCell(a, b, Tile::BackGroundType::labFloor);
+    }
+//    Tile bTmp = getCell(0,0);
+//    setCell(1, 1, bTmp.backGround);
+
     //  levelMap = 0; // 0 is TileType::Unused, see the enum class TipeTyle
     //  createLevel(xsize,ysize);
 }
@@ -57,8 +72,7 @@ ProceduralMap::~ProceduralMap() {
 }
 
 int ProceduralMap::getRand(int x, int y){
-    long seed = time(nullptr) + oldSeed;
-    oldSeed = seed;
+    return rand() % (y-x) + x;
 }
 
 
@@ -80,7 +94,7 @@ void ProceduralMap::setCell(int x, int y, Tile::BackGroundType inputTile) {
 
     //std::shared_ptr& operator=(const std::shared_ptr<Tile>& tileMap[x+y*25]) noexcept;
 
-    std::shared_ptr<Tile>(tmp).swap(tileMap[x+y*25]);
+    std::shared_ptr<Tile>(tmp).swap(tileMap[y+x*25]);
 
     //tileMap[x+y*25]->coordinates.x = x;
     //tileMap[x+y*25]->coordinates.y = y;
@@ -93,7 +107,11 @@ void ProceduralMap::setCell(int x, int y, Tile::BackGroundType inputTile) {
     //std::shared_ptr<Tile> tmp = std::make_shared<Tile>(textures, sf::Vector2f(x,y), inputTile);
     //tileMap[x*y].swap(tmp);
 }
-
+/*
+Tile ProceduralMap::getCell(int x, int y) {
+    return *tileMap[x+y*25];
+}
+*/
 //    int rand;
 /*
     tileSprite.setPosition(x*32, y*32);
