@@ -29,7 +29,7 @@ public:
     bool createLevel(int inx, int iny);
     //Tile::BackGroundType getCell (int x, int y) const;
     void setCell (int x, int y, Tile::BackGroundType inputTile);
-    Tile getCell (int x, int y);
+    std::shared_ptr<Tile> getCell (int x, int y);
 
 private:
 

@@ -17,6 +17,8 @@ Textures::ID toTextureID(Tile::BackGroundType type) {
             return Textures::ID::cementTile;
         case Tile::BackGroundType::baseFloor:
             return Textures::ID::baseTile;
+        case Tile::BackGroundType::metalWall:
+            return  Textures::ID::metalWall;
         default:
             return Textures::ID::baseTile;
     }
