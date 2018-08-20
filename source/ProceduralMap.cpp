@@ -57,7 +57,6 @@ ProceduralMap::ProceduralMap(const TextureHolder &textures, Tile::BackGroundType
 
 }
 
-
 ProceduralMap::~ProceduralMap() {
 
 }

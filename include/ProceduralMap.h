@@ -45,6 +45,7 @@ private:
 public:
     std::vector<std::shared_ptr<Tile>> tileMap;
 
+
 private:
 
     std::shared_ptr<sf::RenderWindow> mapWindow;
