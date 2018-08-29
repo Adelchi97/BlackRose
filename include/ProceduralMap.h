@@ -33,7 +33,7 @@ public:
 
 private:
 
-    bool makeCorridor(int x, int y, int lenght, int direction);
+    bool makeCorridor(int x, int y, int length, int direction);
     //
     bool makeRoom(int x, int y, int direction); //ci può essere soltanto una bossroom per livello
     bool makeBossRoom(int x, int y);
@@ -65,6 +65,10 @@ private:
     //rooms have priority, define rooms and corridors chance to be created
     const int chanceRoom;
     const int chanceCorridor;
+    const int chance1Door = 30;
+    const int chance2Door = 85;
+    const int chance3Door = 95;
+    const int chance4Door = 100;
 
 
     const int minRoomSide;

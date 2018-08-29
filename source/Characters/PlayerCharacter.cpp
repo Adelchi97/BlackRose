@@ -95,7 +95,7 @@ bool PlayerCharacter::interactWithObject(std::shared_ptr<Object> &object) {
 
 
 bool PlayerCharacter::shoot() {
-    //TODO it will dipend on the weapon equipped
+    //TODO it will depend on the weapon equipped
     if(rangedWeapon.get() == nullptr) {
         std::cout<<"you don't have a weapon"<<std::endl;
         return false;

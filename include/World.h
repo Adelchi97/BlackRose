@@ -36,9 +36,11 @@ public:
     void updateTextureDisplayed();
 
     void checkCollision();
+    void collisionWall();
     void collisionProjectiles();
     void collisionPlayerEnemy();
     void checkCollection();
+
 
 private:
     std::shared_ptr<sf::RenderWindow> window;
@@ -47,6 +49,7 @@ private:
     sf::Clock textureTimer;
 
     std::shared_ptr<PlayerCharacter> player;
+    std::shared_ptr<Character> characterArray;
     std::vector<std::shared_ptr<Enemy>> enemyArray;
     std::shared_ptr<RangedWeapon> rangedWeapon;
 

@@ -75,6 +75,47 @@ void World::checkCollision() {
     //Projectiles and Enemiesx
     collisionProjectiles();
     collisionPlayerEnemy();
+    //Wall
+    collisionWall();
+}
+
+void World::collisionWall() {
+    //character collision with walls
+    //(rect.getPosition().x/y +/-16)/32 <- next tile near to playercharacter
+    //getCell
+    //if getCell == wall -> setPosition
+    int a = player->rect.getPosition().x;
+    int b = player->rect.getPosition().y;
+    int aCell = a/32;
+    int bCell = b/32;
+    //wall on right
+    if(map->tileMap[bCell+((a+16)/32)*25]->backGround == Tile::BackGroundType::metalWall)
+        player->rect.setPosition(a-2,b);
+    //wall on left
+    else if(map->tileMap[bCell+((a-16)/32)*25]->backGround == Tile::BackGroundType::metalWall)
+        player->rect.setPosition(a+2,b);
+
+    //wall on bot
+    if(map->tileMap[(b+16)/32+aCell*25]->backGround == Tile::BackGroundType::metalWall)
+        player->rect.setPosition(a,b-2);
+    //wall on top
+    else if(map->tileMap[(b-16)/32+aCell*25]->backGround == Tile::BackGroundType::metalWall)
+        player->rect.setPosition(a,b+2);
+    //TODO to implement the diagonal wall collision
+    /*
+        //check right bound
+        if((rect.getPosition().x+16)>windowSize.x)
+            rect.setPosition(windowSize.x-16, rect.getPosition().y);
+            //check left bound;
+        else if(rect.getPosition().x-16<0)
+            rect.setPosition(16, rect.getPosition().y);
+        //check button bound
+        if((rect.getPosition().y)+16>windowSize.y)
+            rect.setPosition(rect.getPosition().x, windowSize.y-16);
+            //check upper bound
+        else if(rect.getPosition().y-16<0)
+            rect.setPosition(rect.getPosition().x, 16);
+    */
 }
 
 void World::collisionPlayerEnemy() {
