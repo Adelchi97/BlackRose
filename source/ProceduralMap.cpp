@@ -213,6 +213,7 @@ bool ProceduralMap::makeRoom(int x, int y, int direction) {
     int wallDir;
     int i;
     bool doorDone = false;
+    int northWall, eastWall, southWall, westWall;
     //a door function cannot be done in a convenient way because the system changes depending on the direction of the room
     switch (dir) {
         case 0:
@@ -234,13 +235,13 @@ bool ProceduralMap::makeRoom(int x, int y, int direction) {
             for (int yTemp = y; yTemp > (y - yLength); yTemp--) {
                 for (int xTemp = (x - xLength / 2); xTemp < (x + ((xLength + 1) / 2)); xTemp++) {
                     //start with the walls
-                    if (xTemp == (x - xLength / 2))
+                    if (xTemp == (x - xLength / 2)) //westwall
                         setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                    else if (xTemp == (x + (xLength - 1) / 2))
+                    else if (xTemp == (x + (xLength - 1) / 2)) //eastwall
                         setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                    else if (yTemp == y)
+                    else if (yTemp == y) //southwall
                         setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                    else if (yTemp == (y - yLength + 1))
+                    else if (yTemp == (y - yLength + 1)) //northwall
                         setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
                         //and then fill with the floor
                     else {
@@ -251,23 +252,23 @@ bool ProceduralMap::makeRoom(int x, int y, int direction) {
             }
             for (i = 0; i < nDoors; i++) {
                 wallDir = getRand(0, 3);
-                //yNorthWall = y-yLength;
-                //xEastWall = x+(xLength+1)/2;
+                //yNorthWall = y-yLength+1;
+                //xEastWall = x+(xLength-1)/2;
                 //ySouthWall = y;
                 //xOvestWall = x-xLength/2;
                 while (!doorDone) {
                     if (wallDir == 0) {
                         l = getRand( x-xLength/2 + 1, x+(xLength+1)/2 - 1);
-                        if (getCell(l, y-yLength -1)->backGround != Tile::BackGroundType::metalWall && getCell(l, y-yLength)->backGround == Tile::BackGroundType ::metalWall) {
-                            setCell(l, y-yLength, Tile::BackGroundType::cementFloor);
+                        if (getCell(l, y-yLength )->backGround != Tile::BackGroundType::metalWall && getCell(l, y-yLength +1)->backGround == Tile::BackGroundType ::metalWall) {
+                            setCell(l, y-yLength +1, Tile::BackGroundType::cementFloor);
                             doorDone = true;
                         } else
                             wallDir = getRand(0, 3);
                     }
                     if (wallDir == 1) {
-                        l = getRand((y - 1), (y-yLength + 1));
-                        if (getCell(x+xLength/2 + 1, l)->backGround != Tile::BackGroundType::metalWall && getCell(x+xLength/2, l)->backGround == Tile::BackGroundType ::metalWall) {
-                            setCell(x+(xLength+1)/2, l, Tile::BackGroundType::cementFloor);
+                        l = getRand(y - 1, (y-yLength +2));
+                        if (getCell(x+(xLength)/2 + 1, l)->backGround != Tile::BackGroundType::metalWall && getCell(x+(xLength-1)/2, l)->backGround == Tile::BackGroundType ::metalWall) {
+                            setCell(x+(xLength-1)/2, l, Tile::BackGroundType::cementFloor);
                             doorDone = true;
                         } else
                             wallDir = getRand(0, 3);
@@ -312,13 +313,13 @@ bool ProceduralMap::makeRoom(int x, int y, int direction) {
                     for (int yTemp = (y - yLength / 2); yTemp < (y + (yLength +1) / 2); yTemp++) {
                         for (int xTemp = x; xTemp < (x + xLength); xTemp++) {
 
-                            if (xTemp == x)
+                            if (xTemp == x) //westwall
                                 setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                            else if (xTemp == (x + xLength - 1))
+                            else if (xTemp == (x + xLength - 1)) //eastwall
                                 setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                            else if (yTemp == (y - yLength / 2))
+                            else if (yTemp == (y - yLength / 2)) //northwall
                                 setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                            else if (yTemp == (y + (yLength - 1) / 2))
+                            else if (yTemp == (y + (yLength - 1) / 2)) //southwall
                                 setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
                             else
                                 setCell(xTemp, yTemp, Tile::BackGroundType::labFloor);
@@ -326,15 +327,15 @@ bool ProceduralMap::makeRoom(int x, int y, int direction) {
                     }
 
                     for (i = 0; i < nDoors; i++) {
-                        wallDir = 2; //getRand(0, 3);
+                        wallDir = getRand(0, 3);
                         //yNorthWall = y-yLength/2;
-                        //xEastWall = x+xLength;
-                        //ySouthWall = y+(yLength+1)/2;
+                        //xEastWall = x+xLength -1;
+                        //ySouthWall = y+(yLength-1)/2;
                         //xOvestWall = x;
 
                         while (!doorDone) {
                             if (wallDir == 0) {
-                                l = getRand( x + 1, (x+xLength - 1));
+                                l = getRand( x + 1, (x+xLength - 2));
                                 if (getCell(l, (y - yLength/2 -1))->backGround != Tile::BackGroundType::metalWall && getCell(l, y - yLength/2)->backGround == Tile::BackGroundType ::metalWall) {
                                     setCell(l, (y - yLength / 2), Tile::BackGroundType::cementFloor);
                                     doorDone = true;
@@ -342,24 +343,24 @@ bool ProceduralMap::makeRoom(int x, int y, int direction) {
                                     wallDir = getRand(0, 3);
                             }
                             if (wallDir == 1) {
-                                l = getRand((y - yLength/2 + 2), (y + (yLength+1)/2 - 1));
-                                if (getCell(x + xLength +1, l)->backGround != Tile::BackGroundType::metalWall && getCell(x + xLength, l)->backGround == Tile::BackGroundType ::metalWall) {
-                                    setCell((x + xLength), l, Tile::BackGroundType::cementFloor);
+                                l = getRand((y - yLength/2 + 1), (y + (yLength-1)/2 - 1));
+                                if (getCell(x + xLength, l)->backGround != Tile::BackGroundType::metalWall && getCell(x + xLength -1, l)->backGround == Tile::BackGroundType ::metalWall) {
+                                    setCell((x + xLength -1), l, Tile::BackGroundType::cementFloor);
                                     doorDone = true;
                                 } else
                                     wallDir = getRand(0, 3);
 
                             }
                             if (wallDir == 2) {
-                                l = getRand(x + 1, (x + xLength - 1));
-                                if (getCell(l, (y+(yLength+1)/2 + 1))->backGround != Tile::BackGroundType::metalWall && getCell(l, y+(yLength+1)/2)->backGround == Tile::BackGroundType::metalWall) {
-                                    setCell(l, y+(yLength+1)/2, Tile::BackGroundType::cementFloor);
+                                l = getRand(x + 1, (x + xLength - 2));
+                                if (getCell(l, (y+(yLength-1)/2 + 1))->backGround != Tile::BackGroundType::metalWall && getCell(l, y+(yLength-1)/2)->backGround == Tile::BackGroundType::metalWall) {
+                                    setCell(l, y+(yLength-1)/2 , Tile::BackGroundType::cementFloor);
                                     doorDone = true;
                                 } else
                                     wallDir = getRand(0, 3);
                             }
                             if (wallDir == 3) {
-                                l = getRand((y - yLength/2 + 1), (y+(yLength+1)/2 - 1));
+                                l = getRand((y+(yLength-1)/2 - 1), (y - yLength/2 + 1));
                                 if (getCell(x - 1, l)->backGround != Tile::BackGroundType::metalWall && getCell(x, l)->backGround == Tile::BackGroundType ::metalWall) {
                                     setCell(x, l, Tile::BackGroundType::cementFloor);
                                     doorDone = true;
@@ -372,6 +373,10 @@ bool ProceduralMap::makeRoom(int x, int y, int direction) {
                 break;
                 case 2:
                     //south
+                    northWall = y;
+                    eastWall = x+(xLength-1)/2;
+                    southWall = y+yLength-1;
+                    westWall = x-xLength/2;
                     for (int yTemp = y; yTemp < (y + yLength); yTemp++) {
                         if (yTemp < 0 || yTemp > ysize)
                             return false;
@@ -404,31 +409,27 @@ bool ProceduralMap::makeRoom(int x, int y, int direction) {
                         wallDir = getRand(0, 3);
                         while (!doorDone) {
                             //SOUTH
-                            //northwall y
-                            //eastwall x+(xLength+1)/2
-                            //southwall y+yLength
-                            //ovestwall x-xLength/2
                             if (wallDir == 0) {
-                                l = getRand((x - xLength / 2) + 1, (x+(xLength + 1)/2) - 1);
-                                if (getCell(l, (y - 1))->backGround != Tile::BackGroundType::metalWall && getCell(l, y)->backGround == Tile::BackGroundType::metalWall){
-                                    setCell(l, y, Tile::BackGroundType::cementFloor);
+                                l = getRand(westWall + 1, eastWall - 1);
+                                if (getCell(l, (northWall - 1))->backGround != Tile::BackGroundType::metalWall && getCell(l, northWall)->backGround == Tile::BackGroundType::metalWall){
+                                    setCell(l, northWall, Tile::BackGroundType::cementFloor);
                                     doorDone = true;
                                 } else
                                     wallDir = getRand(0, 3);
 
                             }
                             if (wallDir == 1) {
-                                l = getRand(y +1 , (y + yLength -1));
-                                if (getCell((x + (xLength + 1)/2) +1, l)->backGround != Tile::BackGroundType::metalWall && getCell(x+(xLength+1)/2, l)->backGround == Tile::BackGroundType::metalWall) {
-                                    setCell(x + (xLength + 1)/2, l, Tile::BackGroundType::cementFloor);
+                                l = getRand(northWall +1 , (southWall -1));
+                                if (getCell(eastWall +1, l)->backGround != Tile::BackGroundType::metalWall && getCell(eastWall, l)->backGround == Tile::BackGroundType::metalWall) {
+                                    setCell(eastWall, l, Tile::BackGroundType::cementFloor);
                                     doorDone = true;
                                 } else
                                     wallDir = getRand(0, 3);
                             }
                             if (wallDir == 2) {
-                                l = getRand((x - xLength / 2) + 1, (x + (xLength + 1) / 2) - 1);
-                                if (getCell(l, (y + yLength + 1))->backGround != Tile::BackGroundType::metalWall && getCell(l, y+yLength)->backGround == Tile::BackGroundType::metalWall) {
-                                    setCell(l, y, Tile::BackGroundType::cementFloor);
+                                l = getRand(westWall + 1, eastWall - 1);
+                                if (getCell(l, southWall +1)->backGround != Tile::BackGroundType::metalWall && getCell(l, southWall)->backGround == Tile::BackGroundType::metalWall) {
+                                    setCell(l, southWall, Tile::BackGroundType::cementFloor);
                                     doorDone = true;
                                 } else
                                     wallDir = getRand(0, 3);
@@ -436,9 +437,9 @@ bool ProceduralMap::makeRoom(int x, int y, int direction) {
 
                             }
                             if (wallDir == 3) {
-                                l = getRand((y + 1), (y + yLength - 1));
-                                if (getCell((x - xLength / 2) - 1, l)->backGround != Tile::BackGroundType::metalWall && getCell(x-xLength/2, l)->backGround == Tile::BackGroundType::metalWall) {
-                                    setCell((x - xLength / 2), l, Tile::BackGroundType::cementFloor);
+                                l = getRand(southWall -1, northWall +1);
+                                if (getCell(eastWall -1, l)->backGround != Tile::BackGroundType::metalWall && getCell(eastWall, l)->backGround == Tile::BackGroundType::metalWall) {
+                                    setCell(eastWall, l, Tile::BackGroundType::cementFloor);
                                     doorDone = true;
                                 } else
                                     wallDir = getRand(0, 3);
@@ -449,7 +450,10 @@ bool ProceduralMap::makeRoom(int x, int y, int direction) {
                 break;
                 case 3:
                     //west
-
+                    northWall = y-yLength/2;
+                    eastWall = x;
+                    southWall = y + (yLength-1)/2;
+                    westWall = x - xLength +1;
                     for (int yTemp = (y - yLength / 2); yTemp < (y + (yLength + 1) / 2);
                          yTemp++) {
                         if (yTemp < 0 || yTemp > ysize)
@@ -481,33 +485,33 @@ bool ProceduralMap::makeRoom(int x, int y, int direction) {
                             wallDir = getRand(0, 3);
                             while (!doorDone) {
                                 if (wallDir == 0) {
-                                    l = getRand(x - 1, x - xLength + 1);
-                                    if (getCell(l, (y - yLength/2 -1))->backGround != Tile::BackGroundType::metalWall && getCell(l, y-yLength/2)->backGround == Tile::BackGroundType::metalWall) {
-                                        setCell(l, (y - yLength), Tile::BackGroundType::cementFloor);
+                                    l = getRand(westWall +1, eastWall -1);
+                                    if (getCell(l, northWall -1)->backGround != Tile::BackGroundType::metalWall && getCell(l, northWall)->backGround == Tile::BackGroundType::metalWall) {
+                                        setCell(l, northWall, Tile::BackGroundType::cementFloor);
                                         doorDone = true;
                                     } else
                                         wallDir = getRand(0, 3);
                                 }
                                 if (wallDir == 1) {
-                                    l = getRand((y - yLength/2 + 1), (y + (yLength+1)/2 - 1));
-                                    if (getCell(x + 1, l)->backGround != Tile::BackGroundType::metalWall && getCell(x, l)->backGround == Tile::BackGroundType::metalWall) {
-                                        setCell(x , l, Tile::BackGroundType::cementFloor);
+                                    l = getRand(southWall -1, northWall +1);
+                                    if (getCell(eastWall + 1, l)->backGround != Tile::BackGroundType::metalWall && getCell(eastWall, l)->backGround == Tile::BackGroundType::metalWall) {
+                                        setCell(eastWall , l, Tile::BackGroundType::cementFloor);
                                         doorDone = true;
                                     } else
                                         wallDir = getRand(0, 3);
                                 }
                                 if (wallDir == 2) {
-                                    l = getRand(x - xLength + 1, x - 1);
-                                    if (getCell(l, (y + (yLength+1)/2 + 1))->backGround != Tile::BackGroundType::metalWall && getCell(l, y+(yLength+1)/2)->backGround == Tile::BackGroundType::metalWall) {
-                                        setCell(l, y+(yLength+1)/2, Tile::BackGroundType::cementFloor);
+                                    l = getRand(westWall +1, eastWall -1);
+                                    if (getCell(l, southWall +1)->backGround != Tile::BackGroundType::metalWall && getCell(l, southWall)->backGround == Tile::BackGroundType::metalWall) {
+                                        setCell(l, southWall, Tile::BackGroundType::cementFloor);
                                         doorDone = true;
                                     } else
                                         wallDir = getRand(0, 3);
                                 }
                                 if (wallDir == 3) {
-                                    l = getRand((y - yLength/2 + 1), y+(yLength+1)/2 - 1);
-                                    if (getCell((x - xLength) - 1, l)->backGround == Tile::BackGroundType::metalWall && getCell(x-xLength, l)->backGround == Tile::BackGroundType ::metalWall) {
-                                        setCell((x - xLength), l, Tile::BackGroundType::cementFloor);
+                                    l = getRand(southWall -1, northWall +1);
+                                    if (getCell(westWall -1, l)->backGround == Tile::BackGroundType::metalWall && getCell(westWall, l)->backGround == Tile::BackGroundType ::metalWall) {
+                                        setCell(westWall, l, Tile::BackGroundType::cementFloor);
                                         doorDone = true;
                                     } else
                                         wallDir = getRand(0, 3);
