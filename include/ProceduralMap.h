@@ -58,6 +58,9 @@ private:
     const int ysize; // stessa cosa, è una torre a pianta quadrata
 
     const int maxRoomSide;
+    const int minRoomSide;
+
+    const int numSideCell = 25;
     int towerLevel = 0;
     int objects; //chest, loot on the map
 
@@ -71,7 +74,7 @@ private:
     const int chance4Door = 100;
 
 
-    const int minRoomSide;
+
 
     bool bossRoom = false;
     const int minBossRoomSide = 10;

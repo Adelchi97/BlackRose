@@ -35,15 +35,17 @@ public:
     void seek();
     void patrol();
     void useSkill(SkillType type);
+    void changeDirection();
     virtual void die();
 
 private:
-    void changeDirection();
+
     void setRandomType();
 
 public:
     Type type;
     bool active;
+    bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
 
 private:
     std::shared_ptr<Weapon> weapon;
@@ -56,7 +58,7 @@ private:
     int counterWalk;
     int changeDirectionTime, counterDirection = 0;
     bool delayWalk, delayMoreWalk;
-    bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
+    //bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
 
     std::random_device rd;
     std::uniform_real_distribution<> distribution;

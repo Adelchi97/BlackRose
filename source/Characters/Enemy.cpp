@@ -48,9 +48,9 @@ Enemy::Enemy(const TextureHolder &textures, sf::Vector2u windowSize): textures(t
     changeDirectionTime = 100;
     speed = 2;
     if(type==robotRed)
-        hp = 40, attackDamage = 20;
+        hp = 20, attackDamage = 20;
     else if(type==robotGray)
-        hp = 20, attackDamage = 10;
+        hp = 40, attackDamage = 10;
 
     hpMax = hp;
 
