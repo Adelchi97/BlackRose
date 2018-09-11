@@ -4,6 +4,7 @@
 
 #include "../../include/Characters/PlayerCharacter.h"
 
+
 Textures::ID toTextureID(PlayerCharacter::Type type) {
     switch(type) {
         case PlayerCharacter::Type::blueHero:
@@ -27,6 +28,7 @@ PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures, sf::V
     this->windowSize.y = (int)windowSize.y;
 
     rect.setPosition(windowSize.x/2.f,windowSize.y/2.f);
+    //rect.setPosition(generateRandom(800), generateRandom(800));
     speed = 2;
     hp = 200;
     hpMax = hp;
@@ -88,7 +90,8 @@ bool PlayerCharacter::interactWithObject(std::shared_ptr<Object> &object) {
     rangedWeapon = std::dynamic_pointer_cast<RangedWeapon>(object);
     if(rangedWeapon.get() != nullptr) {
         rangedWeapon->equipped = true;
-        std::cout<<"Weapon equipped"<<std::endl;
+        if(inventory.addItem(object.get()))
+            std::cout<<"Weapon equipped"<<std::endl;
     }
     return true;
 }

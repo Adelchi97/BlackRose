@@ -9,6 +9,7 @@
 #include "Characters/Enemy.h"
 #include "ProceduralMap.h"
 #include "textDisplay.h"
+#include <string>
 
 class World {
 public:
@@ -42,14 +43,19 @@ public:
     void collisionPlayerEnemy();
     void checkCollection();
 
-
-private:
+public:
+    std::shared_ptr<PlayerCharacter> player;
     std::shared_ptr<sf::RenderWindow> window;
+    //std::vector<int> wallArray;
+
+    std::shared_ptr<ProceduralMap> map;
+private:
+
     const TextureHolder& textures;
     std::vector<std::shared_ptr<textDisplay>> textureDisplayArray;
     sf::Clock textureTimer;
 
-    std::shared_ptr<PlayerCharacter> player;
+
     std::shared_ptr<Character> characterArray;
     std::vector<std::shared_ptr<Enemy>> enemyArray;
     std::shared_ptr<RangedWeapon> rangedWeapon;
@@ -57,7 +63,7 @@ private:
     std::vector<std::shared_ptr<Projectile>> projectileArray;
     std::vector<std::shared_ptr<Object>> collectableObject;
 
-    std::shared_ptr<ProceduralMap> map;
+
 
 };
 

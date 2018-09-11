@@ -116,78 +116,6 @@ std::shared_ptr<Tile> ProceduralMap::getCell(int x, int y) {
     return tileMap[y+x*25];
 }
 
-//    int rand;
-/*
-    tileSprite.setPosition(x*32, y*32);
-    if(tile == Floor){
-        tileSprite.setTextureRect(sf::IntRect(0,0,32,32));
-        mapWindow->draw(tileSprite);
-        levelMap[x + xsize*y] = 1;
-    }
-    if (tile == Unused){
-        tileSprite.setTextureRect(sf::IntRect(32,0,32*2,32));
-        mapWindow->draw(tileSprite);
-        levelMap[x + xsize*y] = 0;
-    }
-    if(tile == Wall){
-        tileSprite.setTextureRect(sf::IntRect(32,32,32*2,32*2));
-        mapWindow->draw(tileSprite);
-        levelMap[x + xsize*y] = 2;
-    }
-
-    if (tile == TileType::Floor){
-        rand = getRand(1,3);
-        switch (rand){
-            case 1:
-                levelMap[x + xsize * y] = TileType::Floor;
-                break;
-            case 2:
-                levelMap[x + xsize * y] = TileType::dirtFloor;
-                break;
-            case 3:
-                levelMap[x + xsize * y] = TileType::brokenFloor;
-                break;
-            default:
-                levelMap[x + xsize * y] = TileType::Floor;
-                break;
-        }
-    }
-
-    else if (tile == TileType::Wall){
-        rand = getRand(1,3);
-        switch (rand){
-            case 1:
-                levelMap[x + xsize * y] = TileType::Wall;
-                break;
-            case 2:
-                levelMap[x + xsize * y] = TileType::dirtWall;
-                break;
-            case 3:
-                levelMap[x + xsize * y] = TileType::brokenWall;
-                break;
-            default:
-                levelMap[x + xsize * y] = TileType::Wall;
-                break;
-        }
-
-    }
-    else if (tile == TileType::Door){
-        rand = getRand(1,2);
-        switch (rand){
-            case 1:
-                levelMap[x + xsize * y] = TileType::Door;
-                break;
-            case 2:
-                levelMap[x + xsize * y] = TileType::BrokenDoor;
-                break;
-            default:
-                levelMap[x + xsize * y] = TileType::Door;
-                break;
-        }
-    }
-
-}
-*/
 
 bool ProceduralMap::makeBossRoom(int x, int y) {
 
@@ -207,7 +135,7 @@ bool ProceduralMap::makeRoom(int x, int y, int direction) {
         }
     }
     */
-// rooms will respect the min and max width and length, the walkable tiles will be 2 less for length and 2 less for width
+    // rooms will respect the min and max width and length, the walkable tiles will be 2 less for length and 2 less for width
     int xLength = getRand(minRoomSide, maxRoomSide);
     int yLength = getRand(minRoomSide, maxRoomSide);
     //two cases in room creation. I'll manage what tile version of wall or floor to take in SetCell
@@ -311,233 +239,233 @@ bool ProceduralMap::makeRoom(int x, int y, int direction) {
                 }
             }
             break;
-            case 1:
-                    //east
-                    //yNorthWall = y-yLength/2;
-                    //xEastWall = x+xLength;
-                    //ySouthWall = y + yLength/2;
-                    //xOvestWall = x;
-                    for (int yTemp = (y - yLength / 2); yTemp < (y + (yLength +1 ) / 2); yTemp++) {
-                        if (yTemp < 0 || yTemp > ysize)
-                            return false;
-                        for (int xTemp = x; xTemp < (x + xLength); xTemp++) {
-                            if (xTemp < 0 || xTemp > xsize)
-                                return false;
-                            if (getCell(xTemp, yTemp)->backGround != Tile::BackGroundType::baseFloor)
-                                return false;
-                        }
-                    }
-
-                    for (int yTemp = (y - yLength / 2); yTemp < (y + (yLength +1) / 2); yTemp++) {
-                        for (int xTemp = x; xTemp < (x + xLength); xTemp++) {
-
-                            if (xTemp == x) //westwall
-                                setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                            else if (xTemp == (x + xLength - 1)) //eastwall
-                                setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                            else if (yTemp == (y - yLength / 2)) //northwall
-                                setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                            else if (yTemp == (y + (yLength - 1) / 2)) //southwall
-                                setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                            else
-                                setCell(xTemp, yTemp, Tile::BackGroundType::labFloor);
-                        }
-                    }
-
-                    for (i = 0; i < nDoors; i++) {
-                        wallDir = getRand(0, 3);
-                        //yNorthWall = y-yLength/2;
-                        //xEastWall = x+xLength -1;
-                        //ySouthWall = y+(yLength-1)/2;
-                        //xOvestWall = x;
-
-                        while (!doorDone) {
-                            if (wallDir == 0) {
-                                l = getRand( x + 1, (x+xLength - 2));
-                                if (getCell(l, (y - yLength/2 -1))->backGround != Tile::BackGroundType::metalWall && getCell(l, y - yLength/2)->backGround == Tile::BackGroundType ::metalWall) {
-                                    setCell(l, (y - yLength / 2), Tile::BackGroundType::cementFloor);
-                                    doorDone = true;
-                                } else
-                                    wallDir = getRand(0, 3);
-                            }
-                            if (wallDir == 1) {
-                                l = getRand((y - yLength/2 + 1), (y + (yLength-1)/2 - 1));
-                                if (getCell(x + xLength, l)->backGround != Tile::BackGroundType::metalWall && getCell(x + xLength -1, l)->backGround == Tile::BackGroundType ::metalWall) {
-                                    setCell((x + xLength -1), l, Tile::BackGroundType::cementFloor);
-                                    doorDone = true;
-                                } else
-                                    wallDir = getRand(0, 3);
-
-                            }
-                            if (wallDir == 2) {
-                                l = getRand(x + 1, (x + xLength - 2));
-                                if (getCell(l, (y+(yLength-1)/2 + 1))->backGround != Tile::BackGroundType::metalWall && getCell(l, y+(yLength-1)/2)->backGround == Tile::BackGroundType::metalWall) {
-                                    setCell(l, y+(yLength-1)/2 , Tile::BackGroundType::cementFloor);
-                                    doorDone = true;
-                                } else
-                                    wallDir = getRand(0, 3);
-                            }
-                            if (wallDir == 3) {
-                                l = getRand((y+(yLength-1)/2 - 1), (y - yLength/2 + 1));
-                                if (getCell(x - 1, l)->backGround != Tile::BackGroundType::metalWall && getCell(x, l)->backGround == Tile::BackGroundType ::metalWall) {
-                                    setCell(x, l, Tile::BackGroundType::cementFloor);
-                                    doorDone = true;
-                                } else
-                                    wallDir = getRand(0, 3);
-                            }
-                        }
-                    }
-
-                break;
-                case 2:
-                    //south
-                    northWall = y;
-                    eastWall = x+(xLength-1)/2;
-                    southWall = y+yLength-1;
-                    westWall = x-xLength/2;
-                    for (int yTemp = y; yTemp < (y + yLength); yTemp++) {
-                        if (yTemp < 0 || yTemp > ysize)
-                            return false;
-                        for (int xTemp = (x - xLength / 2); xTemp < (x + (xLength + 1) / 2);
-                             xTemp++) {
-                            if (xTemp < 0 || xTemp > xsize)
-                                return false;
-                            if (getCell(xTemp, yTemp)->backGround != Tile::BackGroundType::baseFloor)
-                                return false;
-                        }
-                    }
-
-                    for (int yTemp = y; yTemp < (y + yLength); yTemp++) {
-                        for (int xTemp = (x - xLength / 2); xTemp < (x + (xLength + 1) / 2);
-                             xTemp++) {
-
-                            if (xTemp == (x - xLength / 2))
-                                setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                            else if (xTemp == (x + (xLength - 1) / 2))
-                                setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                            else if (yTemp == y)
-                                setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                            else if (yTemp == (y + yLength - 1))
-                                setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                            else
-                                setCell(xTemp, yTemp, Tile::BackGroundType::labFloor);
-                        }
-                    }
-                    for (i = 0; i < nDoors; i++) {
-                        wallDir = getRand(0, 3);
-                        while (!doorDone) {
-                            //SOUTH
-                            if (wallDir == 0) {
-                                l = getRand(westWall + 1, eastWall - 1);
-                                if (getCell(l, (northWall - 1))->backGround != Tile::BackGroundType::metalWall && getCell(l, northWall)->backGround == Tile::BackGroundType::metalWall){
-                                    setCell(l, northWall, Tile::BackGroundType::cementFloor);
-                                    doorDone = true;
-                                } else
-                                    wallDir = getRand(0, 3);
-
-                            }
-                            if (wallDir == 1) {
-                                l = getRand(northWall +1 , (southWall -1));
-                                if (getCell(eastWall +1, l)->backGround != Tile::BackGroundType::metalWall && getCell(eastWall, l)->backGround == Tile::BackGroundType::metalWall) {
-                                    setCell(eastWall, l, Tile::BackGroundType::cementFloor);
-                                    doorDone = true;
-                                } else
-                                    wallDir = getRand(0, 3);
-                            }
-                            if (wallDir == 2) {
-                                l = getRand(westWall + 1, eastWall - 1);
-                                if (getCell(l, southWall +1)->backGround != Tile::BackGroundType::metalWall && getCell(l, southWall)->backGround == Tile::BackGroundType::metalWall) {
-                                    setCell(l, southWall, Tile::BackGroundType::cementFloor);
-                                    doorDone = true;
-                                } else
-                                    wallDir = getRand(0, 3);
-
-
-                            }
-                            if (wallDir == 3) {
-                                l = getRand(southWall -1, northWall +1);
-                                if (getCell(eastWall -1, l)->backGround != Tile::BackGroundType::metalWall && getCell(eastWall, l)->backGround == Tile::BackGroundType::metalWall) {
-                                    setCell(eastWall, l, Tile::BackGroundType::cementFloor);
-                                    doorDone = true;
-                                } else
-                                    wallDir = getRand(0, 3);
-
-                            }
-                        }
-                    }
-                break;
-                case 3:
-                    //west
-                    northWall = y-yLength/2;
-                    eastWall = x;
-                    southWall = y + (yLength-1)/2;
-                    westWall = x - xLength +1;
-                    for (int yTemp = (y - yLength / 2); yTemp < (y + (yLength + 1) / 2);
-                         yTemp++) {
-                        if (yTemp < 0 || yTemp > ysize)
-                            return false;
-                        for (int xTemp = x; xTemp > (x - xLength); xTemp--) {
-                            if (xTemp < 0 || xTemp > xsize)
-                                return false;
-                            if (getCell(xTemp, yTemp)->backGround != Tile::BackGroundType::baseFloor)
-                                return false;
-                        }
-                    }
-                    for (int yTemp = (y - yLength / 2); yTemp < (y + (yLength + 1) / 2);
-                     yTemp++) {
-                        for (int xTemp = x; xTemp > (x - xLength); xTemp--) {
-
-                            if (xTemp == x)
-                                setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                            else if (xTemp == (x - xLength + 1))
-                                setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                            else if (yTemp == (y - yLength / 2))
-                                setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                            else if (yTemp == (y + (yLength - 1) / 2))
-                                setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
-                            else
-                                setCell(xTemp, yTemp, Tile::BackGroundType::labFloor);
-                        }
-                    }
-                        for (i = 0; i < nDoors; i++) {
-                            wallDir = getRand(0, 3);
-                            while (!doorDone) {
-                                if (wallDir == 0) {
-                                    l = getRand(westWall +1, eastWall -1);
-                                    if (getCell(l, northWall -1)->backGround != Tile::BackGroundType::metalWall && getCell(l, northWall)->backGround == Tile::BackGroundType::metalWall) {
-                                        setCell(l, northWall, Tile::BackGroundType::cementFloor);
-                                        doorDone = true;
-                                    } else
-                                        wallDir = getRand(0, 3);
-                                }
-                                if (wallDir == 1) {
-                                    l = getRand(southWall -1, northWall +1);
-                                    if (getCell(eastWall + 1, l)->backGround != Tile::BackGroundType::metalWall && getCell(eastWall, l)->backGround == Tile::BackGroundType::metalWall) {
-                                        setCell(eastWall , l, Tile::BackGroundType::cementFloor);
-                                        doorDone = true;
-                                    } else
-                                        wallDir = getRand(0, 3);
-                                }
-                                if (wallDir == 2) {
-                                    l = getRand(westWall +1, eastWall -1);
-                                    if (getCell(l, southWall +1)->backGround != Tile::BackGroundType::metalWall && getCell(l, southWall)->backGround == Tile::BackGroundType::metalWall) {
-                                        setCell(l, southWall, Tile::BackGroundType::cementFloor);
-                                        doorDone = true;
-                                    } else
-                                        wallDir = getRand(0, 3);
-                                }
-                                if (wallDir == 3) {
-                                    l = getRand(southWall -1, northWall +1);
-                                    if (getCell(westWall -1, l)->backGround == Tile::BackGroundType::metalWall && getCell(westWall, l)->backGround == Tile::BackGroundType ::metalWall) {
-                                        setCell(westWall, l, Tile::BackGroundType::cementFloor);
-                                        doorDone = true;
-                                    } else
-                                        wallDir = getRand(0, 3);
-                                }
-                            }
-                        }
-                break;
+        case 1:
+            //east
+            //yNorthWall = y-yLength/2;
+            //xEastWall = x+xLength;
+            //ySouthWall = y + yLength/2;
+            //xOvestWall = x;
+            for (int yTemp = (y - yLength / 2); yTemp < (y + (yLength +1 ) / 2); yTemp++) {
+                if (yTemp < 0 || yTemp > ysize)
+                    return false;
+                for (int xTemp = x; xTemp < (x + xLength); xTemp++) {
+                    if (xTemp < 0 || xTemp > xsize)
+                        return false;
+                    if (getCell(xTemp, yTemp)->backGround != Tile::BackGroundType::baseFloor)
+                        return false;
+                }
             }
+
+            for (int yTemp = (y - yLength / 2); yTemp < (y + (yLength +1) / 2); yTemp++) {
+                for (int xTemp = x; xTemp < (x + xLength); xTemp++) {
+
+                    if (xTemp == x) //westwall
+                        setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
+                    else if (xTemp == (x + xLength - 1)) //eastwall
+                        setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
+                    else if (yTemp == (y - yLength / 2)) //northwall
+                        setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
+                    else if (yTemp == (y + (yLength - 1) / 2)) //southwall
+                        setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
+                    else
+                        setCell(xTemp, yTemp, Tile::BackGroundType::labFloor);
+                }
+            }
+
+            for (i = 0; i < nDoors; i++) {
+                wallDir = getRand(0, 3);
+                //yNorthWall = y-yLength/2;
+                //xEastWall = x+xLength -1;
+                //ySouthWall = y+(yLength-1)/2;
+                //xOvestWall = x;
+
+                while (!doorDone) {
+                    if (wallDir == 0) {
+                        l = getRand( x + 1, (x+xLength - 2));
+                        if (getCell(l, (y - yLength/2 -1))->backGround != Tile::BackGroundType::metalWall && getCell(l, y - yLength/2)->backGround == Tile::BackGroundType ::metalWall) {
+                            setCell(l, (y - yLength / 2), Tile::BackGroundType::cementFloor);
+                            doorDone = true;
+                        } else
+                            wallDir = getRand(0, 3);
+                    }
+                    if (wallDir == 1) {
+                        l = getRand((y - yLength/2 + 1), (y + (yLength-1)/2 - 1));
+                        if (getCell(x + xLength, l)->backGround != Tile::BackGroundType::metalWall && getCell(x + xLength -1, l)->backGround == Tile::BackGroundType ::metalWall) {
+                            setCell((x + xLength -1), l, Tile::BackGroundType::cementFloor);
+                            doorDone = true;
+                        } else
+                            wallDir = getRand(0, 3);
+
+                    }
+                    if (wallDir == 2) {
+                        l = getRand(x + 1, (x + xLength - 2));
+                        if (getCell(l, (y+(yLength-1)/2 + 1))->backGround != Tile::BackGroundType::metalWall && getCell(l, y+(yLength-1)/2)->backGround == Tile::BackGroundType::metalWall) {
+                            setCell(l, y+(yLength-1)/2 , Tile::BackGroundType::cementFloor);
+                            doorDone = true;
+                        } else
+                            wallDir = getRand(0, 3);
+                    }
+                    if (wallDir == 3) {
+                        l = getRand((y+(yLength-1)/2 - 1), (y - yLength/2 + 1));
+                        if (getCell(x - 1, l)->backGround != Tile::BackGroundType::metalWall && getCell(x, l)->backGround == Tile::BackGroundType ::metalWall) {
+                            setCell(x, l, Tile::BackGroundType::cementFloor);
+                            doorDone = true;
+                        } else
+                            wallDir = getRand(0, 3);
+                    }
+                }
+            }
+
+            break;
+        case 2:
+            //south
+            northWall = y;
+            eastWall = x+(xLength-1)/2;
+            southWall = y+yLength-1;
+            westWall = x-xLength/2;
+            for (int yTemp = y; yTemp < (y + yLength); yTemp++) {
+                if (yTemp < 0 || yTemp > ysize)
+                    return false;
+                for (int xTemp = (x - xLength / 2); xTemp < (x + (xLength + 1) / 2);
+                     xTemp++) {
+                    if (xTemp < 0 || xTemp > xsize)
+                        return false;
+                    if (getCell(xTemp, yTemp)->backGround != Tile::BackGroundType::baseFloor)
+                        return false;
+                }
+            }
+
+            for (int yTemp = y; yTemp < (y + yLength); yTemp++) {
+                for (int xTemp = (x - xLength / 2); xTemp < (x + (xLength + 1) / 2);
+                     xTemp++) {
+
+                    if (xTemp == (x - xLength / 2))
+                        setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
+                    else if (xTemp == (x + (xLength - 1) / 2))
+                        setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
+                    else if (yTemp == y)
+                        setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
+                    else if (yTemp == (y + yLength - 1))
+                        setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
+                    else
+                        setCell(xTemp, yTemp, Tile::BackGroundType::labFloor);
+                }
+            }
+            for (i = 0; i < nDoors; i++) {
+                wallDir = getRand(0, 3);
+                while (!doorDone) {
+                    //SOUTH
+                    if (wallDir == 0) {
+                        l = getRand(westWall + 1, eastWall - 1);
+                        if (getCell(l, (northWall - 1))->backGround != Tile::BackGroundType::metalWall && getCell(l, northWall)->backGround == Tile::BackGroundType::metalWall){
+                            setCell(l, northWall, Tile::BackGroundType::cementFloor);
+                            doorDone = true;
+                        } else
+                            wallDir = getRand(0, 3);
+
+                    }
+                    if (wallDir == 1) {
+                        l = getRand(northWall +1 , (southWall -1));
+                        if (getCell(eastWall +1, l)->backGround != Tile::BackGroundType::metalWall && getCell(eastWall, l)->backGround == Tile::BackGroundType::metalWall) {
+                            setCell(eastWall, l, Tile::BackGroundType::cementFloor);
+                            doorDone = true;
+                        } else
+                            wallDir = getRand(0, 3);
+                    }
+                    if (wallDir == 2) {
+                        l = getRand(westWall + 1, eastWall - 1);
+                        if (getCell(l, southWall +1)->backGround != Tile::BackGroundType::metalWall && getCell(l, southWall)->backGround == Tile::BackGroundType::metalWall) {
+                            setCell(l, southWall, Tile::BackGroundType::cementFloor);
+                            doorDone = true;
+                        } else
+                            wallDir = getRand(0, 3);
+
+
+                    }
+                    if (wallDir == 3) {
+                        l = getRand(southWall -1, northWall +1);
+                        if (getCell(eastWall -1, l)->backGround != Tile::BackGroundType::metalWall && getCell(eastWall, l)->backGround == Tile::BackGroundType::metalWall) {
+                            setCell(eastWall, l, Tile::BackGroundType::cementFloor);
+                            doorDone = true;
+                        } else
+                            wallDir = getRand(0, 3);
+
+                    }
+                }
+            }
+            break;
+        case 3:
+            //west
+            northWall = y-yLength/2;
+            eastWall = x;
+            southWall = y + (yLength-1)/2;
+            westWall = x - xLength +1;
+            for (int yTemp = (y - yLength / 2); yTemp < (y + (yLength + 1) / 2);
+                 yTemp++) {
+                if (yTemp < 0 || yTemp > ysize)
+                    return false;
+                for (int xTemp = x; xTemp > (x - xLength); xTemp--) {
+                    if (xTemp < 0 || xTemp > xsize)
+                        return false;
+                    if (getCell(xTemp, yTemp)->backGround != Tile::BackGroundType::baseFloor)
+                        return false;
+                }
+            }
+            for (int yTemp = (y - yLength / 2); yTemp < (y + (yLength + 1) / 2);
+             yTemp++) {
+                for (int xTemp = x; xTemp > (x - xLength); xTemp--) {
+
+                    if (xTemp == x)
+                        setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
+                    else if (xTemp == (x - xLength + 1))
+                        setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
+                    else if (yTemp == (y - yLength / 2))
+                        setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
+                    else if (yTemp == (y + (yLength - 1) / 2))
+                        setCell(xTemp, yTemp, Tile::BackGroundType::metalWall);
+                    else
+                        setCell(xTemp, yTemp, Tile::BackGroundType::labFloor);
+                }
+            }
+                for (i = 0; i < nDoors; i++) {
+                    wallDir = getRand(0, 3);
+                    while (!doorDone) {
+                        if (wallDir == 0) {
+                            l = getRand(westWall +1, eastWall -1);
+                            if (getCell(l, northWall -1)->backGround != Tile::BackGroundType::metalWall && getCell(l, northWall)->backGround == Tile::BackGroundType::metalWall) {
+                                setCell(l, northWall, Tile::BackGroundType::cementFloor);
+                                doorDone = true;
+                            } else
+                                wallDir = getRand(0, 3);
+                        }
+                        if (wallDir == 1) {
+                            l = getRand(southWall -1, northWall +1);
+                            if (getCell(eastWall + 1, l)->backGround != Tile::BackGroundType::metalWall && getCell(eastWall, l)->backGround == Tile::BackGroundType::metalWall) {
+                                setCell(eastWall , l, Tile::BackGroundType::cementFloor);
+                                doorDone = true;
+                            } else
+                                wallDir = getRand(0, 3);
+                        }
+                        if (wallDir == 2) {
+                            l = getRand(westWall +1, eastWall -1);
+                            if (getCell(l, southWall +1)->backGround != Tile::BackGroundType::metalWall && getCell(l, southWall)->backGround == Tile::BackGroundType::metalWall) {
+                                setCell(l, southWall, Tile::BackGroundType::cementFloor);
+                                doorDone = true;
+                            } else
+                                wallDir = getRand(0, 3);
+                        }
+                        if (wallDir == 3) {
+                            l = getRand(southWall -1, northWall +1);
+                            if (getCell(westWall -1, l)->backGround == Tile::BackGroundType::metalWall && getCell(westWall, l)->backGround == Tile::BackGroundType ::metalWall) {
+                                setCell(westWall, l, Tile::BackGroundType::cementFloor);
+                                doorDone = true;
+                            } else
+                                wallDir = getRand(0, 3);
+                        }
+                    }
+                }
+            break;
+    }
     // successful build
     return true;
 }

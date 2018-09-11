@@ -13,9 +13,20 @@ Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(800, 800), "BlackRose"
 
     //sets the icon
     sf::Image icon;
+
     if(!icon.loadFromFile("Media/Icon.png"))
         throw std::runtime_error("icon not loaded");
     mWindow->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
+    //set the font and text on screen
+
+    sf::Font font;
+    mFont.loadFromFile("Media/Digitalism.ttf");
+    mStatisticsText.setFont(mFont);
+    mStatisticsText.setPosition(5.f,5.f);
+    mStatisticsText.setCharacterSize(50);
+    mStatisticsText.setString("Ammo: ");
+    //mStatisticsText.setString("Ammo: " + std::to_string(world->player->rangedWeapon->projectilesCounter));
 
     /*
     //Statistics text
@@ -25,7 +36,7 @@ Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(800, 800), "BlackRose"
     mStatisticsText.setCharacterSize(50);
     //mStatisticsText.setColor(sf::Color::Cyan);
     mStatisticsText.setString("Hello");
-     */
+    */
 
 }
 

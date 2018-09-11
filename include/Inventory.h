@@ -9,8 +9,28 @@
 
 //template <typename object>
 class Inventory {
-    //TODO
+public:
+    Inventory();
+    Inventory(const Object& right);
+
+    Inventory(Object **arrayItems);
+
+    Object& operator=(const Object& right);
+    virtual ~Inventory(){}
+    bool addItem(Object* item);
+    bool getElement(int pos, Object& item) const;
+    bool removeItem(int pos, Object& item);
+    int getMaxElements() const;
+
+
+protected:
+    static const int maxElements = 12;
+    Object *arrayItems[maxElements];
 };
 
+
+
+
+//vettore di oggetti, ogni personaggio ha un inventario
 
 #endif //BLACKROSE_INVENTORY_H

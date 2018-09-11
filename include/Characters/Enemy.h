@@ -20,6 +20,7 @@ public:
         robotRed,
         robotGray
     };
+    //enum Direction{ UP = 1,DOWN,LEFT,RIGHT};
 
     explicit Enemy(Type type, const TextureHolder& textures, sf::Vector2u windowSize);
     explicit Enemy(const TextureHolder& textures, sf::Vector2u windowSize);
@@ -45,6 +46,7 @@ private:
 public:
     Type type;
     bool active;
+    Direction dir;
     bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
 
 private:
@@ -58,7 +60,7 @@ private:
     int counterWalk;
     int changeDirectionTime, counterDirection = 0;
     bool delayWalk, delayMoreWalk;
-    //bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
+
 
     std::random_device rd;
     std::uniform_real_distribution<> distribution;
