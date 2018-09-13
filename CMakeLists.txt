@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 project(BlackRose)
 
-cmake_policy(SET CMP0074 OLD)
+#cmake_policy(SET CMP0074 OLD)
 set(SFML_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/Libraries/SFML)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -17,7 +17,7 @@ set(SOURCE_FILES source/Game.cpp include/Game.h include/management/ResourceHolde
         source/Entity.cpp include/Entity.h source/Objects/Object.cpp include/Objects/Object.h source/Objects/ConsumableObject.cpp
         include/Objects/ConsumableObject.h source/Objects/RangedWeapon.cpp include/Objects/RangedWeapon.h source/Objects/MeleeWeapon.cpp
         include/Objects/MeleeWeapon.h source/Projectile.cpp include/Projectile.h include/Random.h source/Random.cpp
-        source/Objects/Tile.cpp include/Objects/Tile.h source/Objects/Healpack.cpp include/Objects/Healpack.h source/textDisplay.cpp include/textDisplay.h source/Inventory.cpp)
+        source/Objects/Tile.cpp include/Objects/Tile.h source/Objects/Healpack.cpp include/Objects/Healpack.h source/textDisplay.cpp include/textDisplay.h source/Inventory.cpp include/Characters/CharacterFactory.cpp include/Characters/CharacterFactory.h)
 add_executable(BlackRose source/main.cpp)
 
 

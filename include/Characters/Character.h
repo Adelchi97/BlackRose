@@ -15,6 +15,11 @@
 
 class Character: public Entity {
 public:
+    enum Type {
+        player,
+        enemy
+    };
+
     Character();
     //virtual ~Character() = 0;
     virtual void move();
@@ -29,6 +34,7 @@ public:
     int hp;
     int hpMax;
     int attackDamage;
+    Type typeCharacter;
 
     bool barDisplayed = false;
     sf::RectangleShape bar;

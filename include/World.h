@@ -5,11 +5,13 @@
 #ifndef BLACKROSE_WORLD_H
 #define BLACKROSE_WORLD_H
 
+#include <string>
+
 #include "Characters/PlayerCharacter.h"
 #include "Characters/Enemy.h"
 #include "ProceduralMap.h"
 #include "textDisplay.h"
-#include <string>
+#include "Characters/CharacterFactory.h"
 
 class World {
 public:
@@ -55,14 +57,13 @@ private:
     std::vector<std::shared_ptr<textDisplay>> textureDisplayArray;
     sf::Clock textureTimer;
 
-
-    std::shared_ptr<Character> characterArray;
+    std::vector<std::shared_ptr<Character>> characterArray;
     std::vector<std::shared_ptr<Enemy>> enemyArray;
     std::shared_ptr<RangedWeapon> rangedWeapon;
+    CharacterFactory characterFactory;
 
     std::vector<std::shared_ptr<Projectile>> projectileArray;
     std::vector<std::shared_ptr<Object>> collectableObject;
-
 
 
 };

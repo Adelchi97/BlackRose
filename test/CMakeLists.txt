@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-cmake_policy(SET CMP0074 OLD)
+#cmake_policy(SET CMP0074 OLD)
 
 
 add_subdirectory(lib/googletest)

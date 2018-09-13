@@ -20,7 +20,6 @@ public:
         robotRed,
         robotGray
     };
-    //enum Direction{ UP = 1,DOWN,LEFT,RIGHT};
 
     explicit Enemy(Type type, const TextureHolder& textures, sf::Vector2u windowSize);
     explicit Enemy(const TextureHolder& textures, sf::Vector2u windowSize);

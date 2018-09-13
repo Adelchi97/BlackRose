@@ -30,7 +30,10 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
 
 void World::createEnemies() {
     for(int i=0; i<5; i++) {
-        enemyArray.emplace_back(std::make_shared<Enemy>(textures, window->getSize()));
+        std::shared_ptr<Character> enemy = characterFactory.createCharacter(Character::enemy, Enemy::Type::robotGray, textures,
+                sf::Vector2u(800,800));
+        characterArray.emplace_back(enemy);
+        //enemyArray.emplace_back(std::make_shared<Enemy>(textures, window->getSize()));
         enemyArray[i]->setPosition(generateRandom(800), generateRandom(800));
     }
 }
@@ -44,7 +47,8 @@ void World::createWeapons() {
         b = generateRandom(800);
         rangedWeapon->setPosition(sf::Vector2f(a, b));
     }
-        while (map->tileMap[b/32+(a/32)*25]->backGround != Tile::labFloor);
+    while (map->tileMap[b/32+(a/32)*25]->backGround != Tile::labFloor);
+
     //rangedWeapon->setPosition(sf::Vector2f(generateRandom(800),generateRandom(800)));
     rangedWeapon->update();
     collectableObject.emplace_back(rangedWeapon);
@@ -170,7 +174,7 @@ void World::collisionEnemyWall() {
             enemyArray[i]->changeDirection();
         }
 
-        //wall on bot
+        //wall on bottom
         if(map->tileMap[((yPosEnemy+16)/32)+(xPosEnemy/32)*25]->backGround == Tile::BackGroundType::metalWall && enemyArray[i]->isMovingDown){
             //enemyArray[i]->rect.setPosition(xPosEnemy,yPosEnemy-2);
             enemyArray[i]->changeDirection();

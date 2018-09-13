@@ -251,8 +251,6 @@ void Enemy::die() {
 }
 */
 
-#include "../../include/Characters/Enemy.h"
-
 Textures::ID toTextureID(Enemy::Type type) {
     switch(type) {
         case Enemy::Type::robotGray:
@@ -277,6 +275,7 @@ Enemy::Enemy(Type type, const TextureHolder& textures, sf::Vector2u windowSize) 
         hp = 20;
 
     hpMax = hp;
+    typeCharacter = Character::Type::enemy;
 
     rect.setOrigin(32/2,32/2);
     sprite.setOrigin(32/2,32/2);
@@ -302,6 +301,7 @@ Enemy::Enemy(const TextureHolder &textures, sf::Vector2u windowSize): textures(t
         hp = 40, attackDamage = 10;
 
     hpMax = hp;
+    typeCharacter = Character::Type::enemy;
 
     rect.setOrigin(32/2,32/2);
     sprite.setOrigin(32/2,32/2);

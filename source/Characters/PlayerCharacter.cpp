@@ -32,6 +32,7 @@ PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures, sf::V
     speed = 2;
     hp = 200;
     hpMax = hp;
+    typeCharacter = Character::Type::player;
 
     rect.setOrigin(32/2,32/2);
     sprite.setOrigin(32/2,32/2);

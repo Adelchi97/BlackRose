@@ -13,7 +13,7 @@ Textures::ID toTextureID( ProceduralMap::TileType type) {
             return Textures::labTile;
         case ProceduralMap::Unused:
             return Textures::labTile;
-/*
+
         case TileType::Door:
             return Textures::HeroWhite;
         case TileType::dirtFloor:
