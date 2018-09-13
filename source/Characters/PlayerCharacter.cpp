@@ -5,25 +5,26 @@
 #include "../../include/Characters/PlayerCharacter.h"
 
 
-Textures::ID toTextureID(PlayerCharacter::Type type) {
+Textures::ID toTextureID(PlayerCharacter::SubType type) {
     switch(type) {
-        case PlayerCharacter::Type::blueHero:
+        case PlayerCharacter::SubType::blueHero:
             return Textures::HeroBlue;
-        case PlayerCharacter::Type::blondHero:
+        case PlayerCharacter::SubType::blondHero:
             return Textures::HeroBlond;
-        case PlayerCharacter::Type::whiteHero:
+        case PlayerCharacter::SubType::whiteHero:
             return Textures::HeroWhite;
-        case PlayerCharacter::Type::grayHero:
+        case PlayerCharacter::SubType::grayHero:
             return Textures::HeroGray;
-        case PlayerCharacter::Type::starLord:
+        case PlayerCharacter::SubType::starLord:
             return Textures::StarLord;
     }
 }
 
-PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures, sf::Vector2u windowSize): type(type),
-     textures(textures), counterWalk(0), isMovingUp(false), isMovingDown(false), isMovingLeft(false), isMovingRight
-     (false), delayWalk(false), delayMoreWalk(false), shooting(false), dead(false) {
+PlayerCharacter::PlayerCharacter(SubType subType, const TextureHolder& textures, sf::Vector2u windowSize):
+    textures(textures), counterWalk(0), isMovingUp(false), isMovingDown(false), isMovingLeft(false),
+    isMovingRight(false), delayWalk(false), delayMoreWalk(false), shooting(false), dead(false) {
 
+    this->subType = subType;
     this->windowSize.x = (int)windowSize.x;
     this->windowSize.y = (int)windowSize.y;
 
@@ -32,11 +33,10 @@ PlayerCharacter::PlayerCharacter(Type type, const TextureHolder& textures, sf::V
     speed = 2;
     hp = 200;
     hpMax = hp;
-    typeCharacter = Character::Type::player;
 
     rect.setOrigin(32/2,32/2);
     sprite.setOrigin(32/2,32/2);
-    texture = textures.get(toTextureID(type));
+    texture = textures.get(toTextureID(subType));
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0,0,32,32));
 
@@ -119,9 +119,9 @@ void PlayerCharacter::die() {
 
 }
 
-void PlayerCharacter::setPosition(sf::Vector2f &movement) {
+void PlayerCharacter::setPosition(sf::Vector2f movement) {
 
-    rect.move(movement);
+    Character::setPosition(movement);
     checkWorldBounds();
 
 }

@@ -16,18 +16,19 @@ public:
         skill2
     };
 
-    enum Type {
+    enum SubType {
         robotRed,
-        robotGray
+        robotGray,
     };
 
-    explicit Enemy(Type type, const TextureHolder& textures, sf::Vector2u windowSize);
-    explicit Enemy(const TextureHolder& textures, sf::Vector2u windowSize);
+    explicit Enemy(SubType subType, const TextureHolder& textures, sf::Vector2u windowSize);
+    // explicit Enemy(const TextureHolder& textures, sf::Vector2u windowSize);
+
 
     void update();
     void setPositionMovement(const sf::Vector2f &movement);
     void setPosition(float x, float y);
-    void setPosition();
+    void setPosition(sf::Vector2f &movement);
     virtual const sf::Sprite &getSprite();
     void setDirection(Enemy::Direction direction);
     int getAttackDamage();
@@ -54,6 +55,7 @@ private:
 
     const TextureHolder& textures;
     sf::Vector2f windowSize;
+    SubType subType;
 
     sf::Clock attackClock;
     int counterWalk;

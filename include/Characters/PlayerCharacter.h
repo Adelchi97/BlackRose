@@ -14,7 +14,7 @@ class Weapon;
 class PlayerCharacter : public Character {
 public:
 
-    enum Type {
+    enum SubType {
         blueHero,
         blondHero,
         whiteHero,
@@ -22,7 +22,7 @@ public:
         starLord
     };
 
-    PlayerCharacter(Type type, const TextureHolder& textures, sf::Vector2u windowSize);
+    PlayerCharacter(SubType subType, const TextureHolder& textures, sf::Vector2u windowSize);
     virtual bool interactWithObject(std::shared_ptr<Object> &object);
     bool shoot();
     //a movement that covers several tiles thanks to the ProtoBelt
@@ -30,7 +30,7 @@ public:
     virtual void die();
     void update(sf::Time dt);
 
-    void setPosition(sf::Vector2f &movement);
+    void setPosition(sf::Vector2f movement);
     void setPosition(float x, float y);
     sf::Vector2f getPosition();
 
@@ -49,7 +49,7 @@ public:
     bool shooting;
     std::shared_ptr<RangedWeapon> rangedWeapon;
 
-    Type type;
+    SubType subType;
 
     bool dead;
 

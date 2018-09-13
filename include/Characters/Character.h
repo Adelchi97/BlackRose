@@ -19,16 +19,28 @@ public:
         player,
         enemy
     };
-
+    /*
+    enum SubType {
+        robotRed,
+        robotGray,
+        blueHero,
+        blondHero,
+        whiteHero,
+        grayHero,
+        starLord
+    };
+    */
     Character();
     //virtual ~Character() = 0;
     virtual void move();
+    virtual void setPosition(sf::Vector2f movement);
     virtual void fight();
     //basic interaction with the world, it will be associated with a key
     virtual bool interactWithObject(std::shared_ptr <Object> &object);
     virtual void die();
     void update();
     void display();
+
 
 public:
     int hp;
@@ -39,6 +51,9 @@ public:
     bool barDisplayed = false;
     sf::RectangleShape bar;
     sf::RectangleShape lifeBar;
+
+    //TODO fare private
+    sf::Vector2f windowSize;
 
 protected:
     int resistance;

@@ -7,7 +7,7 @@ set(SFML_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/Libraries/SFML)
 set(CMAKE_CXX_STANDARD 11)
 
 message("Adding test subdir")
-add_subdirectory(test)
+#add_subdirectory(test)
 
 
 set(SOURCE_FILES source/Game.cpp include/Game.h include/management/ResourceHolder.h source/ProceduralMap.cpp include/ProceduralMap.h

@@ -5,8 +5,8 @@
 #include "../../include/Characters/Character.h"
 
 
-
 Character::Character() {
+
     //all characters are this big
     rect.setSize(sf::Vector2f(32,32));
 
@@ -59,4 +59,8 @@ void Character::update() {
     if(timerTextures.getElapsedTime().asSeconds() > .5) {
         barDisplayed = false;
     }
+}
+
+void Character::setPosition(sf::Vector2f movement) {
+    rect.move(movement.x, movement.y);
 }

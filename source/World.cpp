@@ -7,10 +7,9 @@
 
 
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
-        (textures), player(new PlayerCharacter(PlayerCharacter::blondHero,textures, window->getSize())),
-                           rangedWeapon(new RangedWeapon(textures,RangedWeapon::Type::energyShooter)), map(new ProceduralMap
-                                                                                                      (textures,
-                                                                                   Tile::BackGroundType::baseFloor)) {
+        (textures), player(new PlayerCharacter(PlayerCharacter::SubType::blondHero, textures,
+                window->getSize())), rangedWeapon(new RangedWeapon(textures,RangedWeapon::Type::energyShooter)),
+                           map(new ProceduralMap(textures, Tile::BackGroundType::baseFloor)) {
 
     createEnemies();
 
@@ -30,11 +29,14 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
 
 void World::createEnemies() {
     for(int i=0; i<5; i++) {
-        std::shared_ptr<Character> enemy = characterFactory.createCharacter(Character::enemy, Enemy::Type::robotGray, textures,
-                sf::Vector2u(800,800));
+        std::shared_ptr<Character> enemy = characterFactory.createCharacter(Character::enemy,
+                Enemy::SubType::robotGray, textures, window->getSize());
         characterArray.emplace_back(enemy);
         //enemyArray.emplace_back(std::make_shared<Enemy>(textures, window->getSize()));
-        enemyArray[i]->setPosition(generateRandom(800), generateRandom(800));
+        //enemy = std::dynamic_pointer_cast<Enemy>(enemy);
+        //if(enemy != nullptr) {
+            characterArray[i]->setPosition(sf::Vector2f(generateRandom(800), generateRandom(800)));
+        //}
     }
 }
 
