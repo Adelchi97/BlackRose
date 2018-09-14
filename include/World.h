@@ -8,10 +8,11 @@
 #include <string>
 
 #include "Characters/PlayerCharacter.h"
-#include "Characters/Enemy.h"
+#include "Characters/RobotFighter.h"
+#include "Characters/RobotShooter.h"
 #include "ProceduralMap.h"
 #include "textDisplay.h"
-#include "Characters/CharacterFactory.h"
+#include "Characters/EnemyFactory.h"
 
 class World {
 public:
@@ -57,9 +58,9 @@ private:
     std::vector<std::shared_ptr<textDisplay>> textureDisplayArray;
     sf::Clock textureTimer;
 
-    std::vector<std::shared_ptr<Character>> characterArray;
+    std::vector<std::shared_ptr<Enemy>> enemyArray;
     std::shared_ptr<RangedWeapon> rangedWeapon;
-    CharacterFactory characterFactory;
+    EnemyFactory enemyFactory;
 
     std::vector<std::shared_ptr<Projectile>> projectileArray;
     std::vector<std::shared_ptr<Object>> collectableObject;

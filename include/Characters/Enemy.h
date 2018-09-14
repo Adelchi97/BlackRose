@@ -11,47 +11,35 @@
 
 class Enemy : public Character {
 public:
-    enum SkillType {
-        skill1,
-        skill2
-    };
 
     enum SubType {
         robotRed,
         robotGray,
     };
 
-    explicit Enemy(SubType subType, const TextureHolder& textures, sf::Vector2u windowSize);
-    // explicit Enemy(const TextureHolder& textures, sf::Vector2u windowSize);
+    Enemy();
 
-
-    void update();
-    void setPositionMovement(const sf::Vector2f &movement);
-    void setPosition(float x, float y);
-    void setPosition(sf::Vector2f &movement);
+    virtual void update();
+    virtual void setPositionMovement(const sf::Vector2f &movement);
+    virtual void setPosition(float x, float y);
+    virtual void setPosition(sf::Vector2f &movement);
     virtual const sf::Sprite &getSprite();
-    void setDirection(Enemy::Direction direction);
-    int getAttackDamage();
+    virtual void setDirection(Enemy::Direction direction);
+    virtual int getAttackDamage();
 
-    void seek();
-    void patrol();
-    void useSkill(SkillType type);
-    void changeDirection();
+    virtual void seek();
+    virtual void patrol();
+    virtual void changeDirection();
     virtual void die();
-
-private:
-
-    void setRandomType();
 
 public:
     Type type;
     Direction dir;
 
-private:
+protected:
     std::shared_ptr<Weapon> weapon;
     std::shared_ptr<Shield> shield;
 
-    const TextureHolder& textures;
     sf::Vector2f windowSize;
     SubType subType;
 
@@ -60,9 +48,6 @@ private:
     int changeDirectionTime, counterDirection = 0;
     bool delayWalk, delayMoreWalk;
 
-
-    std::random_device rd;
-    std::uniform_real_distribution<> distribution;
 
 };
 
