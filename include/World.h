@@ -58,7 +58,6 @@ private:
     sf::Clock textureTimer;
 
     std::vector<std::shared_ptr<Character>> characterArray;
-    std::vector<std::shared_ptr<Enemy>> enemyArray;
     std::shared_ptr<RangedWeapon> rangedWeapon;
     CharacterFactory characterFactory;
 

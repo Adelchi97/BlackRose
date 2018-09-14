@@ -2,7 +2,7 @@
 // Created by Elena Faillace on 12/09/2018.
 //
 
-#include "CharacterFactory.h"
+#include "../../include/Characters/CharacterFactory.h"
 
 
 std::shared_ptr<Character> CharacterFactory::createCharacter(Character::Type type, Enemy::SubType subtype,

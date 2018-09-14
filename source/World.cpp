@@ -32,11 +32,10 @@ void World::createEnemies() {
         std::shared_ptr<Character> enemy = characterFactory.createCharacter(Character::enemy,
                 Enemy::SubType::robotGray, textures, window->getSize());
         characterArray.emplace_back(enemy);
-        //enemyArray.emplace_back(std::make_shared<Enemy>(textures, window->getSize()));
-        //enemy = std::dynamic_pointer_cast<Enemy>(enemy);
-        //if(enemy != nullptr) {
-            characterArray[i]->setPosition(sf::Vector2f(generateRandom(800), generateRandom(800)));
-        //}
+        characterArray[i] = std::dynamic_pointer_cast<Enemy>(enemy);
+        if(enemy != nullptr) {
+            enemy->setPosition(generateRandom(800), generateRandom(800));
+        }
     }
 }
 
@@ -159,53 +158,53 @@ void World::collisionEnemyWall() {
 
 void World::collisionEnemyWall() {
     int xPosEnemy, yPosEnemy;
-    int numEnemy = enemyArray.size();
+    int numEnemy = characterArray.size();
 
     for (int i=0; i<numEnemy; i++){
-        xPosEnemy = (enemyArray[i]->rect.getPosition().x);
-        yPosEnemy = (enemyArray[i]->rect.getPosition().y);
+        xPosEnemy = (characterArray[i]->rect.getPosition().x);
+        yPosEnemy = (characterArray[i]->rect.getPosition().y);
 
         //wall on right
-        if(map->tileMap[yPosEnemy/32+((xPosEnemy+16)/32)*25]->backGround == Tile::BackGroundType::metalWall && enemyArray[i]->isMovingRight) {
+        if(map->tileMap[yPosEnemy/32+((xPosEnemy+16)/32)*25]->backGround == Tile::BackGroundType::metalWall && characterArray[i]->isMovingRight) {
             //enemyArray[i]->rect.setPosition(xPosEnemy - 2, yPosEnemy);
-            enemyArray[i]->changeDirection();
+            characterArray[i]->changeDirection();
         }
         //wall on left
-        else if(map->tileMap[yPosEnemy/32+((xPosEnemy-16)/32)*25]->backGround == Tile::BackGroundType::metalWall && enemyArray[i]->isMovingLeft){
+        else if(map->tileMap[yPosEnemy/32+((xPosEnemy-16)/32)*25]->backGround == Tile::BackGroundType::metalWall && characterArray[i]->isMovingLeft){
             //enemyArray[i]->rect.setPosition(xPosEnemy+2,yPosEnemy);
-            enemyArray[i]->changeDirection();
+            characterArray[i]->changeDirection();
         }
 
         //wall on bottom
-        if(map->tileMap[((yPosEnemy+16)/32)+(xPosEnemy/32)*25]->backGround == Tile::BackGroundType::metalWall && enemyArray[i]->isMovingDown){
+        if(map->tileMap[((yPosEnemy+16)/32)+(xPosEnemy/32)*25]->backGround == Tile::BackGroundType::metalWall && characterArray[i]->isMovingDown){
             //enemyArray[i]->rect.setPosition(xPosEnemy,yPosEnemy-2);
-            enemyArray[i]->changeDirection();
+            characterArray[i]->changeDirection();
         }
             //wall on top
-        else if(map->tileMap[(yPosEnemy-16)/32+(xPosEnemy/32)*25]->backGround == Tile::BackGroundType::metalWall && enemyArray[i]->isMovingUp){
+        else if(map->tileMap[(yPosEnemy-16)/32+(xPosEnemy/32)*25]->backGround == Tile::BackGroundType::metalWall && characterArray[i]->isMovingUp){
             //enemyArray[i]->rect.setPosition(xPosEnemy,yPosEnemy+2);
-            enemyArray[i]->changeDirection();
+            characterArray[i]->changeDirection();
         }
         //DIAGONAL collisions
         //right top
-        if(map->tileMap[(yPosEnemy-16)/32+((xPosEnemy+16)/32)*25]->backGround == Tile::BackGroundType::metalWall && (enemyArray[i]->isMovingUp && enemyArray[i]->isMovingRight)){
+        if(map->tileMap[(yPosEnemy-16)/32+((xPosEnemy+16)/32)*25]->backGround == Tile::BackGroundType::metalWall && (characterArray[i]->isMovingUp && characterArray[i]->isMovingRight)){
             //enemyArray[i]->rect.setPosition(xPosEnemy-2,yPosEnemy+2);
-            enemyArray[i]->changeDirection();
+            characterArray[i]->changeDirection();
         }
         //left top
-        if(map->tileMap[(yPosEnemy-16)/32+((xPosEnemy-16)/32)*25]->backGround == Tile::BackGroundType::metalWall && (enemyArray[i]->isMovingUp && enemyArray[i]->isMovingLeft)){
+        if(map->tileMap[(yPosEnemy-16)/32+((xPosEnemy-16)/32)*25]->backGround == Tile::BackGroundType::metalWall && (characterArray[i]->isMovingUp && characterArray[i]->isMovingLeft)){
             //enemyArray[i]->rect.setPosition(xPosEnemy+2,yPosEnemy+2);
-            enemyArray[i]->changeDirection();
+            characterArray[i]->changeDirection();
         }
         //right bot
-        if(map->tileMap[(yPosEnemy+16)/32+((xPosEnemy+16)/32)*25]->backGround == Tile::BackGroundType::metalWall && (enemyArray[i]->isMovingDown && enemyArray[i]->isMovingRight)){
+        if(map->tileMap[(yPosEnemy+16)/32+((xPosEnemy+16)/32)*25]->backGround == Tile::BackGroundType::metalWall && (characterArray[i]->isMovingDown && characterArray[i]->isMovingRight)){
             //enemyArray[i]->rect.setPosition(xPosEnemy-2,yPosEnemy-2);
-            enemyArray[i]->changeDirection();
+            characterArray[i]->changeDirection();
         }
         //left bot (yPosChar+16)/32+((xPosChar+16)/32)*25
-        if(map->tileMap[(yPosEnemy+16)/32+((xPosEnemy-16)/32)*25]->backGround == Tile::BackGroundType::metalWall && (enemyArray[i]->isMovingDown && enemyArray[i]->isMovingLeft)){
+        if(map->tileMap[(yPosEnemy+16)/32+((xPosEnemy-16)/32)*25]->backGround == Tile::BackGroundType::metalWall && (characterArray[i]->isMovingDown && characterArray[i]->isMovingLeft)){
             //enemyArray[i]->rect.setPosition(xPosEnemy+2,yPosEnemy-2);
-            enemyArray[i]->changeDirection();
+            characterArray[i]->changeDirection();
         }
     }
 }
@@ -213,28 +212,28 @@ void World::collisionEnemyWall() {
 void World::collisionPlayerEnemy() {
     //Enemies and Player
     int counterEnemy = 0;
-    for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
-        if ( player->rect.getGlobalBounds().intersects(enemyArray[counterEnemy]->rect.getGlobalBounds())) {
+    for ( auto iter = characterArray.begin(); iter != characterArray.end(); iter++ ) {
+        if ( player->rect.getGlobalBounds().intersects(characterArray[counterEnemy]->rect.getGlobalBounds())) {
             player->display();
-            player->hp -= enemyArray[counterEnemy]->getAttackDamage();
+            player->hp -= characterArray[counterEnemy]->getAttackDamage();
         }
         counterEnemy++;
     }
 }
 
 void World::collisionProjectiles() {
-    if(!projectileArray.empty() && !enemyArray.empty()) {
+    if(!projectileArray.empty() && !characterArray.empty()) {
         int counterProjectiles = 0;
         //go through all projectiles
         for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
             int counterEnemy = 0;
             //go through all enemies
-            for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
+            for ( auto iter = characterArray.begin(); iter != characterArray.end(); iter++ ) {
                 if ( projectileArray[ counterProjectiles ]->rect.getGlobalBounds().
-                        intersects(enemyArray[ counterEnemy ]->rect.getGlobalBounds())) {
+                        intersects(characterArray[ counterEnemy ]->rect.getGlobalBounds())) {
                     std::cout << "Collision!" << std::endl;
-                    enemyArray[counterEnemy]->display();
-                    enemyArray[counterEnemy]->hp -= projectileArray[counterProjectiles]->attackDamage;
+                    characterArray[counterEnemy]->display();
+                    characterArray[counterEnemy]->hp -= projectileArray[counterProjectiles]->attackDamage;
                     projectileArray[counterProjectiles]->active = false;
                 }
                 counterEnemy++;
@@ -245,19 +244,19 @@ void World::collisionProjectiles() {
 }
 
 void World::updateEnemies() {
-    if(!enemyArray.empty()) {
+    if(!characterArray.empty()) {
         int counter = 0;
         int deleted = -1;
-        for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
-            enemyArray[ counter ]->update();
+        for ( auto iter = characterArray.begin(); iter != characterArray.end(); iter++ ) {
+            characterArray[ counter ]->update();
 
-            if ( !enemyArray[ counter ]->active ) {
+            if ( !characterArray[ counter ]->active ) {
                 deleted = counter;
             }
             counter++;
         }
         if(deleted>=0)
-            enemyArray.erase(enemyArray.begin() + deleted);
+            characterArray.erase(characterArray.begin() + deleted);
     }
 }
 
@@ -328,13 +327,13 @@ void World::drawMap() {
 }
 
 void World::drawEnemies() {
-    if(!enemyArray.empty()) {
+    if(!characterArray.empty()) {
         int counter = 0;
-        for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
-            window->draw(enemyArray[counter]->getSprite());
-            if(enemyArray[counter]->barDisplayed) {
-                window->draw(enemyArray[counter]->bar);
-                window->draw(enemyArray[counter]->lifeBar);
+        for ( auto iter = characterArray.begin(); iter != characterArray.end(); iter++ ) {
+            window->draw(characterArray[counter]->getSprite());
+            if(characterArray[counter]->barDisplayed) {
+                window->draw(characterArray[counter]->bar);
+                window->draw(characterArray[counter]->lifeBar);
             }
             counter++;
         }

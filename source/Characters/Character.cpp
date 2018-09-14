@@ -49,18 +49,32 @@ void Character::display() {
 
 void Character::update() {
     //life bar
-    bar.setPosition(position.x-16,position.y-32);
-    lifeBar.setPosition(position.x-16,position.y-32);
-    lifeBar.setSize(sf::Vector2f(32*hp/hpMax,5));
-    if(lifeBar.getSize().x <= 16)
-        lifeBar.setFillColor(sf::Color::Yellow);
-    if(lifeBar.getSize().x <= 8)
-        lifeBar.setFillColor(sf::Color::Red);
-    if(timerTextures.getElapsedTime().asSeconds() > .5) {
-        barDisplayed = false;
+    if(barDisplayed) {
+        bar.setPosition(position.x-16,position.y-32);
+        lifeBar.setPosition(position.x-16,position.y-32);
+        lifeBar.setSize(sf::Vector2f(32*hp/hpMax,5));
+        if(lifeBar.getSize().x <= 16)
+            lifeBar.setFillColor(sf::Color::Yellow);
+        if(lifeBar.getSize().x <= 8)
+            lifeBar.setFillColor(sf::Color::Red);
+        if(timerTextures.getElapsedTime().asSeconds() > .5) {
+            barDisplayed = false;
+        }
     }
 }
 
-void Character::setPosition(sf::Vector2f movement) {
+void Character::setPosition(sf::Vector2f& movement) {
     rect.move(movement.x, movement.y);
+}
+
+void Character::changeDirection() {
+
+}
+
+int Character::getAttackDamage() {
+    return 0;
+}
+
+void Character::setPosition(float x, float y) {
+    rect.move(x,y);
 }

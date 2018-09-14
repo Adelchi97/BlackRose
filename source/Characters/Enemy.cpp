@@ -218,7 +218,7 @@ Textures::ID toTextureID(Enemy::SubType type) {
 }
 
 Enemy::Enemy(SubType subType, const TextureHolder& textures, sf::Vector2u windowSize) : textures
-        (textures), isMovingDown(false), isMovingUp(false), isMovingLeft(false), isMovingRight(false), active(true) {
+        (textures) {
 
     this->subType = subType;
     typeCharacter = enemy;
@@ -227,10 +227,14 @@ Enemy::Enemy(SubType subType, const TextureHolder& textures, sf::Vector2u window
 
     changeDirectionTime = generateRandom(200);
     speed = 2;
-    if(subType == robotRed)
+    if(subType == robotRed) {
         hp = 40;
-    else if(subType == robotGray)
+        attackDamage = 20;
+    }
+    else if(subType == robotGray) {
         hp = 20;
+        attackDamage = 10;
+    }
 
     hpMax = hp;
 
@@ -239,6 +243,12 @@ Enemy::Enemy(SubType subType, const TextureHolder& textures, sf::Vector2u window
     texture = textures.get(toTextureID(subType));
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0,0,32,32));
+
+    isMovingDown = false;
+    isMovingLeft = false;
+    isMovingRight = false;
+    isMovingUp = false;
+    active = true;
 }
 
 /*
@@ -374,7 +384,7 @@ void Enemy::setPositionMovement(const sf::Vector2f &movement) {
 }
 
 void Enemy::setPosition(float x, float y) {
-    rect.move(x,y);
+    Character::setPosition(x,y);
 }
 
 void Enemy::setPosition(sf::Vector2f &movement) {

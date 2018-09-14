@@ -21,18 +21,23 @@ Textures::ID toTextureID(PlayerCharacter::SubType type) {
 }
 
 PlayerCharacter::PlayerCharacter(SubType subType, const TextureHolder& textures, sf::Vector2u windowSize):
-    textures(textures), counterWalk(0), isMovingUp(false), isMovingDown(false), isMovingLeft(false),
-    isMovingRight(false), delayWalk(false), delayMoreWalk(false), shooting(false), dead(false) {
+    textures(textures), counterWalk(0), delayWalk(false), delayMoreWalk(false), shooting(false), dead(false) {
 
     this->subType = subType;
     this->windowSize.x = (int)windowSize.x;
     this->windowSize.y = (int)windowSize.y;
+    isMovingUp = false;
+    isMovingRight = false;
+    isMovingLeft = false;
+    isMovingDown = false;
+    active = true;
 
     rect.setPosition(windowSize.x/2.f,windowSize.y/2.f);
     //rect.setPosition(generateRandom(800), generateRandom(800));
     speed = 2;
     hp = 200;
     hpMax = hp;
+    attackDamage = 0;
 
     rect.setOrigin(32/2,32/2);
     sprite.setOrigin(32/2,32/2);

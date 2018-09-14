@@ -45,9 +45,7 @@ private:
 
 public:
     Type type;
-    bool active;
     Direction dir;
-    bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
 
 private:
     std::shared_ptr<Weapon> weapon;

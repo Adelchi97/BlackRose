@@ -45,7 +45,6 @@ private:
 
 public:
     std::string name;
-    bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
     bool shooting;
     std::shared_ptr<RangedWeapon> rangedWeapon;
 

@@ -33,20 +33,27 @@ public:
     Character();
     //virtual ~Character() = 0;
     virtual void move();
-    virtual void setPosition(sf::Vector2f movement);
+    virtual void setPosition(sf::Vector2f& movement);
+    virtual void setPosition(float x, float y);
+    virtual void changeDirection();
+
     virtual void fight();
+    virtual int getAttackDamage();
     //basic interaction with the world, it will be associated with a key
     virtual bool interactWithObject(std::shared_ptr <Object> &object);
     virtual void die();
-    void update();
-    void display();
+    virtual void update();
+    virtual void display();
 
 
 public:
+    bool active;
+
     int hp;
     int hpMax;
     int attackDamage;
     Type typeCharacter;
+    bool isMovingUp, isMovingDown, isMovingLeft, isMovingRight;
 
     bool barDisplayed = false;
     sf::RectangleShape bar;
@@ -59,6 +66,7 @@ protected:
     int resistance;
     int speed;
     sf::Vector2f position;
+
     Inventory inventory;
     sf::Clock timerTextures;
 };
