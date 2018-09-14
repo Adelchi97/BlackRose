@@ -67,8 +67,9 @@ void Enemy::update() {
         setDirection(Enemy::left);
     }
 
-    if(hp<=0)
-        active = false;
+    if(hp<=0) {
+        this->die();
+    }
 
     Character::update();
 
@@ -154,7 +155,25 @@ void Enemy::patrol() {
 }
 
 void Enemy::die() {
+    active = false;
+    notifyObservers();//TODO call the observer (PlayerCharacter) who will update his enemyKills counter, advancing with achievements
+}
 
+void Enemy::registerObserver(Observer* o) {
+    observers.push_back(o);
+}
+
+void Enemy::removeObserver(Observer* o) {
+    for(auto iter=observers.begin(); iter!=observers.end(); iter++){
+        if(iter.operator*() == o)
+            observers.erase(iter);
+    }
+}
+
+void Enemy::notifyObservers() const {
+    for(auto iter=observers.begin(); iter!=observers.end(); iter ++){
+        (*iter)->update();
+    }
 }
 
 

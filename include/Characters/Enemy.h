@@ -8,8 +8,9 @@
 #include <memory>
 #include "Character.h"
 #include "../Random.h"
+#include "Subject.h"
 
-class Enemy : public Character {
+class Enemy : public Character, public Subject {
 public:
 
     enum SubType {
@@ -32,16 +33,26 @@ public:
     virtual void changeDirection();
     virtual void die();
 
+    void registerObserver(Observer* o) override;
+    void removeObserver(Observer* o) override;
+    void notifyObservers() const override;
+
+private:
+
+    void setRandomType();
+
 public:
     Type type;
     Direction dir;
+    bool killedByRangedWeapon = false, killedBySword = false;
+    SubType subType;
 
-protected:
+    std::vector<Observer*> observers; //achievements
+
     std::shared_ptr<Weapon> weapon;
     std::shared_ptr<Shield> shield;
 
     sf::Vector2f windowSize;
-    SubType subType;
 
     sf::Clock attackClock;
     int counterWalk;

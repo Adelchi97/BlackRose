@@ -17,7 +17,13 @@ set(SOURCE_FILES source/Game.cpp include/Game.h include/management/ResourceHolde
         source/Entity.cpp include/Entity.h source/Objects/Object.cpp include/Objects/Object.h source/Objects/ConsumableObject.cpp
         include/Objects/ConsumableObject.h source/Objects/RangedWeapon.cpp include/Objects/RangedWeapon.h source/Objects/MeleeWeapon.cpp
         include/Objects/MeleeWeapon.h source/Projectile.cpp include/Projectile.h include/Random.h source/Random.cpp
-        source/Objects/Tile.cpp include/Objects/Tile.h source/Objects/Healpack.cpp include/Objects/Healpack.h source/textDisplay.cpp include/textDisplay.h source/Inventory.cpp source/Characters/EnemyFactory.cpp include/Characters/EnemyFactory.h source/Characters/RobotShooter.cpp include/Characters/RobotShooter.h source/Characters/RobotFighter.cpp include/Characters/RobotFighter.h)
+        source/Objects/Tile.cpp include/Objects/Tile.h source/Objects/Healpack.cpp include/Objects/Healpack.h source/textDisplay.cpp include/textDisplay.h
+        source/Inventory.cpp source/Characters/Subject.cpp include/Characters/Subject.h source/Characters/Observer.cpp include/Characters/Observer.h
+        source/Characters/Achievement.cpp include/Characters/Achievement.h source/Objects/Tile.cpp include/Objects/Tile.h
+        source/Objects/Healpack.cpp include/Objects/Healpack.h source/textDisplay.cpp include/textDisplay.h source/Inventory.cpp
+        source/Characters/EnemyFactory.cpp include/Characters/EnemyFactory.h source/Characters/RobotShooter.cpp include/Characters/RobotShooter.h
+        source/Characters/RobotFighter.cpp include/Characters/RobotFighter.h)
+
 add_executable(BlackRose source/main.cpp)
 
 
