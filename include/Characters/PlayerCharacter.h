@@ -48,6 +48,9 @@ public:
     bool shooting;
     std::shared_ptr<RangedWeapon> rangedWeapon;
 
+    std::shared_ptr<Weapon> meleeWeapon;
+    std::shared_ptr<Shield> slotShield;
+
     SubType subType;
 
     bool dead;
@@ -57,9 +60,6 @@ private:
     int counterWalk;
     bool delayWalk, delayMoreWalk;
     sf::Vector2u windowSize;
-
-    std::shared_ptr<Weapon> meleeWeapon;
-    std::shared_ptr<Shield> slotShield;
 
 };
 

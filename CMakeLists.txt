@@ -22,7 +22,7 @@ set(SOURCE_FILES source/Game.cpp include/Game.h include/management/ResourceHolde
         source/Characters/Achievement.cpp include/Characters/Achievement.h source/Objects/Tile.cpp include/Objects/Tile.h
         source/Objects/Healpack.cpp include/Objects/Healpack.h source/textDisplay.cpp include/textDisplay.h source/Inventory.cpp
         source/Characters/EnemyFactory.cpp include/Characters/EnemyFactory.h source/Characters/RobotShooter.cpp include/Characters/RobotShooter.h
-        source/Characters/RobotFighter.cpp include/Characters/RobotFighter.h)
+        source/Characters/RobotFighter.cpp include/Characters/RobotFighter.h source/management/Strategy.cpp include/management/Strategy.h source/management/PatrolStrategy.cpp include/management/PatrolStrategy.h)
 
 add_executable(BlackRose source/main.cpp)
 

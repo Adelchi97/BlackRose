@@ -3,18 +3,16 @@
 //
 
 #include "../../include/Characters/RobotShooter.h"
-/*
-Textures::ID toTextureID(Enemy::SubType type) {
-    switch(type) {
-        case Enemy::SubType::robotGray:
-            return Textures::RobotGray;
-        case Enemy::SubType::robotRed:
-            return Textures::RobotRed;
-    }
-}
-*/
 
-RobotShooter::RobotShooter(const TextureHolder &textures, sf::Vector2u windowSize): textures(textures) {
+RobotShooter::RobotShooter(const TextureHolder &textures, sf::Vector2u windowSize, std::shared_ptr<Strategy> strategy):
+    textures(textures) {
+
+
+    if(std::dynamic_pointer_cast<PatrolStrategy>(strategy) != nullptr)
+        strategy = std::make_shared<PatrolStrategy>(windowSize);
+    else
+        std::cout <<"errore sulla conversione della strategia"<< std::endl;
+
 
     //TODO
     typeCharacter = enemy;
@@ -28,8 +26,8 @@ RobotShooter::RobotShooter(const TextureHolder &textures, sf::Vector2u windowSiz
     this->windowSize.x = (int)windowSize.x;
     this->windowSize.y = (int)windowSize.y;
 
-    changeDirectionTime = generateRandom(200);
-    speed = 1;
+    //changeDirectionTime = generateRandom(200);
+    speedBasic = 0;
     hp = 40;
     hpMax = hp;
     attackDamage = 40;

@@ -11,7 +11,7 @@
 class RobotShooter: public Enemy {
 public:
 
-    explicit RobotShooter(const TextureHolder& textures, sf::Vector2u windowSize);
+    explicit RobotShooter(const TextureHolder& textures, sf::Vector2u windowSize, std::shared_ptr<Strategy> strategy);
 
 private:
     const TextureHolder& textures;

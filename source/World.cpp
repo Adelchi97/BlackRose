@@ -29,10 +29,10 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
 void World::createEnemies() {
 
     for(int i=0; i<5; i++) {
+
         std::shared_ptr<Enemy> enemy = enemyFactory.createEnemy(Enemy::SubType::robotGray, textures,
                 window->getSize());
         enemyArray.emplace_back(enemy);
-        enemy->setPosition(generateRandom(800), generateRandom(800));
     }
 }
 

@@ -34,7 +34,7 @@ PlayerCharacter::PlayerCharacter(SubType subType, const TextureHolder& textures,
 
     rect.setPosition(windowSize.x/2.f,windowSize.y/2.f);
     //rect.setPosition(generateRandom(800), generateRandom(800));
-    speed = 2;
+    speedBasic = 2;
     hp = 200;
     hpMax = hp;
     attackDamage = 0;
@@ -54,19 +54,19 @@ void PlayerCharacter::update(sf::Time dt) {
 
     sf::Vector2f movements(0.f,0.f);
     if(isMovingUp) {
-        movements.y-=speed;
+        movements.y-=speedBasic;
         setDirection(PlayerCharacter::up);
     }
     if(isMovingDown) {
-        movements.y+=speed;
+        movements.y+=speedBasic;
         setDirection(PlayerCharacter::down);
     }
     if(isMovingRight) {
-        movements.x+=speed;
+        movements.x+=speedBasic;
         setDirection(PlayerCharacter::right);
     }
     if(isMovingLeft) {
-        movements.x-=speed;
+        movements.x-=speedBasic;
         setDirection(PlayerCharacter::left);
     }
 
@@ -159,11 +159,11 @@ const sf::Sprite &PlayerCharacter::getSprite() {
 }
 
 float PlayerCharacter::getSpeed() const {
-    return speed;
+    return speedBasic;
 }
 
 void PlayerCharacter::setSpeed(int speed) {
-    this->speed = speed;
+    this->speedBasic = speed;
 }
 
 void PlayerCharacter::setDirection(PlayerCharacter::Direction direction) {

@@ -64,7 +64,7 @@ public:
 
 protected:
     int resistance;
-    int speed;
+    int speedBasic;
     sf::Vector2f position;
 
     Inventory inventory;
