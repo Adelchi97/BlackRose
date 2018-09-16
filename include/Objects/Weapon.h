@@ -17,8 +17,6 @@ public:
 
 public:
     int range;
-
-protected:
     int power;
 };
 

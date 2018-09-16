@@ -91,6 +91,7 @@ void World::updateObjects() {
 void World::checkCollision() {
 
     collisionPlayerProjectilesOnObjects();
+    collisionEnemyProjectilesOnObjects();
     collisionPlayerEnemy();
     //Wall
     collisionWithMap();
@@ -161,7 +162,19 @@ void World::collisionWithMap() {
                     counterProjectiles++;
                 }
             }
-            //TODO itera anche sui proiettili nemici
+            if(!projectileEnemyArray.empty()) {
+                int counterProjectiles = 0;
+                //go through all projectiles
+                for ( auto iterProjectile = projectileEnemyArray.begin(); iterProjectile != projectileEnemyArray.end();
+                iterProjectile++ ) {
+
+                    if(projectileEnemyArray[counterProjectiles]->rect.getGlobalBounds().intersects(map->tileMap[counterMap]->rect
+                    .getGlobalBounds())) {
+                        projectileEnemyArray[counterProjectiles]->active = false;
+                    }
+                    counterProjectiles++;
+                }
+            }
         }
         counterMap++;
     }
@@ -203,6 +216,26 @@ void World::collisionPlayerProjectilesOnObjects() {
     }
 }
 
+void World::collisionEnemyProjectilesOnObjects() {
+    if(!projectileEnemyArray.empty()) {
+        int counterProjectiles = 0;
+        //go through all projectiles
+        for ( auto iterProjectile = projectileEnemyArray.begin(); iterProjectile != projectileEnemyArray.end(); iterProjectile++ ) {
+
+            //check player collision
+            if ( projectileEnemyArray[ counterProjectiles ]->rect.getGlobalBounds().intersects(player->rect.getGlobalBounds())) {
+                std::cout << "got shoot!" << std::endl;
+                player->display();
+                player->hp -= projectileEnemyArray[counterProjectiles]->attackDamage;
+                projectileEnemyArray[counterProjectiles]->active = false;
+            }
+
+            counterProjectiles++;
+        }
+    }
+}
+
+
 void World::updateEnemies() {
     if(!enemyArray.empty()) {
         int counter = 0;
@@ -216,6 +249,7 @@ void World::updateEnemies() {
                 projectileEnemyArray.emplace_back(std::make_shared<Projectile>(textures));
                 projectileEnemyArray.back()->setPosition(shooter->rect.getPosition(),shooter->direction);
                 projectileEnemyArray.back()->range = shooter->weapon->range;
+                projectileEnemyArray.back()->attackDamage = 10;
                 //perché never used ??
                 shooter->attackAvailable = false;
             }
@@ -231,7 +265,7 @@ void World::updateEnemies() {
 }
 
 void World::updateProjectiles() {
-    //TODO itera anche sui projectiles nemici
+    //friendly projectiles
     if(!projectilePlayerArray.empty()) {
         int counter = 0;
         int deleted = -1;
@@ -246,6 +280,7 @@ void World::updateProjectiles() {
         if(deleted>=0)
             projectilePlayerArray.erase(projectilePlayerArray.begin() + deleted);
     }
+    //enemy projectiles
     if(!projectileEnemyArray.empty()) {
         int counter = 0;
         int deleted = -1;

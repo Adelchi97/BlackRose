@@ -43,7 +43,7 @@ RobotShooter::RobotShooter(const TextureHolder &textures, sf::Vector2u windowSiz
 
 void RobotShooter::update() {
     //TODO if it's in seek but now do every once in a while
-    if(shootingTimer.getElapsedTime().asSeconds() > .5) {
+    if(shootingTimer.getElapsedTime().asSeconds() > 1) {
         std::cout << "ROBOT SHOOT!" << std::endl;
         attackAvailable = true;
         shootingTimer.restart();

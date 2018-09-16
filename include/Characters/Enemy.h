@@ -30,8 +30,6 @@ public:
     const sf::Sprite &getSprite() override;
     int getAttackDamage() override;
 
-    virtual void seek();
-    virtual void patrol();
     void die() override;
 
     void registerObserver(Observer* o) override;

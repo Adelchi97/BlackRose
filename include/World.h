@@ -42,6 +42,7 @@ public:
     void checkCollision();
     void collisionWithMap();
     void collisionPlayerProjectilesOnObjects();
+    void collisionEnemyProjectilesOnObjects();
     void collisionPlayerEnemy();
     void checkCollection();
 

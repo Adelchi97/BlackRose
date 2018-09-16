@@ -69,14 +69,6 @@ const sf::Sprite &Enemy::getSprite() {
     return Entity::getSprite();
 }
 
-void Enemy::seek() {
-
-}
-
-void Enemy::patrol() {
-
-}
-
 void Enemy::die() {
     active = false;
     notifyObservers();//TODO call the observer (PlayerCharacter) who will update his enemyKills counter, advancing with achievements
