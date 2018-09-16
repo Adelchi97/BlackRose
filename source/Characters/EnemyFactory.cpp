@@ -19,8 +19,6 @@ std::shared_ptr<Enemy> EnemyFactory::createEnemy(Enemy::SubType subtype, const T
         enemy = std::make_shared<RobotFighter>(textures, windowSize, strategy);
     }
 
-    enemy->setPosition(generateRandom(800), generateRandom(800));
-
     return enemy;
 
 }

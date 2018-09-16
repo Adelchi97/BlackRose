@@ -18,11 +18,6 @@ Character::Character() {
     bar.setFillColor(sf::Color::Black);
     lifeBar.setFillColor(sf::Color::Green);
 
-    /*
-    bar.setPosition(position.x, position.y-16);
-    lifeBar.setPosition(position.x, position.y-16);
-     */
-
     //TODO istanzia un inventory
 }
 

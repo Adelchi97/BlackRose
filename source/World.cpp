@@ -10,44 +10,44 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
         (textures), player(new PlayerCharacter(PlayerCharacter::SubType::blondHero, textures,
                 window->getSize())), rangedWeapon(new RangedWeapon(textures,RangedWeapon::Type::energyShooter)),
                            map(new ProceduralMap(textures, Tile::BackGroundType::baseFloor)) {
+    int x,y;
+    do{
+        x = generateRandom(24);
+        y = generateRandom(24);
+    } while (map->tileMap[x*25+y]->backGround != Tile::labFloor);
+    player->rect.setPosition(x*32+16,y*32+16);
 
     createEnemies();
     createWeapons();
-    /*
-    int z;
-    for(int i=0; i<25; i++){
-        for(int j=0; j<25; j++){
-            z = j+i*25;
-            if(map->tileMap[z]->backGround == Tile::metalWall)
-            wallArray.emplace_back(z);
-        }
-    }
-    */
+
 }
 
 
 void World::createEnemies() {
 
     for(int i=0; i<5; i++) {
-
         std::shared_ptr<Enemy> enemy = enemyFactory.createEnemy(Enemy::SubType::robotGray, textures,
                 window->getSize());
+        int x,y;
+        do{
+            x = generateRandom(24);
+            y = generateRandom(24);
+        } while (map->tileMap[x*25+y]->backGround != Tile::labFloor);
+        enemy->rect.setPosition(x*32+16,y*32+16);
+
         enemyArray.emplace_back(enemy);
     }
 }
 
 void World::createWeapons() {
-    //TODO the weapon lasts 25 seconds on the ground. make it permanent
     rangedWeapon->addProjectile(50);
-    int a,b;
+    int x,y;
     do{
-        a = generateRandom(800);
-        b = generateRandom(800);
-        rangedWeapon->setPosition(sf::Vector2f(a, b));
-    }
-    while (map->tileMap[b/32+(a/32)*25]->backGround != Tile::labFloor);
+        x = generateRandom(24);
+        y = generateRandom(24);
+    } while (map->tileMap[x*25+y]->backGround != Tile::labFloor);
+    rangedWeapon->setPosition(sf::Vector2f(x*32+16,y*32+16));
 
-    //rangedWeapon->setPosition(sf::Vector2f(generateRandom(800),generateRandom(800)));
     rangedWeapon->update();
     collectableObject.emplace_back(rangedWeapon);
 }
@@ -95,42 +95,7 @@ void World::checkCollision() {
     //Wall
     collisionWithMap();
 }
-/*
-void World::collisionPlayerWall() {
-    //character collision with walls
-    int xPosChar = player->rect.getPosition().x;
-    int yPosChar = player->rect.getPosition().y;
-    int aCell = xPosChar/32;
-    int bCell = yPosChar/32;
-    //wall on right
-    if(map->tileMap[bCell+((xPosChar+16)/32)*25]->backGround == Tile::BackGroundType::metalWall && player->isMovingRight)
-        player->rect.setPosition(xPosChar-2,yPosChar);
-    //wall on left
-    else if(map->tileMap[bCell+((xPosChar-16)/32)*25]->backGround == Tile::BackGroundType::metalWall && player->isMovingLeft)
-        player->rect.setPosition(xPosChar+2,yPosChar);
 
-    //wall on bot
-    if(map->tileMap[(yPosChar+16)/32+aCell*25]->backGround == Tile::BackGroundType::metalWall && player->isMovingDown)
-        player->rect.setPosition(xPosChar,yPosChar-2);
-    //wall on top
-    else if(map->tileMap[(yPosChar-16)/32+aCell*25]->backGround == Tile::BackGroundType::metalWall && player->isMovingUp)
-        player->rect.setPosition(xPosChar,yPosChar+2);
-    //DIAGONAL collisions
-    //right top
-    if(map->tileMap[(yPosChar-16)/32+((xPosChar+16)/32)*25]->backGround == Tile::BackGroundType::metalWall && (player->isMovingUp && player->isMovingRight))
-        player->rect.setPosition(xPosChar-2,yPosChar+2);
-    //left top
-    if(map->tileMap[(yPosChar-16)/32+((xPosChar-16)/32)*25]->backGround == Tile::BackGroundType::metalWall && (player->isMovingUp && player->isMovingLeft))
-        player->rect.setPosition(xPosChar+2,yPosChar+2);
-    //right bot
-    if(map->tileMap[(yPosChar+16)/32+((xPosChar+16)/32)*25]->backGround == Tile::BackGroundType::metalWall && (player->isMovingDown && player->isMovingRight))
-        player->rect.setPosition(xPosChar-2,yPosChar-2);
-    //left bot
-    if(map->tileMap[(yPosChar+16)/32+((xPosChar-16)/32)*25]->backGround == Tile::BackGroundType::metalWall && (player->isMovingDown && player->isMovingLeft))
-        player->rect.setPosition(xPosChar+2,yPosChar-2);
-
-}
-*/
 void World::collisionWithMap() {
     int counterMap = 0;
     //iter on tiles
@@ -165,9 +130,6 @@ void World::collisionWithMap() {
             }
             //check player
             if(player->rect.getGlobalBounds().intersects(map->tileMap[counterMap]->rect.getGlobalBounds())) {
-
-                auto posx = player->rect.getPosition().x;
-                auto posy = player->rect.getPosition().y;
 
                 if(player->isMovingUp && player->isMovingLeft) {
                     player->setPosition(2,2);
