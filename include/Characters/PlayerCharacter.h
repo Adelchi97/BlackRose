@@ -23,18 +23,19 @@ public:
     };
 
     PlayerCharacter(SubType subType, const TextureHolder& textures, sf::Vector2u windowSize);
-    virtual bool interactWithObject(std::shared_ptr<Object> &object);
-    bool shoot();
+    bool interactWithObject(std::shared_ptr<Object> &object) override;
+    bool useWeapon();
+    void changeWeapon(std::shared_ptr<Weapon>& newWeapon);
     //a movement that covers several tiles thanks to the ProtoBelt
     void dash();
-    virtual void die();
+    void die() override;
     void update(sf::Time dt);
 
     void setPosition(sf::Vector2f movement);
-    void setPosition(float x, float y);
-    sf::Vector2f getPosition();
+    void setPosition(float x, float y) override;
+    sf::Vector2f getPosition() override;
 
-    virtual const sf::Sprite &getSprite();
+    virtual const sf::Sprite &getSprite() override;
     void setDirection(PlayerCharacter::Direction direction);
 
     float getSpeed() const;
@@ -46,7 +47,7 @@ private:
 public:
     std::string name;
     bool shooting;
-    std::shared_ptr<RangedWeapon> rangedWeapon;
+    std::shared_ptr<Weapon> weapon;
 
     std::shared_ptr<Weapon> meleeWeapon;
     std::shared_ptr<Shield> slotShield;

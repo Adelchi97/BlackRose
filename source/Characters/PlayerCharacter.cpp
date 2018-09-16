@@ -93,9 +93,10 @@ void PlayerCharacter::update(sf::Time dt) {
 
 bool PlayerCharacter::interactWithObject(std::shared_ptr<Object> &object) {
 
-    rangedWeapon = std::dynamic_pointer_cast<RangedWeapon>(object);
-    if(rangedWeapon.get() != nullptr) {
-        rangedWeapon->equipped = true;
+    std::shared_ptr<Weapon> newWeapon = std::dynamic_pointer_cast<Weapon>(object);
+    if(newWeapon != nullptr) {
+        changeWeapon(newWeapon);
+        //TODO lo shared ptr non ha bisogno di essere decapsulato, togliere il get e cambiare inventory
         if(inventory.addItem(object.get()))
             std::cout<<"Weapon equipped"<<std::endl;
     }
@@ -103,17 +104,16 @@ bool PlayerCharacter::interactWithObject(std::shared_ptr<Object> &object) {
 }
 
 
-bool PlayerCharacter::shoot() {
-    //TODO it will depend on the weapon equipped
-    if(rangedWeapon.get() == nullptr) {
+bool PlayerCharacter::useWeapon() {
+    if(weapon == nullptr) {
         std::cout<<"you don't have a weapon"<<std::endl;
         return false;
     }
-    if(!rangedWeapon->shootProjectile()) {
-        std::cout<<"out of projectiles"<<std::endl;
+    if(!weapon->use()) {
+        std::cout<<"out of resource to use the weapon"<<std::endl;
         return false;
-    }
-    return true;
+    } else
+        return true;
 }
 
 void PlayerCharacter::dash() {
@@ -185,4 +185,12 @@ void PlayerCharacter::setDirection(PlayerCharacter::Direction direction) {
             sprite.setTextureRect(sf::IntRect(counterWalk*32,32*2,32,32));
             break;
     }
+}
+
+void PlayerCharacter::changeWeapon(std::shared_ptr<Weapon>& newWeapon) {
+    //TODO vanno cambiati attributi equiped
+    if(this->weapon != nullptr)
+        this->weapon->equipped = false;
+    this->weapon = newWeapon;
+    this->weapon->equipped = true;
 }

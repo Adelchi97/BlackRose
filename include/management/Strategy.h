@@ -9,6 +9,11 @@
 
 class Strategy {
 public:
+    enum Type {
+        patrol,
+        seek
+    };
+
     Strategy();
 
     virtual void update(bool& isMovingUp,bool& isMovingDown,bool& isMovingLeft,bool& isMovingRight, sf::RectangleShape& rect);

@@ -41,7 +41,7 @@ public:
 
     void checkCollision();
     void collisionWithMap();
-    void collisionProjectilesOnObjects();
+    void collisionPlayerProjectilesOnObjects();
     void collisionPlayerEnemy();
     void checkCollection();
 
@@ -61,7 +61,8 @@ private:
     std::shared_ptr<RangedWeapon> rangedWeapon;
     EnemyFactory enemyFactory;
 
-    std::vector<std::shared_ptr<Projectile>> projectileArray;
+    std::vector<std::shared_ptr<Projectile>> projectilePlayerArray;
+    std::vector<std::shared_ptr<Projectile>> projectileEnemyArray;
     std::vector<std::shared_ptr<Object>> collectableObject;
 
 

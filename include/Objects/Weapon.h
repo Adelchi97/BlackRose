@@ -10,6 +10,12 @@
 class Weapon : public Object {
 public:
     Weapon();
+    void update() override;
+    //TODO si il nome...
+    virtual bool addStuff(int added);
+    bool use() override;
+
+public:
     int range;
 
 protected:

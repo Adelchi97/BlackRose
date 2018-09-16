@@ -25,6 +25,7 @@ public:
 
     int changeDirectionTime, counterDirection = 0;
     Direction direction;
+    Type type = patrol;
 
 private:
     void changeDirection(bool &isMovingUp, bool &isMovingDown, bool &isMovingLeft, bool &isMovingRight);

@@ -26,7 +26,7 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
 void World::createEnemies() {
 
     for(int i=0; i<5; i++) {
-        std::shared_ptr<Enemy> enemy = enemyFactory.createEnemy(Enemy::SubType::robotGray, textures,
+        std::shared_ptr<Enemy> enemy = enemyFactory.createEnemy(Enemy::SubType::robotRed, textures,
                 window->getSize());
         int x,y;
         do{
@@ -40,7 +40,7 @@ void World::createEnemies() {
 }
 
 void World::createWeapons() {
-    rangedWeapon->addProjectile(50);
+    rangedWeapon->addStuff(50);
     int x,y;
     do{
         x = generateRandom(24);
@@ -90,7 +90,7 @@ void World::updateObjects() {
 
 void World::checkCollision() {
 
-    collisionProjectilesOnObjects();
+    collisionPlayerProjectilesOnObjects();
     collisionPlayerEnemy();
     //Wall
     collisionWithMap();
@@ -149,18 +149,19 @@ void World::collisionWithMap() {
                     player->setPosition(-2,0);
                 }
             }
-            //checkProjectiles
-            if(!projectileArray.empty()) {
+            //check Projectiles
+            if(!projectilePlayerArray.empty()) {
                 int counterProjectiles = 0;
                 //go through all projectiles
-                for ( auto iterProjectile = projectileArray.begin(); iterProjectile != projectileArray.end(); iterProjectile++ ) {
+                for ( auto iterProjectile = projectilePlayerArray.begin(); iterProjectile != projectilePlayerArray.end(); iterProjectile++ ) {
 
-                    if(projectileArray[counterProjectiles]->rect.getGlobalBounds().intersects(map->tileMap[counterMap]->rect.getGlobalBounds())) {
-                        projectileArray[counterProjectiles]->active = false;
+                    if(projectilePlayerArray[counterProjectiles]->rect.getGlobalBounds().intersects(map->tileMap[counterMap]->rect.getGlobalBounds())) {
+                        projectilePlayerArray[counterProjectiles]->active = false;
                     }
                     counterProjectiles++;
                 }
             }
+            //TODO itera anche sui proiettili nemici
         }
         counterMap++;
     }
@@ -178,23 +179,22 @@ void World::collisionPlayerEnemy() {
     }
 }
 
-void World::collisionProjectilesOnObjects() {
-    if(!projectileArray.empty() && !enemyArray.empty()) {
+void World::collisionPlayerProjectilesOnObjects() {
+    if(!projectilePlayerArray.empty() && !enemyArray.empty()) {
         int counterProjectiles = 0;
         //go through all projectiles
-        //TODO perché questa cosa stupida di iter?? tenere a mano il conto del counter enemy è stupido
-        for ( auto iterProjectile = projectileArray.begin(); iterProjectile != projectileArray.end(); iterProjectile++ ) {
-            //TODO check if there is a wall, if there is delete
+        for ( auto iterProjectile = projectilePlayerArray.begin(); iterProjectile != projectilePlayerArray.end(); iterProjectile++ ) {
+
             int counterEnemy = 0;
             //go through all enemies
             for ( auto iterEnemy = enemyArray.begin(); iterEnemy != enemyArray.end(); iterEnemy++ ) {
-                if ( projectileArray[ counterProjectiles ]->rect.getGlobalBounds().
+                if ( projectilePlayerArray[ counterProjectiles ]->rect.getGlobalBounds().
                         intersects(enemyArray[ counterEnemy ]->rect.getGlobalBounds())) {
 
                     std::cout << "Collision!" << std::endl;
                     enemyArray[counterEnemy]->display();
-                    enemyArray[counterEnemy]->hp -= projectileArray[counterProjectiles]->attackDamage;
-                    projectileArray[counterProjectiles]->active = false;
+                    enemyArray[counterEnemy]->hp -= projectilePlayerArray[counterProjectiles]->attackDamage;
+                    projectilePlayerArray[counterProjectiles]->active = false;
                 }
                 counterEnemy++;
             }
@@ -210,6 +210,16 @@ void World::updateEnemies() {
         for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
             enemyArray[ counter ]->update();
 
+            //if it use his weapon it adds it to the enemyProjectiles
+            auto shooter = std::dynamic_pointer_cast<RobotShooter>(enemyArray[counter]);
+            if( shooter != nullptr && shooter->attackAvailable) {
+                projectileEnemyArray.emplace_back(std::make_shared<Projectile>(textures));
+                projectileEnemyArray.back()->setPosition(shooter->rect.getPosition(),shooter->direction);
+                projectileEnemyArray.back()->range = shooter->weapon->range;
+                //perché never used ??
+                shooter->attackAvailable = false;
+            }
+
             if ( !enemyArray[ counter ]->active ) {
                 deleted = counter;
             }
@@ -221,19 +231,34 @@ void World::updateEnemies() {
 }
 
 void World::updateProjectiles() {
-    if(!projectileArray.empty()) {
+    //TODO itera anche sui projectiles nemici
+    if(!projectilePlayerArray.empty()) {
         int counter = 0;
         int deleted = -1;
-        for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
-            projectileArray[ counter ]->update();
+        for ( auto iter = projectilePlayerArray.begin(); iter != projectilePlayerArray.end(); iter++ ) {
+            projectilePlayerArray[ counter ]->update();
 
-            if ( !projectileArray[ counter ]->active ) {
+            if ( !projectilePlayerArray[ counter ]->active ) {
                 deleted = counter;
             }
             counter++;
         }
         if(deleted>=0)
-            projectileArray.erase(projectileArray.begin() + deleted);
+            projectilePlayerArray.erase(projectilePlayerArray.begin() + deleted);
+    }
+    if(!projectileEnemyArray.empty()) {
+        int counter = 0;
+        int deleted = -1;
+        for ( auto iter = projectileEnemyArray.begin(); iter != projectileEnemyArray.end(); iter++ ) {
+            projectileEnemyArray[ counter ]->update();
+
+            if ( !projectileEnemyArray[ counter ]->active ) {
+                deleted = counter;
+            }
+            counter++;
+        }
+        if(deleted>=0)
+            projectileEnemyArray.erase(projectileEnemyArray.begin() + deleted);
     }
 }
 
@@ -337,19 +362,26 @@ void World::checkCollection() {
 
 //gets the projectile back in the array of the world and sets the right position
 void World::useWeapon() {
-    if(player->shoot()) {
-        projectileArray.emplace_back(std::make_shared<Projectile>(textures));
-        projectileArray.back()->setPosition(player->rect.getPosition(), player->direction);
-        projectileArray.back()->range = player->rangedWeapon->range;
+    if( player->useWeapon()) {
+        projectilePlayerArray.emplace_back(std::make_shared<Projectile>(textures));
+        projectilePlayerArray.back()->setPosition(player->rect.getPosition(), player->direction);
+        projectilePlayerArray.back()->range = player->weapon->range;
     } else
         std::cout<<"non puo sparare "<<std::endl;
 }
 
 void World::drawProjectiles() {
-    if(!projectileArray.empty()) {
+    if(!projectilePlayerArray.empty()) {
         int counter = 0;
-        for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
-            window->draw(projectileArray[ counter ]->getSprite());
+        for ( auto iter = projectilePlayerArray.begin(); iter != projectilePlayerArray.end(); iter++ ) {
+            window->draw(projectilePlayerArray[ counter ]->getSprite());
+            counter++;
+        }
+    }
+    if(!projectileEnemyArray.empty()) {
+        int counter = 0;
+        for ( auto iter = projectileEnemyArray.begin(); iter != projectileEnemyArray.end(); iter++ ) {
+            window->draw(projectileEnemyArray[ counter ]->getSprite());
             counter++;
         }
     }

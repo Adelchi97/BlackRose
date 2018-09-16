@@ -12,7 +12,6 @@ RobotFighter::RobotFighter(const TextureHolder &textures, sf::Vector2u windowSiz
     else
         std::cout <<"errore sulla conversione della strategia"<< std::endl;
 
-
     //TODO spostali in costruttore di character
     typeCharacter = enemy;
     isMovingDown = false;

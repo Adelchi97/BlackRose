@@ -21,6 +21,7 @@ public:
 
     Enemy();
 
+    //update qui serve per fare più che altro update della strategy
     void update() override;
     void setDirection();
     void changeDirection() override;
@@ -44,9 +45,10 @@ public:
     SubType subType;
     std::shared_ptr<Strategy> strategy;
 
+    //TODO altri puntatori bugganti
     std::vector<Observer*> observers; //achievements
 
-
+    bool attackAvailable;
     std::shared_ptr<Weapon> weapon;
     std::shared_ptr<Shield> shield;
 

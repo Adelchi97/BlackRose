@@ -13,10 +13,12 @@ public:
     Inventory();
     Inventory(const Object& right);
 
+    //TODO cosa è questo?? un doppio puntatore D:
     Inventory(Object **arrayItems);
 
     Object& operator=(const Object& right);
     virtual ~Inventory(){}
+    //TODO puntatori!!
     bool addItem(Object* item);
     bool getElement(int pos, Object& item) const;
     bool removeItem(int pos, Object& item);
@@ -25,6 +27,7 @@ public:
 
 protected:
     static const int maxElements = 12;
+    //TODO altri puntatori halp
     Object *arrayItems[maxElements];
 };
 
