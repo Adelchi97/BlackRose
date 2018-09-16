@@ -40,9 +40,8 @@ public:
     void updateTextureDisplayed();
 
     void checkCollision();
-    void collisionPlayerWall();
-    void collisionEnemyWall();
-    void collisionProjectiles();
+    void collisionWithMap();
+    void collisionProjectilesOnObjects();
     void collisionPlayerEnemy();
     void checkCollection();
 

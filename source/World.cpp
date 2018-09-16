@@ -90,14 +90,12 @@ void World::updateObjects() {
 
 void World::checkCollision() {
 
-    //Projectiles and Enemiesx
-    collisionProjectiles();
+    collisionProjectilesOnObjects();
     collisionPlayerEnemy();
     //Wall
-    collisionPlayerWall();
-    collisionEnemyWall();
+    collisionWithMap();
 }
-
+/*
 void World::collisionPlayerWall() {
     //character collision with walls
     int xPosChar = player->rect.getPosition().x;
@@ -132,38 +130,21 @@ void World::collisionPlayerWall() {
         player->rect.setPosition(xPosChar+2,yPosChar-2);
 
 }
-
-/*
-void World::collisionEnemyWall() {
-    int xPosEnemy, yPosEnemy;
-    int numEnemy = enemyArray.size();
-
-    for (int i=0; i<numEnemy; i++) {
-        xPosEnemy = enemyArray[i]->rect.getPosition().x;
-        yPosEnemy = enemyArray[i]->rect.getPosition().y;
-        for(int j=0; j<wallArray.size(); j++){
-            if(enemyArray[i]->isMovingUp || enemyArray[i]->isMovingRight || enemyArray[i]->isMovingDown || enemyArray[i]->isMovingLeft){
-                if( enemyArray[i]->rect.getGlobalBounds().intersects(map->tileMap[j]->rect.getGlobalBounds())){
-                    enemyArray[i]->changeDirection();
-                }
-            }
-        }
-    }
-}
-
 */
-
-void World::collisionEnemyWall() {
+void World::collisionWithMap() {
     int counterMap = 0;
+    //iter on tiles
     for(auto iterMap = map->tileMap.begin(); iterMap != map->tileMap.end(); iterMap++) {
 
+        //if tile is a wall
         if(map->tileMap[counterMap]->backGround == Tile::BackGroundType::metalWall) {
             int counterEnemy = 0;
+            //iter on enemies
             for(auto iterEnemy = enemyArray.begin(); iterEnemy != enemyArray.end(); iterEnemy++) {
 
+                //if enemy touches a wall
                 std::shared_ptr<Enemy> enemy = enemyArray[counterEnemy];
-                if(enemy->rect.getGlobalBounds().intersects(map->tileMap[counterMap]->rect
-                .getGlobalBounds())) {
+                if(enemy->rect.getGlobalBounds().intersects(map->tileMap[counterMap]->rect.getGlobalBounds())) {
 
                     //enemy bounce on walls
                     if(enemy->isMovingUp) {
@@ -182,60 +163,45 @@ void World::collisionEnemyWall() {
                 }
                 counterEnemy++;
             }
+            //check player
+            if(player->rect.getGlobalBounds().intersects(map->tileMap[counterMap]->rect.getGlobalBounds())) {
+
+                auto posx = player->rect.getPosition().x;
+                auto posy = player->rect.getPosition().y;
+
+                if(player->isMovingUp && player->isMovingLeft) {
+                    player->setPosition(2,2);
+                } else if(player->isMovingUp && player->isMovingRight) {
+                    player->setPosition(-2,2);
+                } else if(player->isMovingDown && player->isMovingLeft) {
+                    player->setPosition(2,-2);
+                } else if(player->isMovingDown && player->isMovingRight) {
+                    player->setPosition(-2,-2);
+                } else if(player->isMovingUp) {
+                    player->setPosition(0,2);
+                } else if(player->isMovingDown) {
+                    player->setPosition(0,-2);
+                } else if(player->isMovingLeft) {
+                    player->setPosition(2,0);
+                } else if(player->isMovingRight) {
+                    player->setPosition(-2,0);
+                }
+            }
+            //checkProjectiles
+            if(!projectileArray.empty()) {
+                int counterProjectiles = 0;
+                //go through all projectiles
+                for ( auto iterProjectile = projectileArray.begin(); iterProjectile != projectileArray.end(); iterProjectile++ ) {
+
+                    if(projectileArray[counterProjectiles]->rect.getGlobalBounds().intersects(map->tileMap[counterMap]->rect.getGlobalBounds())) {
+                        projectileArray[counterProjectiles]->active = false;
+                    }
+                    counterProjectiles++;
+                }
+            }
         }
         counterMap++;
     }
-    /*
-    int xPosEnemy, yPosEnemy;
-    int numEnemy = enemyArray.size();
-
-    for (int i=0; i<numEnemy; i++){
-        xPosEnemy = (enemyArray[i]->rect.getPosition().x);
-        yPosEnemy = (enemyArray[i]->rect.getPosition().y);
-
-        //wall on right
-        if(map->tileMap[yPosEnemy/32+((xPosEnemy+16)/32)*25]->backGround == Tile::BackGroundType::metalWall && enemyArray[i]->isMovingRight) {
-            //enemyArray[i]->rect.setPosition(xPosEnemy - 2, yPosEnemy);
-            enemyArray[i]->changeDirection();
-        }
-        //wall on left
-        else if(map->tileMap[yPosEnemy/32+((xPosEnemy-16)/32)*25]->backGround == Tile::BackGroundType::metalWall && enemyArray[i]->isMovingLeft){
-            //enemyArray[i]->rect.setPosition(xPosEnemy+2,yPosEnemy);
-            enemyArray[i]->changeDirection();
-        }
-
-        //wall on bottom
-        if(map->tileMap[((yPosEnemy+16)/32)+(xPosEnemy/32)*25]->backGround == Tile::BackGroundType::metalWall && enemyArray[i]->isMovingDown){
-            //enemyArray[i]->rect.setPosition(xPosEnemy,yPosEnemy-2);
-            enemyArray[i]->changeDirection();
-        }
-            //wall on top
-        else if(map->tileMap[(yPosEnemy-16)/32+(xPosEnemy/32)*25]->backGround == Tile::BackGroundType::metalWall && enemyArray[i]->isMovingUp){
-            //enemyArray[i]->rect.setPosition(xPosEnemy,yPosEnemy+2);
-            enemyArray[i]->changeDirection();
-        }
-        //DIAGONAL collisions
-        //right top
-        if(map->tileMap[(yPosEnemy-16)/32+((xPosEnemy+16)/32)*25]->backGround == Tile::BackGroundType::metalWall && (enemyArray[i]->isMovingUp && enemyArray[i]->isMovingRight)){
-            //enemyArray[i]->rect.setPosition(xPosEnemy-2,yPosEnemy+2);
-            enemyArray[i]->changeDirection();
-        }
-        //left top
-        if(map->tileMap[(yPosEnemy-16)/32+((xPosEnemy-16)/32)*25]->backGround == Tile::BackGroundType::metalWall && (enemyArray[i]->isMovingUp && enemyArray[i]->isMovingLeft)){
-            //enemyArray[i]->rect.setPosition(xPosEnemy+2,yPosEnemy+2);
-            enemyArray[i]->changeDirection();
-        }
-        //right bot
-        if(map->tileMap[(yPosEnemy+16)/32+((xPosEnemy+16)/32)*25]->backGround == Tile::BackGroundType::metalWall && (enemyArray[i]->isMovingDown && enemyArray[i]->isMovingRight)){
-            //enemyArray[i]->rect.setPosition(xPosEnemy-2,yPosEnemy-2);
-            enemyArray[i]->changeDirection();
-        }
-        //left bot (yPosChar+16)/32+((xPosChar+16)/32)*25
-        if(map->tileMap[(yPosEnemy+16)/32+((xPosEnemy-16)/32)*25]->backGround == Tile::BackGroundType::metalWall && (enemyArray[i]->isMovingDown && enemyArray[i]->isMovingLeft)){
-            //enemyArray[i]->rect.setPosition(xPosEnemy+2,yPosEnemy-2);
-            enemyArray[i]->changeDirection();
-        }
-    }*/
 }
 
 void World::collisionPlayerEnemy() {
@@ -250,16 +216,16 @@ void World::collisionPlayerEnemy() {
     }
 }
 
-void World::collisionProjectiles() {
+void World::collisionProjectilesOnObjects() {
     if(!projectileArray.empty() && !enemyArray.empty()) {
         int counterProjectiles = 0;
         //go through all projectiles
         //TODO perché questa cosa stupida di iter?? tenere a mano il conto del counter enemy è stupido
-        for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
+        for ( auto iterProjectile = projectileArray.begin(); iterProjectile != projectileArray.end(); iterProjectile++ ) {
             //TODO check if there is a wall, if there is delete
             int counterEnemy = 0;
             //go through all enemies
-            for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
+            for ( auto iterEnemy = enemyArray.begin(); iterEnemy != enemyArray.end(); iterEnemy++ ) {
                 if ( projectileArray[ counterProjectiles ]->rect.getGlobalBounds().
                         intersects(enemyArray[ counterEnemy ]->rect.getGlobalBounds())) {
 
@@ -270,16 +236,6 @@ void World::collisionProjectiles() {
                 }
                 counterEnemy++;
             }
-            //TODO scrivere 25 è inefficace se voglio cambiare la dimensione della window
-            float posx = projectileArray[counterProjectiles]->rect.getPosition().x;
-            float posy = projectileArray[counterProjectiles]->rect.getPosition().y;
-
-            /*
-            if(map->tileMap[posy/32 + 25*posx/32]->backGround == Tile::BackGroundType::metalWall) {
-
-                projectileArray[counterProjectiles]->active = false;
-            }*/
-
             counterProjectiles++;
         }
     }

@@ -147,7 +147,7 @@ void PlayerCharacter::checkWorldBounds() {
 }
 
 void PlayerCharacter::setPosition(float x, float y) {
-    rect.move(x,y);
+    Character::setPosition(x,y);
 }
 
 sf::Vector2f PlayerCharacter::getPosition() {
