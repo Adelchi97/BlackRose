@@ -577,7 +577,7 @@ bool ProceduralMap::makeCorridor(int x, int y, int length, int direction) {
     return true;
 }
 
-//TODO va dattata alla struttura dati
+//TODO va adattata alla struttura dati
 
 bool ProceduralMap::createLevel(int inx, int iny) {
     towerLevel++;

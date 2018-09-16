@@ -17,11 +17,11 @@ Character::Character() {
     bar.setOutlineColor(sf::Color::Black);
     bar.setFillColor(sf::Color::Black);
     lifeBar.setFillColor(sf::Color::Green);
+
     /*
     bar.setPosition(position.x, position.y-16);
     lifeBar.setPosition(position.x, position.y-16);
      */
-
 
     //TODO istanzia un inventory
 }
@@ -67,6 +67,10 @@ void Character::setPosition(sf::Vector2f& movement) {
     rect.move(movement.x, movement.y);
 }
 
+void Character::setPosition(float x, float y) {
+    rect.move(x,y);
+}
+
 void Character::changeDirection() {
 
 }
@@ -75,6 +79,6 @@ int Character::getAttackDamage() {
     return 0;
 }
 
-void Character::setPosition(float x, float y) {
-    rect.move(x,y);
+sf::Vector2f Character::getPosition() {
+    return position;
 }

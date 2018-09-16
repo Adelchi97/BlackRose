@@ -31,34 +31,7 @@ void PatrolStrategy::update(bool& isMovingUp,bool& isMovingDown,bool& isMovingLe
         movements.x-=speed;
     }
 
-    //TODO Elimina il controllo di collisione con il muro
-    //li passo tutti perché mi serve controllare la collisione con il muro
-    setPositionMovement(isMovingUp, isMovingDown, isMovingLeft, isMovingRight, movements, rect);
-
-}
-
-void PatrolStrategy::setPositionMovement(bool& isMovingUp,bool& isMovingDown,bool& isMovingLeft,bool& isMovingRight,
-        const sf::Vector2f &movement, sf::RectangleShape& rect) {
-
-    rect.move(movement);
-
-    /*
-    if((rect.getPosition().x)+32>windowSize.x) {
-        rect.setPosition(windowSize.x - 32, rect.getPosition().y);
-        changeDirection(isMovingUp, isMovingDown, isMovingLeft, isMovingRight);
-    }
-    else if(rect.getPosition().x<0) {
-        rect.setPosition(0, rect.getPosition().y);
-        changeDirection(isMovingUp, isMovingDown, isMovingLeft, isMovingRight);
-    }
-    if((rect.getPosition().y)+32>windowSize.y) {
-        rect.setPosition(rect.getPosition().x, windowSize.y - 32);
-        changeDirection(isMovingUp, isMovingDown, isMovingLeft, isMovingRight);
-    }
-    else if(rect.getPosition().y<0) {
-        rect.setPosition(rect.getPosition().x, 0);
-        changeDirection(isMovingUp, isMovingDown, isMovingLeft, isMovingRight);
-    }*/
+    rect.move(movements);
 
 }
 

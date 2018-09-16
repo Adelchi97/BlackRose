@@ -35,6 +35,7 @@ public:
     virtual void move();
     virtual void setPosition(sf::Vector2f& movement);
     virtual void setPosition(float x, float y);
+    virtual sf::Vector2f getPosition();
     virtual void changeDirection();
 
     virtual void fight();

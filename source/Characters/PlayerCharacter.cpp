@@ -151,7 +151,7 @@ void PlayerCharacter::setPosition(float x, float y) {
 }
 
 sf::Vector2f PlayerCharacter::getPosition() {
-    return sf::Vector2f(rect.getPosition().x, rect.getPosition().y);
+    return Character::getPosition();
 }
 
 const sf::Sprite &PlayerCharacter::getSprite() {

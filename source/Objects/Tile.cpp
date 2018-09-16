@@ -34,6 +34,11 @@ Tile::Tile(const TextureHolder &textures, sf::Vector2f coordinates, BackGroundTy
     //used for random numbers
     //std::mt19937 mt(rd());
     sprite.setTextureRect(sf::IntRect(32*0,32*0,32,32));
+
+    //this allows to have a border where enemies don't bounce on
+    //rect.setOrigin(coordinates.x+3, coordinates.y+3);
+    rect.setSize(sf::Vector2f(32,32));
+
     rect.setPosition(coordinates.x * 32, coordinates.y * 32);
     sprite.setPosition(rect.getPosition());
 

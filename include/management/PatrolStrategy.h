@@ -29,8 +29,6 @@ public:
 private:
     void changeDirection(bool &isMovingUp, bool &isMovingDown, bool &isMovingLeft, bool &isMovingRight);
 
-    void setPositionMovement(bool& isMovingUp,bool& isMovingDown,bool& isMovingLeft,bool& isMovingRight, const
-    sf::Vector2f &movement, sf::RectangleShape& rect);
 
     int speed;
     sf::Vector2u windowSize;

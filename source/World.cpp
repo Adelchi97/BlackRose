@@ -154,6 +154,38 @@ void World::collisionEnemyWall() {
 */
 
 void World::collisionEnemyWall() {
+    int counterMap = 0;
+    for(auto iterMap = map->tileMap.begin(); iterMap != map->tileMap.end(); iterMap++) {
+
+        if(map->tileMap[counterMap]->backGround == Tile::BackGroundType::metalWall) {
+            int counterEnemy = 0;
+            for(auto iterEnemy = enemyArray.begin(); iterEnemy != enemyArray.end(); iterEnemy++) {
+
+                std::shared_ptr<Enemy> enemy = enemyArray[counterEnemy];
+                if(enemy->rect.getGlobalBounds().intersects(map->tileMap[counterMap]->rect
+                .getGlobalBounds())) {
+
+                    //enemy bounce on walls
+                    if(enemy->isMovingUp) {
+                        enemy->changeDirection();
+                        enemy->setPosition(0,1);
+                    } else if(enemy->isMovingDown) {
+                        enemy->changeDirection();
+                        enemy->setPosition(0,-1);
+                    } else if(enemy->isMovingLeft) {
+                        enemy->changeDirection();
+                        enemy->setPosition(1, 0);
+                    } else if(enemy->isMovingRight) {
+                        enemy->changeDirection();
+                        enemy->setPosition(-1, 0);
+                    }
+                }
+                counterEnemy++;
+            }
+        }
+        counterMap++;
+    }
+    /*
     int xPosEnemy, yPosEnemy;
     int numEnemy = enemyArray.size();
 
@@ -203,7 +235,7 @@ void World::collisionEnemyWall() {
             //enemyArray[i]->rect.setPosition(xPosEnemy+2,yPosEnemy-2);
             enemyArray[i]->changeDirection();
         }
-    }
+    }*/
 }
 
 void World::collisionPlayerEnemy() {
@@ -222,12 +254,15 @@ void World::collisionProjectiles() {
     if(!projectileArray.empty() && !enemyArray.empty()) {
         int counterProjectiles = 0;
         //go through all projectiles
+        //TODO perché questa cosa stupida di iter?? tenere a mano il conto del counter enemy è stupido
         for ( auto iter = projectileArray.begin(); iter != projectileArray.end(); iter++ ) {
+            //TODO check if there is a wall, if there is delete
             int counterEnemy = 0;
             //go through all enemies
             for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
                 if ( projectileArray[ counterProjectiles ]->rect.getGlobalBounds().
                         intersects(enemyArray[ counterEnemy ]->rect.getGlobalBounds())) {
+
                     std::cout << "Collision!" << std::endl;
                     enemyArray[counterEnemy]->display();
                     enemyArray[counterEnemy]->hp -= projectileArray[counterProjectiles]->attackDamage;
@@ -235,6 +270,16 @@ void World::collisionProjectiles() {
                 }
                 counterEnemy++;
             }
+            //TODO scrivere 25 è inefficace se voglio cambiare la dimensione della window
+            float posx = projectileArray[counterProjectiles]->rect.getPosition().x;
+            float posy = projectileArray[counterProjectiles]->rect.getPosition().y;
+
+            /*
+            if(map->tileMap[posy/32 + 25*posx/32]->backGround == Tile::BackGroundType::metalWall) {
+
+                projectileArray[counterProjectiles]->active = false;
+            }*/
+
             counterProjectiles++;
         }
     }
@@ -363,8 +408,7 @@ void World::checkCollection() {
         int counterObject = 0;
         //go through all objects
         for ( auto iter = collectableObject.begin(); iter != collectableObject.end(); iter++ ) {
-            if ( collectableObject[ counterObject ]->rect.getGlobalBounds().
-                    intersects(player->rect.getGlobalBounds())) {
+            if ( collectableObject[ counterObject ]->rect.getGlobalBounds().intersects(player->rect.getGlobalBounds())) {
                 std::cout << "collecting object" << std::endl;
                 player->interactWithObject(collectableObject[ counterObject ]);
             }
