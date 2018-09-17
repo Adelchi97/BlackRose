@@ -124,6 +124,7 @@ void Game::loadTextures() {
 
     textureHolder.load(Textures::ShootingEnergy,"Media/Objects/shootingEnergy.png");
     textureHolder.load(Textures::energyShooter,"Media/Objects/energyShooter.png");
+    textureHolder.load(Textures::redProjectile,"Media/Objects/redProjectile.png");
 
     textureHolder.load(Textures::labTile, "Media/Tiles/CustomLabTile.png");
     textureHolder.load(Textures::woodTile, "Media/Tiles/CustomWoodTile.png");

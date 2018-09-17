@@ -4,27 +4,7 @@
 
 #include "ctime"
 #include "../include/ProceduralMap.h"
-/*
-Textures::ID toTextureID( ProceduralMap::TileType type) {
-    switch(type) {
-        case ProceduralMap::Floor:
-            return Textures::labTile;
-        case ProceduralMap::Wall:
-            return Textures::labTile;
-        case ProceduralMap::Unused:
-            return Textures::labTile;
 
-        case TileType::Door:
-            return Textures::HeroWhite;
-        case TileType::dirtFloor:
-            return Textures::HeroGray;
-        case TileType::dir:
-            return Textures::StarLord;
-
-    }
-}
-
-*/
 ProceduralMap::ProceduralMap(const TextureHolder &textures, Tile::BackGroundType backGroundType, sf::Vector2u
     windowSize): xsize(windowSize.x), ysize(windowSize.y), objects(10), chanceRoom(80), chanceCorridor(20),
     minRoomSide(5), maxRoomSide(10), textures(textures) {

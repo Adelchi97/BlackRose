@@ -246,7 +246,7 @@ void World::updateEnemies() {
             //if it use his weapon it adds it to the enemyProjectiles
             auto shooter = std::dynamic_pointer_cast<RobotShooter>(enemyArray[counter]);
             if( shooter != nullptr && shooter->attackAvailable) {
-                projectileEnemyArray.emplace_back(std::make_shared<Projectile>(textures));
+                projectileEnemyArray.emplace_back(std::make_shared<Projectile>(textures, Projectile::redProjectile));
                 projectileEnemyArray.back()->setPosition(shooter->rect.getPosition(),shooter->direction);
                 projectileEnemyArray.back()->range = shooter->weapon->range;
                 projectileEnemyArray.back()->attackDamage = 10;
@@ -398,7 +398,7 @@ void World::checkCollection() {
 //gets the projectile back in the array of the world and sets the right position
 void World::useWeapon() {
     if( player->useWeapon()) {
-        projectilePlayerArray.emplace_back(std::make_shared<Projectile>(textures));
+        projectilePlayerArray.emplace_back(std::make_shared<Projectile>(textures, Projectile::energyBall));
         projectilePlayerArray.back()->setPosition(player->rect.getPosition(), player->direction);
         projectilePlayerArray.back()->range = player->weapon->range;
     } else
