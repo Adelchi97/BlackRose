@@ -4,7 +4,20 @@
 
 #include "../../include/Objects/Healpack.h"
 
-Healpack::Healpack(const sf::Texture &textures): textures(textures) {
+Healpack::Healpack(const TextureHolder &textures): textures(textures) {
 
-    collected = false;
+    texture = textures.get(Textures::healPack);
+    sprite.setTexture(texture);
+
+    rect.setPosition(sf::Vector2f(300,300));
+    rect.setOrigin(32/2,23/2);
+    sprite.setOrigin(32/2,23/2);
+    rect.setSize(sf::Vector2f(32,23));
+    sprite.setPosition(rect.getPosition());
+
+    counterLifeTime = 1;
+}
+
+void Healpack::update() {
+    ConsumableObject::update();
 }

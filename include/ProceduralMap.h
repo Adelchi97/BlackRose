@@ -14,7 +14,7 @@ class ProceduralMap {
 public:
 
     //ProceduralMap(const TextureHolder &textures);
-    ProceduralMap(const TextureHolder &textures, Tile::BackGroundType backGroundType);
+    ProceduralMap(const TextureHolder &textures, Tile::BackGroundType backGroundType, sf::Vector2u windowSize);
 
     ~ProceduralMap();
 

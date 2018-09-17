@@ -9,19 +9,27 @@
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
         (textures), player(new PlayerCharacter(PlayerCharacter::SubType::blondHero, textures,
                 window->getSize())), rangedWeapon(new RangedWeapon(textures,RangedWeapon::Type::energyShooter)),
-                           map(new ProceduralMap(textures, Tile::BackGroundType::baseFloor)) {
+                           map(new ProceduralMap(textures, Tile::BackGroundType::baseFloor, window->getSize())) {
+
+    //player related stuff
     int x,y;
     do{
         x = generateRandom(24);
         y = generateRandom(24);
     } while (map->tileMap[x*25+y]->backGround != Tile::labFloor);
-    player->rect.setPosition(x*32+16,y*32+16);
+    player->rect.setPosition(x*64+16,y*64+16);
+    //life text
+    mainFont.loadFromFile("Media/Sansation.ttf");
+
+    playerLife = std::make_shared<textDisplay>();
+    playerLife->setString(std::to_string(player->hp));
+    playerLife->text.setFont(mainFont);
+    textureDisplayArray.emplace_back(playerLife);
 
     createEnemies();
-    createWeapons();
+    createObjects();
 
 }
-
 
 void World::createEnemies() {
 
@@ -33,23 +41,34 @@ void World::createEnemies() {
             x = generateRandom(24);
             y = generateRandom(24);
         } while (map->tileMap[x*25+y]->backGround != Tile::labFloor);
-        enemy->rect.setPosition(x*32+16,y*32+16);
+        enemy->rect.setPosition(x*64+16,y*64+16);
 
         enemyArray.emplace_back(enemy);
     }
 }
 
-void World::createWeapons() {
+void World::createObjects() {
+    //create a weapon
     rangedWeapon->addStuff(50);
     int x,y;
     do{
         x = generateRandom(24);
         y = generateRandom(24);
     } while (map->tileMap[x*25+y]->backGround != Tile::labFloor);
-    rangedWeapon->setPosition(sf::Vector2f(x*32+16,y*32+16));
+    rangedWeapon->setPosition(sf::Vector2f(x*64+16,y*64+16));
 
     rangedWeapon->update();
     collectableObject.emplace_back(rangedWeapon);
+
+    //create healpack
+    healpack = std::make_shared<Healpack>(textures);
+    do{
+        x = generateRandom(24);
+        y = generateRandom(24);
+    } while (map->tileMap[x*25+y]->backGround != Tile::woodFloor);
+    healpack->setPosition(sf::Vector2f(x*64+16,y*64+16));
+    collectableObject.emplace_back(healpack);
+
 }
 
 void World::update(sf::Time dt) {
@@ -246,7 +265,7 @@ void World::updateEnemies() {
             //if it use his weapon it adds it to the enemyProjectiles
             auto shooter = std::dynamic_pointer_cast<RobotShooter>(enemyArray[counter]);
             if( shooter != nullptr && shooter->attackAvailable) {
-                projectileEnemyArray.emplace_back(std::make_shared<Projectile>(textures));
+                projectileEnemyArray.emplace_back(std::make_shared<Projectile>(textures, Projectile::redProjectile));
                 projectileEnemyArray.back()->setPosition(shooter->rect.getPosition(),shooter->direction);
                 projectileEnemyArray.back()->range = shooter->weapon->range;
                 projectileEnemyArray.back()->attackDamage = 10;
@@ -316,6 +335,8 @@ void World::drawPlayer() {
             window->draw(player->bar);
             window->draw(player->lifeBar);
         }
+        //life text
+        playerLife->setString(std::to_string(player->hp));
     }
 }
 
@@ -398,7 +419,7 @@ void World::checkCollection() {
 //gets the projectile back in the array of the world and sets the right position
 void World::useWeapon() {
     if( player->useWeapon()) {
-        projectilePlayerArray.emplace_back(std::make_shared<Projectile>(textures));
+        projectilePlayerArray.emplace_back(std::make_shared<Projectile>(textures, Projectile::energyBall));
         projectilePlayerArray.back()->setPosition(player->rect.getPosition(), player->direction);
         projectilePlayerArray.back()->range = player->weapon->range;
     } else

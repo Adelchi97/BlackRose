@@ -14,6 +14,11 @@ public:
         seek
     };
 
+    enum Direction {
+        up, down, left, right
+    };
+
+
     Strategy();
 
     virtual void update(bool& isMovingUp,bool& isMovingDown,bool& isMovingLeft,bool& isMovingRight, sf::RectangleShape& rect);

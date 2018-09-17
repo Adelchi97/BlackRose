@@ -9,6 +9,7 @@
 #include "Character.h"
 #include "../Objects/RangedWeapon.h"
 #include "../Objects/MeleeWeapon.h"
+#include "../Objects/Healpack.h"
 
 class Weapon;
 class PlayerCharacter : public Character {
@@ -47,9 +48,8 @@ private:
 public:
     std::string name;
     bool shooting;
-    std::shared_ptr<Weapon> weapon;
 
-    std::shared_ptr<Weapon> meleeWeapon;
+    std::shared_ptr<Weapon> weapon;
     std::shared_ptr<Shield> slotShield;
 
     SubType subType;

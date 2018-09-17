@@ -6,13 +6,18 @@
 #define BLACKROSE_HEALPACK_H
 
 #include "ConsumableObject.h"
+#include "../management/ResourceHolder.h"
+#include "../management/ResourceIdentifier.h"
 
 class Healpack: public ConsumableObject {
 public:
-    Healpack(const sf::Texture& textures);
+    Healpack(const TextureHolder& textures);
+    void update() final;
+
+    int powerUp = 50;
 
 private:
-    const sf::Texture& textures;
+    const TextureHolder& textures;
 };
 
 
