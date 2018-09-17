@@ -10,10 +10,6 @@
 
 class PatrolStrategy : public Strategy {
 public:
-    enum Direction {
-        up, down, left, right
-    };
-
     PatrolStrategy(sf::Vector2u windowSize);
 
     //change direction every x frames

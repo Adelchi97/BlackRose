@@ -6,7 +6,7 @@
 
 const sf::Time Game::TimePerFrame = sf::seconds(1.f/80.f);
 
-Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(800, 800), "BlackRose", sf::Style::Default)), mFont(),
+Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(1600, 1600), "BlackRose", sf::Style::Default)), mFont(),
                mStatisticsText(), mStatisticsUpdateTime(), mStatisticsNumFrames(0), world(nullptr) {
     loadTextures();
     world = std::make_shared<World>(mWindow,textureHolder);

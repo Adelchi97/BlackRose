@@ -33,13 +33,13 @@ Tile::Tile(const TextureHolder &textures, sf::Vector2f coordinates, BackGroundTy
     sprite.setTexture(texture);
     //used for random numbers
     //std::mt19937 mt(rd());
-    sprite.setTextureRect(sf::IntRect(32*0,32*0,32,32));
+    sprite.setTextureRect(sf::IntRect(64*0,64*0,64,64));
 
     //this allows to have a border where enemies don't bounce on
     //rect.setOrigin(coordinates.x+3, coordinates.y+3);
-    rect.setSize(sf::Vector2f(32,32));
+    rect.setSize(sf::Vector2f(64,64));
 
-    rect.setPosition(coordinates.x * 32, coordinates.y * 32);
+    rect.setPosition(coordinates.x * 64, coordinates.y * 64);
     sprite.setPosition(rect.getPosition());
 
 }
@@ -48,7 +48,7 @@ Tile::Tile(const TextureHolder &textures, sf::Vector2f coordiantes): textures(te
                                                                      coordinates(coordiantes), backGround
                                                                              (BackGroundType::labFloor) {
     texture = textures.get(toTextureID(backGround));
-    sprite.setTextureRect(sf::IntRect(0,0,32,32));
-    rect.setPosition(coordinates.x * 32, coordinates.y * 32);
+    sprite.setTextureRect(sf::IntRect(0,0,64,64));
+    rect.setPosition(coordinates.x * 64, coordinates.y * 64);
     sprite.setPosition(rect.getPosition());
 }

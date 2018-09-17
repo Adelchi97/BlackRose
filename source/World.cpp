@@ -9,13 +9,13 @@
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
         (textures), player(new PlayerCharacter(PlayerCharacter::SubType::blondHero, textures,
                 window->getSize())), rangedWeapon(new RangedWeapon(textures,RangedWeapon::Type::energyShooter)),
-                           map(new ProceduralMap(textures, Tile::BackGroundType::baseFloor)) {
+                           map(new ProceduralMap(textures, Tile::BackGroundType::baseFloor, window->getSize())) {
     int x,y;
     do{
         x = generateRandom(24);
         y = generateRandom(24);
     } while (map->tileMap[x*25+y]->backGround != Tile::labFloor);
-    player->rect.setPosition(x*32+16,y*32+16);
+    player->rect.setPosition(x*64+16,y*64+16);
 
     createEnemies();
     createWeapons();
@@ -33,7 +33,7 @@ void World::createEnemies() {
             x = generateRandom(24);
             y = generateRandom(24);
         } while (map->tileMap[x*25+y]->backGround != Tile::labFloor);
-        enemy->rect.setPosition(x*32+16,y*32+16);
+        enemy->rect.setPosition(x*64+16,y*64+16);
 
         enemyArray.emplace_back(enemy);
     }
@@ -46,7 +46,7 @@ void World::createWeapons() {
         x = generateRandom(24);
         y = generateRandom(24);
     } while (map->tileMap[x*25+y]->backGround != Tile::labFloor);
-    rangedWeapon->setPosition(sf::Vector2f(x*32+16,y*32+16));
+    rangedWeapon->setPosition(sf::Vector2f(x*64+16,y*64+16));
 
     rangedWeapon->update();
     collectableObject.emplace_back(rangedWeapon);

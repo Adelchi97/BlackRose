@@ -25,9 +25,9 @@ Textures::ID toTextureID( ProceduralMap::TileType type) {
 }
 
 */
-ProceduralMap::ProceduralMap(const TextureHolder &textures, Tile::BackGroundType backGroundType): xsize(800), ysize(800),
-               objects(10), chanceRoom(80), chanceCorridor(20), minRoomSide(5), maxRoomSide(10),
-               textures(textures) {
+ProceduralMap::ProceduralMap(const TextureHolder &textures, Tile::BackGroundType backGroundType, sf::Vector2u
+    windowSize): xsize(windowSize.x), ysize(windowSize.y), objects(10), chanceRoom(80), chanceCorridor(20),
+    minRoomSide(5), maxRoomSide(10), textures(textures) {
 
     for (int i=0; i<25; i++) {
         for  (int j=0; j<25; j++) {
