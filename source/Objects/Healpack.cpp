@@ -15,7 +15,7 @@ Healpack::Healpack(const TextureHolder &textures): textures(textures) {
     rect.setSize(sf::Vector2f(32,23));
     sprite.setPosition(rect.getPosition());
 
-    collected = false;
+    counterLifeTime = 1;
 }
 
 void Healpack::update() {

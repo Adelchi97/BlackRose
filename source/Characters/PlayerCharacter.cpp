@@ -100,7 +100,14 @@ bool PlayerCharacter::interactWithObject(std::shared_ptr<Object> &object) {
         if(inventory.addItem(object.get()))
             std::cout<<"Weapon equipped"<<std::endl;
     } else {
-        std::shared_ptr<H> newWeapon = std::dynamic_pointer_cast<Weapon>(object);
+        std::shared_ptr<Healpack> newHeal = std::dynamic_pointer_cast<Healpack>(object);
+        if(newHeal != nullptr) {
+            hp = hp + newHeal->powerUp;
+            if(hp > hpMax)
+                hp = hpMax;
+
+            newHeal->counterLifeTime--;
+        }
     }
     return true;
 }

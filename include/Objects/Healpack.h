@@ -14,6 +14,8 @@ public:
     Healpack(const TextureHolder& textures);
     void update() final;
 
+    int powerUp = 50;
+
 private:
     const TextureHolder& textures;
 };
