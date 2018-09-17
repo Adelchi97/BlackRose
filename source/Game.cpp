@@ -125,14 +125,14 @@ void Game::loadTextures() {
     textureHolder.load(Textures::ShootingEnergy,"Media/Objects/shootingEnergy.png");
     textureHolder.load(Textures::energyShooter,"Media/Objects/energyShooter.png");
 
-    textureHolder.load(Textures::labTile, "Media/Tiles/labTile.png");
-    textureHolder.load(Textures::woodTile, "Media/Tiles/woodTile.png");
+    textureHolder.load(Textures::labTile, "Media/Tiles/CustomLabTile.png");
+    textureHolder.load(Textures::woodTile, "Media/Tiles/CustomWoodTile.png");
     textureHolder.load(Textures::metalTile, "Media/Tiles/metalTile.png");
-    textureHolder.load(Textures::cementTile, "Media/Tiles/cementTile.png");
+    textureHolder.load(Textures::cementTile, "Media/Tiles/CustomCementTile.png");
 
 
-    textureHolder.load(Textures::metalWall, "Media/Walls/metalWall.png");
+    textureHolder.load(Textures::metalWall, "Media/Walls/CustomMetalWall.png");
 
-    textureHolder.load(Textures::baseTile, "Media/Tiles/BaseTile.png");
+    textureHolder.load(Textures::baseTile, "Media/Tiles/CustomBaseTile.png");
 
 }
