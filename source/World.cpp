@@ -10,18 +10,26 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
         (textures), player(new PlayerCharacter(PlayerCharacter::SubType::blondHero, textures,
                 window->getSize())), rangedWeapon(new RangedWeapon(textures,RangedWeapon::Type::energyShooter)),
                            map(new ProceduralMap(textures, Tile::BackGroundType::baseFloor, window->getSize())) {
+
+    //player related stuff
     int x,y;
     do{
         x = generateRandom(24);
         y = generateRandom(24);
     } while (map->tileMap[x*25+y]->backGround != Tile::labFloor);
     player->rect.setPosition(x*64+16,y*64+16);
+    //life text
+    mainFont.loadFromFile("Media/Sansation.ttf");
+
+    playerLife = std::make_shared<textDisplay>();
+    playerLife->setString(std::to_string(player->hp));
+    playerLife->text.setFont(mainFont);
+    textureDisplayArray.emplace_back(playerLife);
 
     createEnemies();
-    createWeapons();
+    createObjects();
 
 }
-
 
 void World::createEnemies() {
 
@@ -39,7 +47,8 @@ void World::createEnemies() {
     }
 }
 
-void World::createWeapons() {
+void World::createObjects() {
+    //create a weapon
     rangedWeapon->addStuff(50);
     int x,y;
     do{
@@ -50,6 +59,16 @@ void World::createWeapons() {
 
     rangedWeapon->update();
     collectableObject.emplace_back(rangedWeapon);
+
+    //create healpack
+    healpack = std::make_shared<Healpack>(textures);
+    do{
+        x = generateRandom(24);
+        y = generateRandom(24);
+    } while (map->tileMap[x*25+y]->backGround != Tile::woodFloor);
+    healpack->setPosition(sf::Vector2f(x*64+16,y*64+16));
+    collectableObject.emplace_back(healpack);
+
 }
 
 void World::update(sf::Time dt) {
@@ -316,6 +335,8 @@ void World::drawPlayer() {
             window->draw(player->bar);
             window->draw(player->lifeBar);
         }
+        //life text
+        playerLife->setString(std::to_string(player->hp));
     }
 }
 

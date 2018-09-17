@@ -13,6 +13,7 @@
 #include "ProceduralMap.h"
 #include "textDisplay.h"
 #include "Characters/EnemyFactory.h"
+#include "Objects/Healpack.h"
 
 class World {
 public:
@@ -22,7 +23,7 @@ public:
     void handlePlayerInput(sf::Keyboard::Key key, bool isPressed, sf::Clock& shootingClock);
 
 //private:
-    void createWeapons();
+    void createObjects();
     void createEnemies();
 
     void useWeapon();
@@ -55,7 +56,10 @@ public:
 private:
 
     const TextureHolder& textures;
+    //this holds all the texts
     std::vector<std::shared_ptr<textDisplay>> textureDisplayArray;
+    std::shared_ptr<textDisplay> playerLife;
+    sf::Font mainFont;
     sf::Clock textureTimer;
 
     std::vector<std::shared_ptr<Enemy>> enemyArray;
@@ -66,6 +70,7 @@ private:
     std::vector<std::shared_ptr<Projectile>> projectileEnemyArray;
     std::vector<std::shared_ptr<Object>> collectableObject;
 
+    std::shared_ptr<Healpack> healpack;
 
 };
 

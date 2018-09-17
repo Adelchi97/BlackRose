@@ -99,6 +99,8 @@ bool PlayerCharacter::interactWithObject(std::shared_ptr<Object> &object) {
         //TODO lo shared ptr non ha bisogno di essere decapsulato, togliere il get e cambiare inventory
         if(inventory.addItem(object.get()))
             std::cout<<"Weapon equipped"<<std::endl;
+    } else {
+        std::shared_ptr<H> newWeapon = std::dynamic_pointer_cast<Weapon>(object);
     }
     return true;
 }

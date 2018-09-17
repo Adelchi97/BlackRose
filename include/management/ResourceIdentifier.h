@@ -30,6 +30,8 @@ namespace Textures {
         energyShooter,
         redProjectile,
 
+        healPack,
+
         baseTile
     };
 }

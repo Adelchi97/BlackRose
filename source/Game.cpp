@@ -19,7 +19,7 @@ Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(1600, 1600), "BlackRos
     mWindow->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     //set the font and text on screen
-
+    //TODO is it necessary?
     sf::Font font;
     mFont.loadFromFile("Media/Digitalism.ttf");
     mStatisticsText.setFont(mFont);
@@ -27,16 +27,6 @@ Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(1600, 1600), "BlackRos
     mStatisticsText.setCharacterSize(50);
     mStatisticsText.setString("Ammo: ");
     //mStatisticsText.setString("Ammo: " + std::to_string(world->player->rangedWeapon->projectilesCounter));
-
-    /*
-    //Statistics text
-    mFont.loadFromFile("Media/Sansation.ttf");
-    mStatisticsText.setFont(mFont);
-    mStatisticsText.setPosition(5.f, 5.f);
-    mStatisticsText.setCharacterSize(50);
-    //mStatisticsText.setColor(sf::Color::Cyan);
-    mStatisticsText.setString("Hello");
-    */
 
 }
 
@@ -125,6 +115,8 @@ void Game::loadTextures() {
     textureHolder.load(Textures::ShootingEnergy,"Media/Objects/shootingEnergy.png");
     textureHolder.load(Textures::energyShooter,"Media/Objects/energyShooter.png");
     textureHolder.load(Textures::redProjectile,"Media/Objects/redProjectile.png");
+
+    textureHolder.load(Textures::healPack,"Media/Objects/whiteHealPack.png");
 
     textureHolder.load(Textures::labTile, "Media/Tiles/CustomLabTile.png");
     textureHolder.load(Textures::woodTile, "Media/Tiles/CustomWoodTile.png");
