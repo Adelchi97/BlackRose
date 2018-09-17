@@ -7,6 +7,7 @@
 
 #include "World.h"
 
+
 class Game : private sf::NonCopyable {
 public:
     Game();
@@ -33,6 +34,8 @@ private:
     sf::Time mStatisticsUpdateTime;
     std::size_t	mStatisticsNumFrames;
 
+
+    std::shared_ptr<AchievementFactory> throphies;
 };
 
 

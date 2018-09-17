@@ -13,6 +13,7 @@
 #include "ProceduralMap.h"
 #include "textDisplay.h"
 #include "Characters/EnemyFactory.h"
+#include "Achievements/AchievementFactory.h"
 #include "Objects/Healpack.h"
 
 class World {
@@ -53,6 +54,9 @@ public:
     //std::vector<int> wallArray;
 
     std::shared_ptr<ProceduralMap> map;
+
+    std::shared_ptr<Achievement> dem;
+
 private:
 
     const TextureHolder& textures;

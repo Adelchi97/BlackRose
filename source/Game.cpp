@@ -23,6 +23,7 @@ Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(1600, 1600), "BlackRos
     sf::Font font;
     mFont.loadFromFile("Media/Digitalism.ttf");
     mStatisticsText.setFont(mFont);
+
     mStatisticsText.setPosition(5.f,5.f);
     mStatisticsText.setCharacterSize(50);
     mStatisticsText.setString("Ammo: ");
@@ -60,6 +61,12 @@ void Game::render() {
     world->draw();
     mWindow->draw(mStatisticsText);
 
+/*
+    int size = throphies->listAchievements.size();
+
+    for(int i=0; i<size; i++)
+        mWindow->draw(throphies->listAchievements[i]->mStatisticsText);
+*/
     mWindow->display();
 }
 

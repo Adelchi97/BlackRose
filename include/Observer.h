@@ -5,12 +5,11 @@
 #ifndef BLACKROSE_OBSERVER_H
 #define BLACKROSE_OBSERVER_H
 
+#include "management/ResourceHolder.h"
+
 class Observer{
-
 protected:
-
     virtual ~Observer(){};
-
 public:
 
     virtual void update() = 0;

@@ -3,9 +3,9 @@
 //
 
 #include "../../include/Characters/Enemy.h"
+#include "../../include/Achievements/DemolisherAchievement.h"
 
 Enemy::Enemy() {
-
 }
 
 
@@ -71,23 +71,30 @@ const sf::Sprite &Enemy::getSprite() {
 
 void Enemy::die() {
     active = false;
-    notifyObservers();//TODO call the observer (PlayerCharacter) who will update his enemyKills counter, advancing with achievements
-}
-
-void Enemy::registerObserver(Observer* o) {
-    observers.push_back(o);
-}
-
-void Enemy::removeObserver(Observer* o) {
+    notifyObservers();// notify his observers who will update his enemyKills counter, advancing with achievements
     for(auto iter=observers.begin(); iter!=observers.end(); iter++){
-        if(iter.operator*() == o)
+            observers.erase(iter); //remove all his observers at his death
+    }
+}
+
+void Enemy::registerObserver(std::shared_ptr<Observer> observer) {
+    observers.emplace_back(observer);
+}
+
+void Enemy::removeObserver(std::shared_ptr<Observer> observer) {
+    int counterObs = 0;
+    for(auto iter=observers.begin(); iter!=observers.end(); iter++){
+        if(observers[counterObs] == observer)
             observers.erase(iter);
+        counterObs++;
     }
 }
 
 void Enemy::notifyObservers() const {
+    int counterObs = 0;
     for(auto iter=observers.begin(); iter!=observers.end(); iter ++){
-        (*iter)->update();
+        observers[counterObs]->update();
+        counterObs++;
     }
 }
 

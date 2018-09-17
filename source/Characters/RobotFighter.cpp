@@ -36,3 +36,8 @@ RobotFighter::RobotFighter(const TextureHolder &textures, sf::Vector2u windowSiz
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(0,0,32,32));
 }
+
+
+void RobotFighter::registerObserver(std::shared_ptr<Observer> observer) {
+    Enemy::registerObserver(observer);
+}

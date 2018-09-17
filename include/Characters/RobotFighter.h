@@ -12,6 +12,7 @@ class RobotFighter: public Enemy {
 public:
 
     explicit RobotFighter(const TextureHolder& textures, sf::Vector2u windowSize, std::shared_ptr<Strategy> strategy);
+    void registerObserver(std::shared_ptr<Observer> observer) final;
 
 private:
     const TextureHolder& textures;

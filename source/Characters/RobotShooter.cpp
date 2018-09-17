@@ -51,3 +51,7 @@ void RobotShooter::update() {
     Enemy::update();
 
 }
+
+void RobotShooter::registerObserver(std::shared_ptr<Observer> observer){
+    Enemy::registerObserver(observer);
+}

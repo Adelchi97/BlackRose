@@ -29,14 +29,21 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
     createEnemies();
     createObjects();
 
+    //TODO dem = std::make_shared<DemolisherAchievement>();
+    //TODO std::shared_ptr<DemolisherAchievement> newDem;
+    //TODO dem = newDem;
+
 }
 
 void World::createEnemies() {
-
+    //TODO std::shared_ptr<DemolisherAchievement> newDem = std::dynamic_pointer_cast<DemolisherAchievement>(dem);
     for(int i=0; i<5; i++) {
+
         std::shared_ptr<Enemy> enemy = enemyFactory.createEnemy(Enemy::SubType::robotRed, textures,
                 window->getSize());
         int x,y;
+        //TODO enemyArray[i]->registerObserver(dem); //TODO temporaneo
+        //TODO enemyArray.at(i)->registerObserver(dem);
         do{
             x = generateRandom(24);
             y = generateRandom(24);
@@ -226,6 +233,8 @@ void World::collisionPlayerProjectilesOnObjects() {
                     std::cout << "Collision!" << std::endl;
                     enemyArray[counterEnemy]->display();
                     enemyArray[counterEnemy]->hp -= projectilePlayerArray[counterProjectiles]->attackDamage;
+                    if(enemyArray[counterEnemy]->hp <= 0)
+                        enemyArray[counterEnemy]->killedByRangedWeapon = true; // questo per progredire con l'achievement
                     projectilePlayerArray[counterProjectiles]->active = false;
                 }
                 counterEnemy++;
@@ -341,6 +350,8 @@ void World::drawPlayer() {
 }
 
 void World::drawTextDisplayed() {
+    // TODO std::shared_ptr<DemolisherAchievement> newDem = std::dynamic_pointer_cast<DemolisherAchievement>(dem);
+    // TODO window->draw(newDem->mStatisticsText);  //TODO temporaneo
     if(!textureDisplayArray.empty()) {
         int counter = 0;
         for ( auto iter = textureDisplayArray.begin(); iter != textureDisplayArray.end(); iter++ ) {

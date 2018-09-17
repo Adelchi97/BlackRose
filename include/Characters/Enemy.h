@@ -8,8 +8,10 @@
 #include <memory>
 #include "Character.h"
 #include "../Random.h"
-#include "Subject.h"
+#include "../Subject.h"
+#include "../Observer.h"
 #include "../management/PatrolStrategy.h"
+#include "../Achievements/DemolisherAchievement.h"
 
 class Enemy : public Character, public Subject {
 public:
@@ -32,8 +34,8 @@ public:
 
     void die() override;
 
-    void registerObserver(Observer* o) override;
-    void removeObserver(Observer* o) override;
+    void registerObserver(std::shared_ptr<Observer> observer) override;
+    void removeObserver(std::shared_ptr<Observer> observer) override;
     void notifyObservers() const override;
 
 public:
@@ -43,8 +45,7 @@ public:
     SubType subType;
     std::shared_ptr<Strategy> strategy;
 
-    //TODO altri puntatori bugganti
-    std::vector<Observer*> observers; //achievements
+    std::vector<std::shared_ptr<Observer>> observers; //achievements
 
     bool attackAvailable;
     std::shared_ptr<Weapon> weapon;
