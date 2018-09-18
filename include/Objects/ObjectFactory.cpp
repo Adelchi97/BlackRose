@@ -58,9 +58,9 @@ Object::Type ObjectFactory::typeDrop() {
     int random = generateRandom(100);
     Object::Type typeSelected;
 
-    if(random < 5)
+    if(random < 50)
         typeSelected = healPack;
-    else if(random < 10)
+    else if(random < 100)
         typeSelected = rangedWeapon;
 
 

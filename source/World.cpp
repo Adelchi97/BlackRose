@@ -82,10 +82,6 @@ void World::createObjects() {
     //create a weapon
     std::shared_ptr<Object> weapon = objectFactory.createObject(Object::Type::rangedWeapon, textures);
 
-    std::shared_ptr<RangedWeapon> rangedWeapon = std::dynamic_pointer_cast<RangedWeapon>(weapon);
-    if(rangedWeapon != nullptr)
-        rangedWeapon->addStuff(50);
-
     int x,y;
     do{
         x = generateRandom(24);
@@ -105,6 +101,15 @@ void World::createObjects() {
 
     collectableObject.emplace_back(healpack);
 
+}
+
+void World::dropObject(int index) {
+    std::shared_ptr<Object> object = objectFactory.createObject(textures);
+
+    if(object != nullptr) {
+        object->setPosition(enemyArray[ index ]->getPosition());
+        collectableObject.emplace_back(object);
+    }
 }
 
 void World::update(sf::Time dt) {
@@ -318,8 +323,10 @@ void World::updateEnemies() {
             }
             counter++;
         }
-        if(deleted>=0)
+        if(deleted>=0) {
+            dropObject(deleted);
             enemyArray.erase(enemyArray.begin() + deleted);
+        }
         //TODO si può iterare sugli observers poi, supponendo siano nello stesso ordine con cui li ho inseriti
         // aggiorno textDisplay
         demolisherAchievement->setString(enemyArray[0]->observers[0]->textProgress.getString());

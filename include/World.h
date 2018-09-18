@@ -27,6 +27,7 @@ public:
 
 //private:
     void createObjects();
+    void dropObject(int index);
     void createEnemies();
 
     void useWeapon();
