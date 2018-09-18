@@ -341,7 +341,6 @@ void World::updateProjectiles() {
 }
 
 void World::draw() {
-    window->setView(window->getDefaultView());
     drawMap();
 
     drawProjectiles();

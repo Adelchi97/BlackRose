@@ -12,6 +12,10 @@ Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(1600, 1600), "BlackRos
     loadTextures();
     //loadSound();
 
+    view = std::make_shared<sf::View>(sf::Vector2f(0, 0), sf::Vector2f(400,400));
+
+    mWindow->setView(*view);
+
     world = std::make_shared<World>(mWindow,textureHolder);
 
     //sets the icon
@@ -62,6 +66,8 @@ void Game::run() {
 void Game::render() {
     mWindow->clear();
 
+    mWindow->setView(*view);
+
     world->draw();
     mWindow->draw(mStatisticsText);
 
@@ -97,6 +103,10 @@ void Game::processEvents(sf::Clock& shootingClock) {
 
 void Game::update(sf::Time deltaTime) {
     world->update(deltaTime);
+    view->setCenter(world->player->rect.getPosition());
+    view->zoom(0.5);
+    view->setSize(sf::Vector2f(mWindow->getSize().x/2, mWindow->getSize().y/2));
+
 }
 
 void Game::updateStatistics(sf::Time elapsedTime) {
@@ -142,9 +152,11 @@ void Game::loadTextures() {
 }
 /*
 void Game::loadSound() {
+
     if(!soundBuffer.loadFromFile("Media/SoundEffects/energyShot"))
         std::cout<<"error - sound not loaded"<<std::endl;
     sound.setBuffer(soundBuffer);
     sound.play();
+
 }
 */
