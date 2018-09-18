@@ -26,7 +26,8 @@ public:
     PlayerCharacter(SubType subType, const TextureHolder& textures, sf::Vector2u windowSize);
     bool interactWithObject(std::shared_ptr<Object> object) override;
     bool useWeapon();
-    void changeWeapon(std::shared_ptr<Weapon>& newWeapon);
+    void changeWeapon(std::shared_ptr<Weapon> newWeapon);
+    void searchWeapon();
     //a movement that covers several tiles thanks to the ProtoBelt
     void dash();
     void die() override;

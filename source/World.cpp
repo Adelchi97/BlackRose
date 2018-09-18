@@ -20,7 +20,6 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
     //life text
     mainFont.loadFromFile("Media/Sansation.ttf");
 
-    //TODO questo andrà in factory
     playerLife = std::make_shared<textDisplay>();
     playerLife->setString(std::to_string(player->hp));
     playerLife->text.setFont(mainFont);
@@ -52,19 +51,20 @@ void World::createEnemies() {
         do{
             x = generateRandom(24);
             y = generateRandom(24);
-        } while (map->tileMap[x*25+y]->backGround != Tile::labFloor);
+        } while (map->tileMap[x*25+y]->backGround != Tile::labFloor && map->tileMap[x*25+y]->backGround !=
+        Tile::woodFloor);
         enemy->rect.setPosition(x*64+16,y*64+16);
         enemyArray.emplace_back(enemy);
     }
     for(int i=0; i<10; i++) {
 
-        std::shared_ptr<Enemy> enemy = enemyFactory.createEnemy(Enemy::SubType::robotGray, textures,
-                                                                window->getSize());
+        std::shared_ptr<Enemy> enemy = enemyFactory.createEnemy(Enemy::SubType::robotGray, textures, window->getSize());
         int x,y;
         do{
             x = generateRandom(24);
             y = generateRandom(24);
-        } while (map->tileMap[x*25+y]->backGround != Tile::labFloor);
+        } while (map->tileMap[x*25+y]->backGround != Tile::labFloor && map->tileMap[x*25+y]->backGround !=
+        Tile::woodFloor);
         enemy->rect.setPosition(x*64+16,y*64+16);
 
         enemyArray.emplace_back(enemy);
@@ -86,7 +86,7 @@ void World::createObjects() {
     do{
         x = generateRandom(24);
         y = generateRandom(24);
-    } while (map->tileMap[x*25+y]->backGround != Tile::labFloor);
+    } while (map->tileMap[x*25+y]->backGround != Tile::labFloor );
     weapon->setPosition(sf::Vector2f(x*64+16,y*64+16));
 
     collectableObject.emplace_back(weapon);

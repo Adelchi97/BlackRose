@@ -95,10 +95,8 @@ bool PlayerCharacter::interactWithObject(std::shared_ptr<Object> object) {
 
     std::shared_ptr<Weapon> newWeapon = std::dynamic_pointer_cast<Weapon>(object);
     if(newWeapon != nullptr) {
-        if(inventory.addItem(object)) {
-            std::cout << "Weapon equipped" << std::endl;
-            changeWeapon(newWeapon);
-        }
+        changeWeapon(newWeapon);
+
     } else {
         std::shared_ptr<Healpack> newHeal = std::dynamic_pointer_cast<Healpack>(object);
         if(newHeal != nullptr) {
@@ -116,6 +114,32 @@ bool PlayerCharacter::interactWithObject(std::shared_ptr<Object> object) {
 }
 
 
+void PlayerCharacter::changeWeapon(std::shared_ptr<Weapon> newWeapon) {
+    //TODO vanno cambiati attributi equiped
+
+    if(this->weapon != nullptr) {
+        this->weapon->equipped = false;
+        if(inventory.addItem(this->weapon)) {
+            this->weapon = newWeapon;
+            this->weapon->equipped = true;
+        } else {
+            std::cout<<"Inventario prieno"<<std::endl;
+        }
+    } else {
+        this->weapon = newWeapon;
+        this->weapon->equipped = true;
+    }
+}
+
+void PlayerCharacter::searchWeapon() {
+    std::shared_ptr<Object> obj = inventory.getElement(Object::rangedWeapon);
+    std::shared_ptr<RangedWeapon> newWeapon = std::dynamic_pointer_cast<RangedWeapon>(obj);
+    if(newWeapon != nullptr) {
+        changeWeapon(newWeapon);
+    }
+}
+
+
 bool PlayerCharacter::useWeapon() {
     if(weapon == nullptr) {
         std::cout<<"you don't have a weapon"<<std::endl;
@@ -123,6 +147,7 @@ bool PlayerCharacter::useWeapon() {
     }
     if(!weapon->use()) {
         std::cout<<"out of resource to use the weapon"<<std::endl;
+        searchWeapon();
         return false;
     } else
         return true;
@@ -197,14 +222,4 @@ void PlayerCharacter::setDirection(PlayerCharacter::Direction direction) {
             sprite.setTextureRect(sf::IntRect(counterWalk*32,32*2,32,32));
             break;
     }
-}
-
-void PlayerCharacter::changeWeapon(std::shared_ptr<Weapon>& newWeapon) {
-    //TODO vanno cambiati attributi equiped
-    /*
-    if(this->weapon != nullptr) {
-        this->weapon->equipped = false;
-    }*/
-    this->weapon = newWeapon;
-    this->weapon->equipped = true;
 }

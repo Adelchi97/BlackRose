@@ -14,12 +14,9 @@ class Inventory {
 public:
     Inventory();
 
-    //Object& operator=(const Object& right);
     bool addItem(std::shared_ptr<Object> item);
     std::shared_ptr<Object> getElement(Object::Type type);
     std::shared_ptr<Object> findElement(Object::Type type);
-    //bool removeItem(int pos, Object& item);
-    //int getMaxElements() const;
 
 private:
     int maxElements = 12;
