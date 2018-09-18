@@ -96,8 +96,7 @@ bool PlayerCharacter::interactWithObject(std::shared_ptr<Object> &object) {
     std::shared_ptr<Weapon> newWeapon = std::dynamic_pointer_cast<Weapon>(object);
     if(newWeapon != nullptr) {
         changeWeapon(newWeapon);
-        //TODO lo shared ptr non ha bisogno di essere decapsulato, togliere il get e cambiare inventory
-        if(inventory.addItem(object.get()))
+        if(inventory.addItem(object))
             std::cout<<"Weapon equipped"<<std::endl;
     } else {
         std::shared_ptr<Healpack> newHeal = std::dynamic_pointer_cast<Healpack>(object);

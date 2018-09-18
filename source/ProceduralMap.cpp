@@ -4,7 +4,7 @@
 
 #include "ctime"
 #include "../include/ProceduralMap.h"
-
+//TODO add a fixup for walls and for metalFloor
 ProceduralMap::ProceduralMap(const TextureHolder &textures, Tile::BackGroundType backGroundType, sf::Vector2u
     windowSize): xsize(windowSize.x), ysize(windowSize.y), objects(10), chanceRoom(80), chanceCorridor(20),
     minRoomSide(5), maxRoomSide(10), textures(textures) {

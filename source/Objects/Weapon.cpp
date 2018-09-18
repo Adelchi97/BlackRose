@@ -5,7 +5,6 @@
 #include "../../include/Objects/Weapon.h"
 
 Weapon::Weapon() {
-
 }
 
 void Weapon::update() {

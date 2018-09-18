@@ -4,11 +4,56 @@
 #include "../include/Inventory.h"
 
 Inventory::Inventory(){
+    /*
     for (int i = 0; i < maxElements; i++){
         arrayItems[i] = NULL;
     }
+     */
+    iter = 0;
 }
 
+bool Inventory::addItem(std::shared_ptr<Object> item) {
+
+    if(slots.size() <= maxElements) {
+        slots.emplace_back(item);
+        return true;
+    } else
+        return false;
+}
+
+std::shared_ptr<Object> Inventory::getElement(Object::Type type) {
+
+    std::shared_ptr<Object> element = slots[iter];
+    for(int i =0; i<slots.size(); i++) {
+        if(slots[iter]->type == type) {
+            element = slots[iter];
+            break;
+        }
+        iter = (iter + 1)% slots.size();
+    }
+    slots.erase(slots.begin() + iter);
+
+    if(element == nullptr)
+        std::cout<<"errore nel get element"<<std::endl;
+    return element;
+}
+
+std::shared_ptr<Object> Inventory::findElement(Object::Type type) {
+
+    std::shared_ptr<Object> element = slots[iter];
+    for(int i =0; i<slots.size(); i++) {
+        if(slots[iter]->type == type) {
+            element = slots[iter];
+            break;
+        }
+        iter = (iter + 1)% slots.size();
+    }
+
+    if(element == nullptr)
+        std::cout<<"errore nel find element"<<std::endl;
+    return element;
+}
+/*
 bool Inventory::addItem(Object* item) {
     for (int i = 0; i < maxElements; i++){
         if (arrayItems[i] == NULL) {
@@ -42,4 +87,4 @@ bool Inventory::removeItem(int pos, Object &item) {
     }
     return false;
 }
-
+*/

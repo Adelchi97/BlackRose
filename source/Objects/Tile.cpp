@@ -27,16 +27,12 @@ Textures::ID toTextureID(Tile::BackGroundType type) {
 Tile::Tile(const TextureHolder &textures, sf::Vector2f coordinates, BackGroundType btype): textures(textures), type
         (TileType::Floor), backGround(btype), coordinates(coordinates) {
 
-    //distribution = std::uniform_real_distribution<>(0,3);
+    rect.setOrigin(32/2,32/2);
+    sprite.setOrigin(32/2,32/2);
 
     texture = textures.get(toTextureID(backGround));
     sprite.setTexture(texture);
-    //used for random numbers
-    //std::mt19937 mt(rd());
     sprite.setTextureRect(sf::IntRect(64*0,64*0,64,64));
-
-    //this allows to have a border where enemies don't bounce on
-    //rect.setOrigin(coordinates.x+3, coordinates.y+3);
     rect.setSize(sf::Vector2f(64,64));
 
     rect.setPosition(coordinates.x * 64, coordinates.y * 64);

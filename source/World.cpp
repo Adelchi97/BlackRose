@@ -8,8 +8,7 @@
 
 World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &textures): window(window), textures
         (textures), player(new PlayerCharacter(PlayerCharacter::SubType::blondHero, textures,
-                window->getSize())), rangedWeapon(new RangedWeapon(textures,RangedWeapon::Type::energyShooter)),
-                           map(new ProceduralMap(textures, Tile::BackGroundType::baseFloor, window->getSize())) {
+                window->getSize())), map(new ProceduralMap(textures, Tile::BackGroundType::baseFloor, window->getSize())) {
 
     //player related stuff
     int x,y;
@@ -52,10 +51,26 @@ void World::createEnemies() {
 
         enemyArray.emplace_back(enemy);
     }
+    for(int i=0; i<10; i++) {
+
+        std::shared_ptr<Enemy> enemy = enemyFactory.createEnemy(Enemy::SubType::robotGray, textures,
+                                                                window->getSize());
+        int x,y;
+        //TODO enemyArray[i]->registerObserver(dem); //TODO temporaneo
+        //TODO enemyArray.at(i)->registerObserver(dem);
+        do{
+            x = generateRandom(24);
+            y = generateRandom(24);
+        } while (map->tileMap[x*25+y]->backGround != Tile::labFloor);
+        enemy->rect.setPosition(x*64+16,y*64+16);
+
+        enemyArray.emplace_back(enemy);
+    }
 }
 
 void World::createObjects() {
     //create a weapon
+    rangedWeapon = std::make_shared<RangedWeapon>(textures, RangedWeapon::Type::energyShooter);
     rangedWeapon->addStuff(50);
     int x,y;
     do{
@@ -277,7 +292,7 @@ void World::updateEnemies() {
                 projectileEnemyArray.emplace_back(std::make_shared<Projectile>(textures, Projectile::redProjectile));
                 projectileEnemyArray.back()->setPosition(shooter->rect.getPosition(),shooter->direction);
                 projectileEnemyArray.back()->range = shooter->weapon->range;
-                projectileEnemyArray.back()->attackDamage = 10;
+                projectileEnemyArray.back()->attackDamage = shooter->weapon->power;
                 //perché never used ??
                 shooter->attackAvailable = false;
             }
@@ -430,9 +445,12 @@ void World::checkCollection() {
 //gets the projectile back in the array of the world and sets the right position
 void World::useWeapon() {
     if( player->useWeapon()) {
-        projectilePlayerArray.emplace_back(std::make_shared<Projectile>(textures, Projectile::energyBall));
-        projectilePlayerArray.back()->setPosition(player->rect.getPosition(), player->direction);
-        projectilePlayerArray.back()->range = player->weapon->range;
+        std::shared_ptr<RangedWeapon> mWeapon = std::dynamic_pointer_cast<RangedWeapon>(player->weapon);
+        if(mWeapon != nullptr) {
+            projectilePlayerArray.emplace_back(std::make_shared<Projectile>(textures, Projectile::energyBall));
+            projectilePlayerArray.back()->setPosition(player->rect.getPosition(), player->direction);
+            projectilePlayerArray.back()->range = player->weapon->range;
+        }
     } else
         std::cout<<"non puo sparare "<<std::endl;
 }

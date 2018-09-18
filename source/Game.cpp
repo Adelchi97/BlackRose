@@ -20,15 +20,16 @@ Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(1600, 1600), "BlackRos
 
     //set the font and text on screen
     //TODO is it necessary?
+    /*
     sf::Font font;
-    mFont.loadFromFile("Media/Digitalism.ttf");
+    mFont.loadFromFile("Media/Sansation.ttf");
     mStatisticsText.setFont(mFont);
 
     mStatisticsText.setPosition(5.f,5.f);
     mStatisticsText.setCharacterSize(50);
     mStatisticsText.setString("Ammo: ");
     //mStatisticsText.setString("Ammo: " + std::to_string(world->player->rangedWeapon->projectilesCounter));
-
+    */
 }
 
 void Game::run() {
@@ -120,7 +121,7 @@ void Game::loadTextures() {
     textureHolder.load(Textures::StarLord,"Media/Characters/People/starlord_mask.png");
 
     textureHolder.load(Textures::ShootingEnergy,"Media/Objects/shootingEnergy.png");
-    textureHolder.load(Textures::energyShooter,"Media/Objects/energyShooter.png");
+    textureHolder.load(Textures::energyShooter,"Media/Objects/gun.png");
     textureHolder.load(Textures::redProjectile,"Media/Objects/redProjectile.png");
 
     textureHolder.load(Textures::healPack,"Media/Objects/whiteHealPack.png");

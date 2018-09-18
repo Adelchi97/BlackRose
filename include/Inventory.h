@@ -6,29 +6,24 @@
 #define BLACKROSE_INVENTORY_H
 
 #include "Objects/Object.h"
+#include <iostream>
 
 //template <typename object>
 class Inventory {
 public:
     Inventory();
-    Inventory(const Object& right);
 
-    //TODO cosa è questo?? un doppio puntatore D:
-    Inventory(Object **arrayItems);
+    //Object& operator=(const Object& right);
+    bool addItem(std::shared_ptr<Object> item);
+    std::shared_ptr<Object> getElement(Object::Type type);
+    std::shared_ptr<Object> findElement(Object::Type type);
+    //bool removeItem(int pos, Object& item);
+    //int getMaxElements() const;
 
-    Object& operator=(const Object& right);
-    virtual ~Inventory(){}
-    //TODO puntatori!!
-    bool addItem(Object* item);
-    bool getElement(int pos, Object& item) const;
-    bool removeItem(int pos, Object& item);
-    int getMaxElements() const;
-
-
-protected:
-    static const int maxElements = 12;
-    //TODO altri puntatori halp
-    Object *arrayItems[maxElements];
+private:
+    int maxElements = 12;
+    int iter;
+    std::vector<std::shared_ptr<Object>> slots;
 };
 
 
