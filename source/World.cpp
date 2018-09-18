@@ -51,18 +51,13 @@ void World::createEnemies() {
             y = generateRandom(24);
         } while (map->tileMap[x*25+y]->backGround != Tile::labFloor);
         enemy->rect.setPosition(x*64+16,y*64+16);
-
         enemyArray.emplace_back(enemy);
-        //enemyArray[i]->registerObserver(dem); //TODO temporaneo
-        //enemyArray.at(i)->registerObserver(dem);
     }
     for(int i=0; i<10; i++) {
 
         std::shared_ptr<Enemy> enemy = enemyFactory.createEnemy(Enemy::SubType::robotGray, textures,
                                                                 window->getSize());
         int x,y;
-        //TODO enemyArray[i]->registerObserver(dem); //TODO temporaneo
-        //TODO enemyArray.at(i)->registerObserver(dem);
         do{
             x = generateRandom(24);
             y = generateRandom(24);
@@ -70,12 +65,12 @@ void World::createEnemies() {
         enemy->rect.setPosition(x*64+16,y*64+16);
 
         enemyArray.emplace_back(enemy);
-        //enemyArray[i]->registerObserver(dem); //TODO temporaneo
 
     }
     int counterEnemies = 0;
     for(auto iter = enemyArray.begin(); iter!=enemyArray.end(); iter++){
         enemyArray.at(counterEnemies)->registerObserver(dem);
+        //enemyArray[i]->registerObserver(dem);
         counterEnemies++;
     }
 }
