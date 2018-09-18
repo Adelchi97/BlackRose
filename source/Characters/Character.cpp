@@ -29,7 +29,7 @@ void Character::fight() {
 
 }
 
-bool Character::interactWithObject(std::shared_ptr <Object> &object) {
+bool Character::interactWithObject(std::shared_ptr <Object> object) {
     return true;
 }
 

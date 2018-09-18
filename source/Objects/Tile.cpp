@@ -10,11 +10,11 @@ Textures::ID toTextureID(Tile::BackGroundType type) {
         case Tile::BackGroundType::labFloor:
             return Textures::ID::labTile;
         case Tile::BackGroundType ::woodFloor:
-            return Textures::ID ::woodTile;
+            return Textures::ID ::labTile;//woodTile;
         case Tile::BackGroundType ::metalFloor:
-            return Textures::ID::metalTile;
+            return Textures::ID::labTile;//metalTile;
         case Tile::BackGroundType::cementFloor:
-            return Textures::ID::cementTile;
+            return Textures::ID::labTile;//cementTile;
         case Tile::BackGroundType::baseFloor:
             return Textures::ID::baseTile;
         case Tile::BackGroundType::metalWall:

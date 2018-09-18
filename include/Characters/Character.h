@@ -41,7 +41,7 @@ public:
     virtual void fight();
     virtual int getAttackDamage();
     //basic interaction with the world, it will be associated with a key
-    virtual bool interactWithObject(std::shared_ptr <Object> &object);
+    virtual bool interactWithObject(std::shared_ptr <Object> object);
     virtual void die();
     virtual void update();
     virtual void display();

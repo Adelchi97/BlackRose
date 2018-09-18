@@ -91,13 +91,14 @@ void PlayerCharacter::update(sf::Time dt) {
     }
 }
 
-bool PlayerCharacter::interactWithObject(std::shared_ptr<Object> &object) {
+bool PlayerCharacter::interactWithObject(std::shared_ptr<Object> object) {
 
     std::shared_ptr<Weapon> newWeapon = std::dynamic_pointer_cast<Weapon>(object);
     if(newWeapon != nullptr) {
-        changeWeapon(newWeapon);
-        if(inventory.addItem(object))
-            std::cout<<"Weapon equipped"<<std::endl;
+        if(inventory.addItem(object)) {
+            std::cout << "Weapon equipped" << std::endl;
+            changeWeapon(newWeapon);
+        }
     } else {
         std::shared_ptr<Healpack> newHeal = std::dynamic_pointer_cast<Healpack>(object);
         if(newHeal != nullptr) {
@@ -106,8 +107,9 @@ bool PlayerCharacter::interactWithObject(std::shared_ptr<Object> &object) {
                 hp = hpMax;
 
             newHeal->counterLifeTime--;
+            display();
             //needs not to be equipped for being displayed
-            newHeal->equipped = true;
+            newHeal->active = false;
         }
     }
     return true;
@@ -199,8 +201,10 @@ void PlayerCharacter::setDirection(PlayerCharacter::Direction direction) {
 
 void PlayerCharacter::changeWeapon(std::shared_ptr<Weapon>& newWeapon) {
     //TODO vanno cambiati attributi equiped
-    if(this->weapon != nullptr)
+    /*
+    if(this->weapon != nullptr) {
         this->weapon->equipped = false;
+    }*/
     this->weapon = newWeapon;
     this->weapon->equipped = true;
 }

@@ -2,7 +2,7 @@
 // Created by Elena Faillace on 18/09/2018.
 //
 
-#include "ObjectFactory.h"
+#include "../../include/Objects/ObjectFactory.h"
 
 std::shared_ptr<Object> ObjectFactory::createObject(Object::Type type, const TextureHolder &textures) {
 
@@ -58,9 +58,9 @@ Object::Type ObjectFactory::typeDrop() {
     int random = generateRandom(100);
     Object::Type typeSelected;
 
-    if(random < 50)
+    if(random < 15)
         typeSelected = healPack;
-    else if(random < 100)
+    else if(random < 65)
         typeSelected = rangedWeapon;
 
 

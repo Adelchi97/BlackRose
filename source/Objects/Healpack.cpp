@@ -16,7 +16,7 @@ Healpack::Healpack(const TextureHolder &textures): textures(textures) {
     sprite.setPosition(rect.getPosition());
 
     powerUp = 50;
-    collected = false;
+    active = true;
     counterLifeTime = 1;
 }
 

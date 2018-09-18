@@ -108,6 +108,17 @@ void World::dropObject(int index) {
 
     if(object != nullptr) {
         object->setPosition(enemyArray[ index ]->getPosition());
+
+        if(enemyArray[index]->subType == Enemy::SubType::robotRed) {
+
+            std::shared_ptr<RangedWeapon> newRangedWeapon = std::dynamic_pointer_cast<RangedWeapon>(object);
+            if(newRangedWeapon != nullptr) {
+                newRangedWeapon->changeType(RangedWeapon::Type::redShooter);
+            }
+        } else {
+            return;
+        }
+
         collectableObject.emplace_back(object);
     }
 }
@@ -141,13 +152,78 @@ void World::updateObjects() {
         for ( auto iter = collectableObject.begin(); iter != collectableObject.end(); iter++ ) {
             collectableObject[ counter ]->update();
 
-            if ( collectableObject[ counter ]->counterLifeTime < 0 ) {
+            if ( collectableObject[ counter ]->counterLifeTime <= 0 ) {
                 deleted = counter;
             }
             counter++;
         }
         if(deleted>=0)
             collectableObject.erase(collectableObject.begin() + deleted);
+    }
+}
+
+void World::updateEnemies() {
+    if(!enemyArray.empty()) {
+        int counter = 0;
+        int deleted = -1;
+        for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
+            enemyArray[ counter ]->update();
+            //if it use his weapon it adds it to the enemyProjectiles
+            auto shooter = std::dynamic_pointer_cast<RobotShooter>(enemyArray[counter]);
+            if( shooter != nullptr && shooter->attackAvailable) {
+                projectileEnemyArray.emplace_back(std::make_shared<Projectile>(textures, Projectile::redProjectile));
+                projectileEnemyArray.back()->setPosition(shooter->rect.getPosition(),shooter->direction);
+                projectileEnemyArray.back()->range = shooter->weapon->range;
+                projectileEnemyArray.back()->attackDamage = shooter->weapon->power;
+                //perché never used ??
+                shooter->attackAvailable = false;
+            }
+
+            if ( !enemyArray[ counter ]->active ) {
+                deleted = counter;
+            }
+            counter++;
+        }
+        if(deleted>=0) {
+            dropObject(deleted);
+            enemyArray.erase(enemyArray.begin() + deleted);
+        }
+        //TODO si può iterare sugli observers poi, supponendo siano nello stesso ordine con cui li ho inseriti
+        // aggiorno textDisplay
+        demolisherAchievement->setString(enemyArray[0]->observers[0]->textProgress.getString());
+    }
+}
+
+void World::updateProjectiles() {
+    //friendly projectiles
+    if(!projectilePlayerArray.empty()) {
+        int counter = 0;
+        int deleted = -1;
+        for ( auto iter = projectilePlayerArray.begin(); iter != projectilePlayerArray.end(); iter++ ) {
+            projectilePlayerArray[ counter ]->update();
+
+            if ( !projectilePlayerArray[ counter ]->active ) {
+                deleted = counter;
+            }
+            counter++;
+        }
+        if(deleted>=0)
+            projectilePlayerArray.erase(projectilePlayerArray.begin() + deleted);
+    }
+    //enemy projectiles
+    if(!projectileEnemyArray.empty()) {
+        int counter = 0;
+        int deleted = -1;
+        for ( auto iter = projectileEnemyArray.begin(); iter != projectileEnemyArray.end(); iter++ ) {
+            projectileEnemyArray[ counter ]->update();
+
+            if ( !projectileEnemyArray[ counter ]->active ) {
+                deleted = counter;
+            }
+            counter++;
+        }
+        if(deleted>=0)
+            projectileEnemyArray.erase(projectileEnemyArray.begin() + deleted);
     }
 }
 
@@ -300,72 +376,6 @@ void World::collisionEnemyProjectilesOnObjects() {
     }
 }
 
-
-void World::updateEnemies() {
-    if(!enemyArray.empty()) {
-        int counter = 0;
-        int deleted = -1;
-        for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
-            enemyArray[ counter ]->update();
-            //if it use his weapon it adds it to the enemyProjectiles
-            auto shooter = std::dynamic_pointer_cast<RobotShooter>(enemyArray[counter]);
-            if( shooter != nullptr && shooter->attackAvailable) {
-                projectileEnemyArray.emplace_back(std::make_shared<Projectile>(textures, Projectile::redProjectile));
-                projectileEnemyArray.back()->setPosition(shooter->rect.getPosition(),shooter->direction);
-                projectileEnemyArray.back()->range = shooter->weapon->range;
-                projectileEnemyArray.back()->attackDamage = shooter->weapon->power;
-                //perché never used ??
-                shooter->attackAvailable = false;
-            }
-
-            if ( !enemyArray[ counter ]->active ) {
-                deleted = counter;
-            }
-            counter++;
-        }
-        if(deleted>=0) {
-            dropObject(deleted);
-            enemyArray.erase(enemyArray.begin() + deleted);
-        }
-        //TODO si può iterare sugli observers poi, supponendo siano nello stesso ordine con cui li ho inseriti
-        // aggiorno textDisplay
-        demolisherAchievement->setString(enemyArray[0]->observers[0]->textProgress.getString());
-    }
-}
-
-void World::updateProjectiles() {
-    //friendly projectiles
-    if(!projectilePlayerArray.empty()) {
-        int counter = 0;
-        int deleted = -1;
-        for ( auto iter = projectilePlayerArray.begin(); iter != projectilePlayerArray.end(); iter++ ) {
-            projectilePlayerArray[ counter ]->update();
-
-            if ( !projectilePlayerArray[ counter ]->active ) {
-                deleted = counter;
-            }
-            counter++;
-        }
-        if(deleted>=0)
-            projectilePlayerArray.erase(projectilePlayerArray.begin() + deleted);
-    }
-    //enemy projectiles
-    if(!projectileEnemyArray.empty()) {
-        int counter = 0;
-        int deleted = -1;
-        for ( auto iter = projectileEnemyArray.begin(); iter != projectileEnemyArray.end(); iter++ ) {
-            projectileEnemyArray[ counter ]->update();
-
-            if ( !projectileEnemyArray[ counter ]->active ) {
-                deleted = counter;
-            }
-            counter++;
-        }
-        if(deleted>=0)
-            projectileEnemyArray.erase(projectileEnemyArray.begin() + deleted);
-    }
-}
-
 void World::draw() {
     drawMap();
 
@@ -406,7 +416,7 @@ void World::drawObjects() {
     if(!collectableObject.empty()) {
         int counter = 0;
         for ( auto iter = collectableObject.begin(); iter != collectableObject.end(); iter++ ) {
-            if(!collectableObject[counter]->equipped)
+            if(!collectableObject[counter]->equipped && collectableObject[counter]->active)
                 window->draw(collectableObject[ counter ]->getSprite());
             counter++;
         }
@@ -473,7 +483,7 @@ void World::useWeapon() {
     if( player->useWeapon()) {
         std::shared_ptr<RangedWeapon> mWeapon = std::dynamic_pointer_cast<RangedWeapon>(player->weapon);
         if(mWeapon != nullptr) {
-            projectilePlayerArray.emplace_back(std::make_shared<Projectile>(textures, Projectile::energyBall));
+            projectilePlayerArray.emplace_back(std::make_shared<Projectile>(textures, mWeapon->projectileType));
             projectilePlayerArray.back()->setPosition(player->rect.getPosition(), player->direction);
             projectilePlayerArray.back()->range = player->weapon->range;
         }

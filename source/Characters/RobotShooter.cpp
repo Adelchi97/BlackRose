@@ -38,13 +38,12 @@ RobotShooter::RobotShooter(const TextureHolder &textures, sf::Vector2u windowSiz
     sprite.setTextureRect(sf::IntRect(0,0,32,32));
 
     //create his weapon
-    weapon = std::make_shared<RangedWeapon>(textures, RangedWeapon::Type::energyShooter);
+    weapon = std::make_shared<RangedWeapon>(textures, RangedWeapon::Type::redShooter);
 }
 
 void RobotShooter::update() {
     //TODO if it's in seek but now do every once in a while
     if(shootingTimer.getElapsedTime().asSeconds() > 1) {
-        std::cout << "ROBOT SHOOT!" << std::endl;
         attackAvailable = true;
         shootingTimer.restart();
     }
