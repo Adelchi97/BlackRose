@@ -37,7 +37,8 @@ RobotFighter::RobotFighter(const TextureHolder &textures, sf::Vector2u windowSiz
     sprite.setTextureRect(sf::IntRect(0,0,32,32));
 }
 
-
-void RobotFighter::registerObserver(std::shared_ptr<Observer> observer) {
+/*
+void RobotFighter::registerObserver(std::shared_ptr<DemolisherAchievement> observer) {
     Enemy::registerObserver(observer);
 }
+*/

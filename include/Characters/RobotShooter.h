@@ -16,7 +16,7 @@ public:
 
     void update() final;
 
-    void registerObserver(std::shared_ptr<Observer> observer) final;
+    //void registerObserver(std::shared_ptr<DemolisherAchievement> observer) final;
 
 public:
     std::shared_ptr<Weapon> weapon;

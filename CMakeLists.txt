@@ -18,13 +18,13 @@ set(SOURCE_FILES source/Game.cpp include/Game.h include/management/ResourceHolde
         include/Objects/ConsumableObject.h source/Objects/RangedWeapon.cpp include/Objects/RangedWeapon.h source/Objects/MeleeWeapon.cpp
         include/Objects/MeleeWeapon.h source/Projectile.cpp include/Projectile.h include/Random.h source/Random.cpp
         source/Objects/Tile.cpp include/Objects/Tile.h source/Objects/Healpack.cpp include/Objects/Healpack.h source/textDisplay.cpp include/textDisplay.h
-        source/Inventory.cpp source/Subject.cpp include/Subject.h source/Observer.cpp include/Observer.h
+        source/Inventory.cpp source/Subject.cpp include/Subject.h
         source/Objects/Tile.cpp include/Objects/Tile.h
         source/Objects/Healpack.cpp include/Objects/Healpack.h source/textDisplay.cpp include/textDisplay.h source/Inventory.cpp
         source/Characters/EnemyFactory.cpp include/Characters/EnemyFactory.h source/Characters/RobotShooter.cpp include/Characters/RobotShooter.h
         source/Characters/RobotFighter.cpp include/Characters/RobotFighter.h source/management/Strategy.cpp include/management/Strategy.h
         source/management/PatrolStrategy.cpp include/management/PatrolStrategy.h source/management/SeekStrategy.cpp include/management/SeekStrategy.h
-        source/Achievements/Achievement.cpp include/Achievements/Achievement.h
+        source/Achievements/Achievement.cpp include/Achievements/Achievement.h source/Observer.cpp include/Observer.h
         source/Achievements/DemolisherAchievement.cpp include/Achievements/DemolisherAchievement.h source/Achievements/AchievementFactory.cpp include/Achievements/AchievementFactory.h
         source/Achievements/SniperAchievement.cpp include/Achievements/SniperAchievement.h)
 

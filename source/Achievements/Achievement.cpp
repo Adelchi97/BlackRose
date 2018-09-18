@@ -8,7 +8,7 @@ Achievement::Achievement() {
     sf::Font font;
     mFont.loadFromFile("Media/Digitalism.ttf");
     mStatisticsText.setFont(mFont);
-    mStatisticsText.setCharacterSize(25);
+    mStatisticsText.setCharacterSize(40);
 
 }
 

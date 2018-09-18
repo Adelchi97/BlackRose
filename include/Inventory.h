@@ -5,6 +5,7 @@
 #ifndef BLACKROSE_INVENTORY_H
 #define BLACKROSE_INVENTORY_H
 
+#include "management/ResourceHolder.h"
 #include "Objects/Object.h"
 #include <iostream>
 

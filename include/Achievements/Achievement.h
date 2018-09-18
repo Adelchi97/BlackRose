@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "../Observer.h"
-#include <string>
+#include "../textDisplay.h"
 
 
 class Achievement : public Observer {
@@ -21,6 +21,7 @@ public:
     int counter = 0;
     sf::Font mFont;
     sf::Text mStatisticsText;
+    //std::shared_ptr<textDisplay> achievementText;
 
 };
 

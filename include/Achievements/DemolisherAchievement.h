@@ -13,9 +13,11 @@ public:
     void update() final;
     //void showProgress();
 
+    float progress = 0.f;
+    sf::Text textProgress;
 protected:
-    const int target = 5; //after "target" enemies killed the Player gains the achievement
-    float progress;
+    const float target = 5.f; //after "target" enemies killed the Player gains the achievement
+
     bool completed = false;
 
 };

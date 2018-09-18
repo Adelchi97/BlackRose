@@ -51,7 +51,8 @@ void RobotShooter::update() {
     Enemy::update();
 
 }
-
-void RobotShooter::registerObserver(std::shared_ptr<Observer> observer){
+/*
+void RobotShooter::registerObserver(std::shared_ptr<DemolisherAchievement> observer){
     Enemy::registerObserver(observer);
 }
+ */

@@ -71,17 +71,20 @@ const sf::Sprite &Enemy::getSprite() {
 
 void Enemy::die() {
     active = false;
-    notifyObservers();// notify his observers who will update his enemyKills counter, advancing with achievements
+    if(!observers.empty())
+        notifyObservers();// notify his observers who will update his enemyKills counter, advancing with achievements
+    /*
     for(auto iter=observers.begin(); iter!=observers.end(); iter++){
             observers.erase(iter); //remove all his observers at his death
     }
+    */
 }
 
-void Enemy::registerObserver(std::shared_ptr<Observer> observer) {
+void Enemy::registerObserver(std::shared_ptr<DemolisherAchievement> observer) {
     observers.emplace_back(observer);
 }
 
-void Enemy::removeObserver(std::shared_ptr<Observer> observer) {
+void Enemy::removeObserver(std::shared_ptr<DemolisherAchievement> observer) {
     int counterObs = 0;
     for(auto iter=observers.begin(); iter!=observers.end(); iter++){
         if(observers[counterObs] == observer)

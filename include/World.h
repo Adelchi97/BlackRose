@@ -56,7 +56,7 @@ public:
 
     std::shared_ptr<ProceduralMap> map;
 
-    std::shared_ptr<Achievement> dem;
+    std::shared_ptr<DemolisherAchievement> dem;
 
 private:
 

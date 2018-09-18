@@ -34,8 +34,8 @@ public:
 
     void die() override;
 
-    void registerObserver(std::shared_ptr<Observer> observer) override;
-    void removeObserver(std::shared_ptr<Observer> observer) override;
+    void registerObserver(std::shared_ptr<DemolisherAchievement> observer) ;
+    void removeObserver(std::shared_ptr<DemolisherAchievement> observer) ;
     void notifyObservers() const override;
 
 public:
@@ -45,7 +45,7 @@ public:
     SubType subType;
     std::shared_ptr<Strategy> strategy;
 
-    std::vector<std::shared_ptr<Observer>> observers; //achievements
+    std::vector<std::shared_ptr<DemolisherAchievement>> observers; //achievements
 
     bool attackAvailable;
     std::shared_ptr<Weapon> weapon;

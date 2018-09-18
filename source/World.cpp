@@ -25,24 +25,27 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
     playerLife->text.setFont(mainFont);
     textureDisplayArray.emplace_back(playerLife);
 
+    dem = std::make_shared<DemolisherAchievement>();
+
+    //textureDisplayArray.emplace_back(dem->achievementText);
+
     createEnemies();
     createObjects();
 
-    //TODO dem = std::make_shared<DemolisherAchievement>();
+
     //TODO std::shared_ptr<DemolisherAchievement> newDem;
     //TODO dem = newDem;
 
 }
 
 void World::createEnemies() {
-    //TODO std::shared_ptr<DemolisherAchievement> newDem = std::dynamic_pointer_cast<DemolisherAchievement>(dem);
+    //std::shared_ptr<DemolisherAchievement> newDem = std::dynamic_pointer_cast<DemolisherAchievement>(dem);
     for(int i=0; i<5; i++) {
 
         std::shared_ptr<Enemy> enemy = enemyFactory.createEnemy(Enemy::SubType::robotRed, textures,
                 window->getSize());
         int x,y;
-        //TODO enemyArray[i]->registerObserver(dem); //TODO temporaneo
-        //TODO enemyArray.at(i)->registerObserver(dem);
+
         do{
             x = generateRandom(24);
             y = generateRandom(24);
@@ -50,6 +53,8 @@ void World::createEnemies() {
         enemy->rect.setPosition(x*64+16,y*64+16);
 
         enemyArray.emplace_back(enemy);
+        //enemyArray[i]->registerObserver(dem); //TODO temporaneo
+        //enemyArray.at(i)->registerObserver(dem);
     }
     for(int i=0; i<10; i++) {
 
@@ -65,6 +70,13 @@ void World::createEnemies() {
         enemy->rect.setPosition(x*64+16,y*64+16);
 
         enemyArray.emplace_back(enemy);
+        //enemyArray[i]->registerObserver(dem); //TODO temporaneo
+
+    }
+    int counterEnemies = 0;
+    for(auto iter = enemyArray.begin(); iter!=enemyArray.end(); iter++){
+        enemyArray.at(counterEnemies)->registerObserver(dem);
+        counterEnemies++;
     }
 }
 
@@ -285,7 +297,6 @@ void World::updateEnemies() {
         int deleted = -1;
         for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
             enemyArray[ counter ]->update();
-
             //if it use his weapon it adds it to the enemyProjectiles
             auto shooter = std::dynamic_pointer_cast<RobotShooter>(enemyArray[counter]);
             if( shooter != nullptr && shooter->attackAvailable) {
@@ -365,7 +376,8 @@ void World::drawPlayer() {
 
 void World::drawTextDisplayed() {
     // TODO std::shared_ptr<DemolisherAchievement> newDem = std::dynamic_pointer_cast<DemolisherAchievement>(dem);
-    // TODO window->draw(newDem->mStatisticsText);  //TODO temporaneo
+    window->draw(dem->mStatisticsText );  //TODO temporaneo
+
     if(!textureDisplayArray.empty()) {
         int counter = 0;
         for ( auto iter = textureDisplayArray.begin(); iter != textureDisplayArray.end(); iter++ ) {

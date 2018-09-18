@@ -32,7 +32,7 @@ Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(1600, 1600), "BlackRos
     mFont.loadFromFile("Media/Sansation.ttf");
     mStatisticsText.setFont(mFont);
 
-    mStatisticsText.setPosition(5.f,5.f);
+    mStatisticsText.setPosition(200.f,5.f);
     mStatisticsText.setCharacterSize(50);
     mStatisticsText.setString("Ammo: ");
     //mStatisticsText.setString("Ammo: " + std::to_string(world->player->rangedWeapon->projectilesCounter));

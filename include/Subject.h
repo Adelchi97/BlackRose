@@ -15,8 +15,8 @@ protected:
 
 public:
 
-    virtual void registerObserver( std::shared_ptr<Observer> observer) = 0;
-    virtual void removeObserver ( std::shared_ptr<Observer> observer) = 0;
+    virtual void registerObserver( std::shared_ptr<Observer> observer){} ;
+    virtual void removeObserver ( std::shared_ptr<Observer> observer) {};
     virtual void notifyObservers () const = 0;
 
 };
