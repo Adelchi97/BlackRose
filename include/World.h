@@ -16,6 +16,7 @@
 #include "Characters/EnemyFactory.h"
 #include "Achievements/AchievementFactory.h"
 #include "Objects/Healpack.h"
+#include "Objects/ObjectFactory.h"
 
 class World {
 public:
@@ -69,8 +70,8 @@ private:
     sf::Clock textureTimer;
 
     std::vector<std::shared_ptr<Enemy>> enemyArray;
-    std::shared_ptr<RangedWeapon> rangedWeapon;
     EnemyFactory enemyFactory;
+    ObjectFactory objectFactory;
 
     std::vector<std::shared_ptr<Projectile>> projectilePlayerArray;
     std::vector<std::shared_ptr<Projectile>> projectileEnemyArray;

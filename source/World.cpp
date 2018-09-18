@@ -80,19 +80,23 @@ void World::createEnemies() {
 
 void World::createObjects() {
     //create a weapon
-    rangedWeapon = std::make_shared<RangedWeapon>(textures, RangedWeapon::Type::energyShooter);
-    rangedWeapon->addStuff(50);
+    std::shared_ptr<Object> weapon = objectFactory.createObject(Object::Type::rangedWeapon, textures);
+
+    std::shared_ptr<RangedWeapon> rangedWeapon = std::dynamic_pointer_cast<RangedWeapon>(weapon);
+    if(rangedWeapon != nullptr)
+        rangedWeapon->addStuff(50);
+
     int x,y;
     do{
         x = generateRandom(24);
         y = generateRandom(24);
     } while (map->tileMap[x*25+y]->backGround != Tile::labFloor);
-    rangedWeapon->setPosition(sf::Vector2f(x*64+16,y*64+16));
+    weapon->setPosition(sf::Vector2f(x*64+16,y*64+16));
 
-    collectableObject.emplace_back(rangedWeapon);
+    collectableObject.emplace_back(weapon);
 
     //create healpack
-    healpack = std::make_shared<Healpack>(textures);
+    std::shared_ptr<Object> healpack = objectFactory.createObject(Object::Type::healPack, textures);
     do{
         x = generateRandom(24);
         y = generateRandom(24);

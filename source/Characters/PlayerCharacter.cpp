@@ -106,6 +106,8 @@ bool PlayerCharacter::interactWithObject(std::shared_ptr<Object> &object) {
                 hp = hpMax;
 
             newHeal->counterLifeTime--;
+            //needs not to be equipped for being displayed
+            newHeal->equipped = true;
         }
     }
     return true;
