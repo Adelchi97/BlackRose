@@ -15,9 +15,13 @@ Healpack::Healpack(const TextureHolder &textures): textures(textures) {
     rect.setSize(sf::Vector2f(32,23));
     sprite.setPosition(rect.getPosition());
 
+    powerUp = 50;
+    collected = false;
     counterLifeTime = 1;
 }
 
 void Healpack::update() {
-    ConsumableObject::update();
+    rect.setPosition(position);
+    sprite.setPosition(rect.getPosition());
+    //ConsumableObject::update();
 }

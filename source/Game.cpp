@@ -7,8 +7,11 @@
 const sf::Time Game::TimePerFrame = sf::seconds(1.f/80.f);
 
 Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(1600, 1600), "BlackRose", sf::Style::Default)), mFont(),
-               mStatisticsText(), mStatisticsUpdateTime(), mStatisticsNumFrames(0), world(nullptr) {
+               mStatisticsText(), mStatisticsUpdateTime(), mStatisticsNumFrames(0) {
+
     loadTextures();
+    //loadSound();
+
     world = std::make_shared<World>(mWindow,textureHolder);
 
     //sets the icon
@@ -137,3 +140,11 @@ void Game::loadTextures() {
     textureHolder.load(Textures::baseTile, "Media/Tiles/CustomBaseTile.png");
 
 }
+/*
+void Game::loadSound() {
+    if(!soundBuffer.loadFromFile("Media/SoundEffects/energyShot"))
+        std::cout<<"error - sound not loaded"<<std::endl;
+    sound.setBuffer(soundBuffer);
+    sound.play();
+}
+*/

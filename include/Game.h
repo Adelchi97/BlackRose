@@ -21,10 +21,15 @@ private:
     void updateStatistics(sf::Time elapsedTime);
 
     void loadTextures();
+    //void loadSound();
 
 private:
     std::shared_ptr<World> world;
-
+/*
+    sf::SoundBuffer soundBuffer;
+    sf::Music music;
+    sf::Sound sound;
+*/
     TextureHolder textureHolder;
     std::shared_ptr<sf::RenderWindow> mWindow;
     static const sf::Time TimePerFrame;

@@ -79,7 +79,6 @@ void World::createObjects() {
     } while (map->tileMap[x*25+y]->backGround != Tile::labFloor);
     rangedWeapon->setPosition(sf::Vector2f(x*64+16,y*64+16));
 
-    rangedWeapon->update();
     collectableObject.emplace_back(rangedWeapon);
 
     //create healpack
@@ -89,6 +88,7 @@ void World::createObjects() {
         y = generateRandom(24);
     } while (map->tileMap[x*25+y]->backGround != Tile::woodFloor);
     healpack->setPosition(sf::Vector2f(x*64+16,y*64+16));
+
     collectableObject.emplace_back(healpack);
 
 }
@@ -268,8 +268,8 @@ void World::collisionEnemyProjectilesOnObjects() {
             //check player collision
             if ( projectileEnemyArray[ counterProjectiles ]->rect.getGlobalBounds().intersects(player->rect.getGlobalBounds())) {
                 std::cout << "got shoot!" << std::endl;
-                player->display();
                 player->hp -= projectileEnemyArray[counterProjectiles]->attackDamage;
+                player->display();
                 projectileEnemyArray[counterProjectiles]->active = false;
             }
 

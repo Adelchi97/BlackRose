@@ -6,6 +6,7 @@
 #define BLACKROSE_WORLD_H
 
 #include <string>
+#include <SFML/Audio.hpp>
 
 #include "Characters/PlayerCharacter.h"
 #include "Characters/RobotFighter.h"
