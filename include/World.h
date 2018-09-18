@@ -64,6 +64,7 @@ private:
     //this holds all the texts
     std::vector<std::shared_ptr<textDisplay>> textureDisplayArray;
     std::shared_ptr<textDisplay> playerLife;
+    std::shared_ptr<textDisplay> demolisherAchievement;
     sf::Font mainFont;
     sf::Clock textureTimer;
 

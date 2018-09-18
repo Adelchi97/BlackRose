@@ -11,7 +11,7 @@ textDisplay::textDisplay() {
 }
 
 void textDisplay::update() {
-    text.setString("life: " + string);
+    text.setString(string);
 }
 
 void textDisplay::setString(std::string mstring) {

@@ -20,14 +20,17 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
     //life text
     mainFont.loadFromFile("Media/Sansation.ttf");
 
+    //TODO questo andrà in factory
     playerLife = std::make_shared<textDisplay>();
     playerLife->setString(std::to_string(player->hp));
     playerLife->text.setFont(mainFont);
     textureDisplayArray.emplace_back(playerLife);
 
     dem = std::make_shared<DemolisherAchievement>();
-
-    //textureDisplayArray.emplace_back(dem->achievementText);
+    demolisherAchievement = std::make_shared<textDisplay>();
+    demolisherAchievement->setString(dem->textProgress.getString());
+    demolisherAchievement->text.setFont(mainFont);
+    textureDisplayArray.emplace_back(demolisherAchievement);
 
     createEnemies();
     createObjects();
@@ -119,7 +122,10 @@ void World::update(sf::Time dt) {
 void World::updateTextureDisplayed() {
     int counter = 0;
     for ( auto iter = textureDisplayArray.begin(); iter != textureDisplayArray.end(); iter++ ) {
+        textureDisplayArray[counter]->text.setPosition(player->getPosition().x - window->getSize().x/4 + counter*50,
+                                                       player->getPosition().y - window->getSize().y/4 + counter*50);
         textureDisplayArray[ counter ]->update();
+
         counter++;
     }
 }
@@ -315,6 +321,9 @@ void World::updateEnemies() {
         }
         if(deleted>=0)
             enemyArray.erase(enemyArray.begin() + deleted);
+        //TODO si può iterare sugli observers poi, supponendo siano nello stesso ordine con cui li ho inseriti
+        // aggiorno textDisplay
+        demolisherAchievement->setString(enemyArray[0]->observers[0]->textProgress.getString());
     }
 }
 
@@ -370,7 +379,7 @@ void World::drawPlayer() {
             window->draw(player->lifeBar);
         }
         //life text
-        playerLife->setString(std::to_string(player->hp));
+        playerLife->setString("life: " + std::to_string(player->hp));
     }
 }
 
