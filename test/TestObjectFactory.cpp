@@ -10,7 +10,7 @@ struct ObjectFactoryTest: testing::Test {
     TextureHolder textures;
 };
 
-TEST_F(ObjectFactoryTest, ObjectFactory_Costructor_WithType_Test) {
+TEST_F(ObjectFactoryTest, ObjectFactory_Create_WithType_Test) {
     textures.load(Textures::ShootingEnergy,"../../Media/Objects/shootingEnergy.png");
     textures.load(Textures::energyShooter,"../../Media/Objects/gun.png");
     textures.load(Textures::redProjectile,"../../Media/Objects/redProjectile.png");
