@@ -39,7 +39,7 @@ Tile::Tile(const TextureHolder &textures, sf::Vector2f coordinates, BackGroundTy
     sprite.setPosition(rect.getPosition());
 
 }
-
+/*
 Tile::Tile(const TextureHolder &textures, sf::Vector2f coordiantes): textures(textures), type(TileType::Floor),
                                                                      coordinates(coordiantes), backGround
                                                                              (BackGroundType::labFloor) {
@@ -48,3 +48,4 @@ Tile::Tile(const TextureHolder &textures, sf::Vector2f coordiantes): textures(te
     rect.setPosition(coordinates.x * 64, coordinates.y * 64);
     sprite.setPosition(rect.getPosition());
 }
+*/

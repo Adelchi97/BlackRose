@@ -39,7 +39,7 @@ public:
     }; //BrokenFloor e BrokenWall costituiscono dei passaggi come Door, Upstairs e DownStairs
 
     Tile(const TextureHolder& textures, sf::Vector2f coordinates, BackGroundType type);
-    Tile(const TextureHolder& textures, sf::Vector2f coordinates);
+    //Tile(const TextureHolder& textures, sf::Vector2f coordinates);
 
 
 public:
