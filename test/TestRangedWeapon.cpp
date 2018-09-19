@@ -23,6 +23,7 @@ TEST_F(RangedWeaponTest, RangedWeapon_Costructor_Test) {
     EXPECT_EQ(rangedWeapon.range, 400);
     EXPECT_EQ(rangedWeapon.power, 10);
     EXPECT_EQ(rangedWeapon.projectilesCounter, 40);
+    EXPECT_EQ(rangedWeapon.counterLifeTime, 1);
 
     //Test different weapon
     textures.load(Textures::energyShooter,"../../Media/Objects/gun.png");

@@ -34,20 +34,8 @@ std::shared_ptr<Object> ObjectFactory::createObject(const TextureHolder &texture
     std::shared_ptr<Object> object;
     Object::Type type = typeDrop();
 
-    if ( type == Object::Type::rangedWeapon ) {
-
-        object = std::make_shared<RangedWeapon>(textures, RangedWeapon::Type::energyShooter);
-
-    } else if(type== Object::Type::meleeWeapon ) {
-
-        object = std::make_shared<MeleeWeapon>(textures);
-
-    } else if(type== Object::Type::healPack ) {
-
-        object = std::make_shared<Healpack>(textures);
-
-    } else if( type == Object::Type::Shield ) {
-
+    if(type == 0 || type == 1) { // || type == 2 || type == 3) {
+        object = createObject(type, textures);
     }
 
     return object;
@@ -56,13 +44,15 @@ std::shared_ptr<Object> ObjectFactory::createObject(const TextureHolder &texture
 Object::Type ObjectFactory::typeDrop() {
 
     int random = generateRandom(100);
-    Object::Type typeSelected;
+    Object::Type typeSelected ;
 
-    if(random < 15)
+    //15% to drop healpack
+    if(random < 15) {
         typeSelected = healPack;
-    else if(random < 65)
+    } //50% to drop weapon
+    else if(random < 65) {
         typeSelected = rangedWeapon;
-
+    }
 
     return typeSelected;
 }
