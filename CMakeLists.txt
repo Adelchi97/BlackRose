@@ -26,7 +26,7 @@ set(SOURCE_FILES source/Game.cpp include/Game.h include/management/ResourceHolde
         source/management/PatrolStrategy.cpp include/management/PatrolStrategy.h source/management/SeekStrategy.cpp include/management/SeekStrategy.h
         source/Achievements/Achievement.cpp include/Achievements/Achievement.h source/Observer.cpp include/Observer.h
         source/Achievements/DemolisherAchievement.cpp include/Achievements/DemolisherAchievement.h source/Achievements/AchievementFactory.cpp include/Achievements/AchievementFactory.h
-        source/Achievements/SniperAchievement.cpp include/Achievements/SniperAchievement.h source/Objects/ObjectFactory.cpp include/Objects/ObjectFactory.h)
+        source/Achievements/SniperAchievement.cpp include/Achievements/SniperAchievement.h source/Objects/ObjectFactory.cpp include/Objects/ObjectFactory.h source/Menu.cpp include/Menu.h)
 
 add_executable(BlackRose source/main.cpp)
 

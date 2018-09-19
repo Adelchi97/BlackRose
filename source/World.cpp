@@ -26,14 +26,15 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
     textureDisplayArray.emplace_back(playerLife);
 
     dem = std::make_shared<DemolisherAchievement>();
+
     demolisherAchievement = std::make_shared<textDisplay>();
-    demolisherAchievement->setString(dem->textProgress.getString());
+    //demolisherAchievement->setString(dem->mStatisticsText.getString());
+    demolisherAchievement->setString("ciao mondo");
     demolisherAchievement->text.setFont(mainFont);
     textureDisplayArray.emplace_back(demolisherAchievement);
 
     createEnemies();
     createObjects();
-
 
     //TODO std::shared_ptr<DemolisherAchievement> newDem;
     //TODO dem = newDem;
@@ -136,8 +137,8 @@ void World::update(sf::Time dt) {
 void World::updateTextureDisplayed() {
     int counter = 0;
     for ( auto iter = textureDisplayArray.begin(); iter != textureDisplayArray.end(); iter++ ) {
-        textureDisplayArray[counter]->text.setPosition(player->getPosition().x - window->getSize().x/4 + counter*50,
-                                                       player->getPosition().y - window->getSize().y/4 + counter*50);
+        textureDisplayArray[counter]->text.setPosition(player->getPosition().x - window->getSize().x/4 + counter*100,
+                                                       player->getPosition().y - window->getSize().y/4 + counter*100);
         textureDisplayArray[ counter ]->update();
 
         counter++;
@@ -395,13 +396,14 @@ void World::drawPlayer() {
         }
         //life text
         playerLife->setString("life: " + std::to_string(player->hp));
+        demolisherAchievement->setString("ciaone");
     }
 }
 
 void World::drawTextDisplayed() {
     // TODO std::shared_ptr<DemolisherAchievement> newDem = std::dynamic_pointer_cast<DemolisherAchievement>(dem);
     window->draw(dem->mStatisticsText );  //TODO temporaneo
-
+    //demolisherAchievement->setString(dem->mStatisticsText.getString());
     if(!textureDisplayArray.empty()) {
         int counter = 0;
         for ( auto iter = textureDisplayArray.begin(); iter != textureDisplayArray.end(); iter++ ) {

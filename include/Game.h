@@ -6,6 +6,7 @@
 #define BLACKROSE_GAME_H
 
 #include "World.h"
+#include "Menu.h"
 
 
 class Game : private sf::NonCopyable {
@@ -26,7 +27,7 @@ private:
 private:
     std::shared_ptr<World> world;
     std::shared_ptr<sf::View> view;
-
+    //Menu startMenu;
     /*
     sf::SoundBuffer soundBuffer;
     sf::Music music;

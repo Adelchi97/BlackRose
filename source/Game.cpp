@@ -7,11 +7,24 @@
 const sf::Time Game::TimePerFrame = sf::seconds(1.f/80.f);
 
 Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(1600, 1600), "BlackRose", sf::Style::Default)), mFont(),
-               mStatisticsText(), mStatisticsUpdateTime(), mStatisticsNumFrames(0) {
+               mStatisticsText(), mStatisticsUpdateTime(), mStatisticsNumFrames(0) { //startMenu(mWindow->getSize().x, mWindow->getSize().y )
 
     loadTextures();
     //loadSound();
-
+    //TODO let the menu ask if u want to play or quit
+/*
+    sf::Text playText;
+    playText.setFont(mFont);
+    playText.setString("Play");
+    playText.setPosition(mWindow->getSize().x/2.f, mWindow->getSize().y/4.f);
+    startMenu.choicesVector.emplace_back(playText);
+    sf::Text quitText;
+    quitText.setFont(mFont);
+    quitText.setString("Quit");
+    quitText.setPosition(mWindow->getSize().x/2.f, mWindow->getSize().y/4.f);
+    startMenu.choicesVector.emplace_back(quitText);
+    startMenu.draw(mWindow);
+*/
     view = std::make_shared<sf::View>(sf::Vector2f(0, 0), sf::Vector2f(400,400));
 
     mWindow->setView(*view);
@@ -71,12 +84,6 @@ void Game::render() {
     world->draw();
     mWindow->draw(mStatisticsText);
 
-/*
-    int size = throphies->listAchievements.size();
-
-    for(int i=0; i<size; i++)
-        mWindow->draw(throphies->listAchievements[i]->mStatisticsText);
-*/
     mWindow->display();
 }
 
