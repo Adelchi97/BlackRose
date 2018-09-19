@@ -109,16 +109,15 @@ void World::dropObject(int index) {
     if(object != nullptr) {
         object->setPosition(enemyArray[ index ]->getPosition());
 
-        if(enemyArray[index]->subType == Enemy::SubType::robotRed) {
-
-            std::shared_ptr<RangedWeapon> newRangedWeapon = std::dynamic_pointer_cast<RangedWeapon>(object);
-            if(newRangedWeapon != nullptr) {
+        std::shared_ptr<RangedWeapon> newRangedWeapon = std::dynamic_pointer_cast<RangedWeapon>(object);
+        if(newRangedWeapon != nullptr) {
+            if(enemyArray[index]->subType == Enemy::SubType::robotRed) {
                 newRangedWeapon->changeType(RangedWeapon::Type::redShooter);
             }
-        } else {
-            return;
+            else {
+                return;
+            }
         }
-
         collectableObject.emplace_back(object);
     }
 }

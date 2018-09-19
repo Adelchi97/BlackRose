@@ -118,7 +118,7 @@ void PlayerCharacter::changeWeapon(std::shared_ptr<Weapon> newWeapon) {
     //TODO vanno cambiati attributi equiped
 
     if(this->weapon != nullptr) {
-        this->weapon->equipped = false;
+        //this->weapon->equipped = false;
         if(inventory.addItem(this->weapon)) {
             this->weapon = newWeapon;
             this->weapon->equipped = true;

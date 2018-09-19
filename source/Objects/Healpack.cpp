@@ -4,6 +4,7 @@
 
 #include "../../include/Objects/Healpack.h"
 
+
 Healpack::Healpack(const TextureHolder &textures): textures(textures) {
 
     texture = textures.get(Textures::healPack);
@@ -25,3 +26,4 @@ void Healpack::update() {
     sprite.setPosition(rect.getPosition());
     //ConsumableObject::update();
 }
+
