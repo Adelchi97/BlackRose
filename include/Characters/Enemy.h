@@ -11,6 +11,7 @@
 #include "../Subject.h"
 #include "../Observer.h"
 #include "../management/PatrolStrategy.h"
+#include "../management/SeekStrategy.h"
 #include "../Achievements/DemolisherAchievement.h"
 
 class Enemy : public Character, public Subject {

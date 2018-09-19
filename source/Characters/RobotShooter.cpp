@@ -7,9 +7,12 @@
 RobotShooter::RobotShooter(const TextureHolder &textures, sf::Vector2u windowSize, std::shared_ptr<Strategy> strategy):
     textures(textures) {
 
-    if(std::dynamic_pointer_cast<PatrolStrategy>(strategy) != nullptr)
+    if(std::dynamic_pointer_cast<PatrolStrategy>(strategy) != nullptr) {
         this->strategy = std::make_shared<PatrolStrategy>(windowSize);
-    else
+    }
+    else if(std::dynamic_pointer_cast<SeekStrategy>(strategy) != nullptr) {
+        this->strategy = std::make_shared<SeekStrategy>(windowSize);
+    } else
         std::cout <<"errore sulla conversione della strategia"<< std::endl;
 
 

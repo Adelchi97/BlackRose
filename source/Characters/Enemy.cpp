@@ -29,7 +29,7 @@ void Enemy::update() {
 
     strategy->update(isMovingUp, isMovingDown, isMovingLeft, isMovingRight, rect);
 
-    //serve puramente alla texture corretta
+    //serve per texture corretta
     setDirection();
 
     if(hp<=0) {

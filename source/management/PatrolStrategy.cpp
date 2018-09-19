@@ -7,6 +7,7 @@
 PatrolStrategy::PatrolStrategy(sf::Vector2u windowSize) {
     speed = 1;
     this->windowSize = windowSize;
+    type = patrol;
 }
 
 void PatrolStrategy::update(bool& isMovingUp,bool& isMovingDown,bool& isMovingLeft,bool& isMovingRight, sf::RectangleShape& rect) {

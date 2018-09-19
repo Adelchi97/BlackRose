@@ -6,6 +6,7 @@
 #define BLACKROSE_SEEKSTRATEGY_H
 
 #include <SFML/Graphics.hpp>
+#include <cmath>
 #include "Strategy.h"
 
 class SeekStrategy: public Strategy {
@@ -16,7 +17,6 @@ public:
 
     SeekStrategy(sf::Vector2u windowSize);
 
-    //change direction every x frames
     void update(bool &isMovingUp, bool &isMovingDown, bool &isMovingLeft, bool &isMovingRight, sf::RectangleShape&
     rect) override;
 
@@ -25,13 +25,14 @@ public:
 
     //int changeDirectionTime, counterDirection = 0;
     Direction direction;
-    Type type = seek;
+    Type type;
+    sf::Vector2f playerPosition;
 
 private:
     //void changeDirection(bool &isMovingUp, bool &isMovingDown, bool &isMovingLeft, bool &isMovingRight);
 
 
-    int speed;
+    float speed;
     sf::Vector2u windowSize;
 
 };

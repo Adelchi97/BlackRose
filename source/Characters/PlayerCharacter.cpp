@@ -131,7 +131,7 @@ void PlayerCharacter::changeWeapon(std::shared_ptr<Weapon> newWeapon) {
     }
 }
 
-void PlayerCharacter::searchWeapon() {
+void PlayerCharacter::searchForWeaponInInventory() {
     std::shared_ptr<Object> obj = inventory.getElement(Object::rangedWeapon);
     std::shared_ptr<RangedWeapon> newWeapon = std::dynamic_pointer_cast<RangedWeapon>(obj);
     if(newWeapon != nullptr) {
@@ -147,7 +147,7 @@ bool PlayerCharacter::useWeapon() {
     }
     if(!weapon->use()) {
         std::cout<<"out of resource to use the weapon"<<std::endl;
-        searchWeapon();
+        searchForWeaponInInventory();
         return false;
     } else
         return true;

@@ -36,8 +36,6 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
     createEnemies();
     createObjects();
 
-    //TODO std::shared_ptr<DemolisherAchievement> newDem;
-    //TODO dem = newDem;
 
 }
 
@@ -167,8 +165,18 @@ void World::updateEnemies() {
         int counter = 0;
         int deleted = -1;
         for ( auto iter = enemyArray.begin(); iter != enemyArray.end(); iter++ ) {
+
+            //set player position to the strategy
+            auto seekStrategy = std::dynamic_pointer_cast<SeekStrategy>(enemyArray[counter]->strategy);
+            if(seekStrategy != nullptr) {
+                //TODO potrei fare un redesign delle classi e far sì che venga dato un riferimento costante a
+                // player->position al momento della creazione delle strategy
+                seekStrategy->playerPosition = player->getPosition();
+            }
+
             enemyArray[ counter ]->update();
-            //if it use his weapon it adds it to the enemyProjectiles
+
+            //if it uses his weapon it adds it to the enemyProjectiles
             auto shooter = std::dynamic_pointer_cast<RobotShooter>(enemyArray[counter]);
             if( shooter != nullptr && shooter->attackAvailable) {
                 projectileEnemyArray.emplace_back(std::make_shared<Projectile>(textures, Projectile::redProjectile));
@@ -344,6 +352,11 @@ void World::collisionPlayerProjectilesOnObjects() {
                         intersects(enemyArray[ counterEnemy ]->rect.getGlobalBounds())) {
 
                     std::cout << "Collision!" << std::endl;
+                    //change strategy
+                    std::shared_ptr<Strategy> newStrategy = std::make_shared<SeekStrategy>(window->getSize());
+                    enemyArray[counterEnemy]->strategy = newStrategy;
+
+                    //check life and bar
                     enemyArray[counterEnemy]->display();
                     enemyArray[counterEnemy]->hp -= projectilePlayerArray[counterProjectiles]->attackDamage;
                     if(enemyArray[counterEnemy]->hp <= 0)
