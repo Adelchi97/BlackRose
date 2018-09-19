@@ -28,8 +28,8 @@ World::World(std::shared_ptr <sf::RenderWindow> window, const TextureHolder &tex
     dem = std::make_shared<DemolisherAchievement>();
 
     demolisherAchievement = std::make_shared<textDisplay>();
-    //demolisherAchievement->setString(dem->mStatisticsText.getString());
-    demolisherAchievement->setString("ciao mondo");
+    demolisherAchievement->setString(dem->mStatisticsText.getString());
+    //demolisherAchievement->setString(std::to_string(dem->progress));
     demolisherAchievement->text.setFont(mainFont);
     textureDisplayArray.emplace_back(demolisherAchievement);
 
@@ -133,10 +133,13 @@ void World::update(sf::Time dt) {
 }
 
 void World::updateTextureDisplayed() {
+    //life text
+    playerLife->setString("life: " + std::to_string(player->hp));
+    demolisherAchievement->setString(dem->mStatisticsText.getString());
     int counter = 0;
     for ( auto iter = textureDisplayArray.begin(); iter != textureDisplayArray.end(); iter++ ) {
-        textureDisplayArray[counter]->text.setPosition(player->getPosition().x - window->getSize().x/4 + counter*100,
-                                                       player->getPosition().y - window->getSize().y/4 + counter*100);
+        textureDisplayArray[counter]->text.setPosition(player->getPosition().x - window->getSize().x/4 + counter*1,
+                                                       player->getPosition().y - window->getSize().y/4 + counter*50);
         textureDisplayArray[ counter ]->update();
 
         counter++;
@@ -203,8 +206,6 @@ void World::updateEnemies() {
             enemyArray.erase(enemyArray.begin() + deleted);
         }
         //TODO si può iterare sugli observers poi, supponendo siano nello stesso ordine con cui li ho inseriti
-        // aggiorno textDisplay
-        demolisherAchievement->setString(enemyArray[0]->observers[0]->textProgress.getString());
     }
 }
 
@@ -441,16 +442,10 @@ void World::drawPlayer() {
             window->draw(player->bar);
             window->draw(player->lifeBar);
         }
-        //life text
-        playerLife->setString("life: " + std::to_string(player->hp));
-        demolisherAchievement->setString("ciaone");
     }
 }
 
 void World::drawTextDisplayed() {
-    // TODO std::shared_ptr<DemolisherAchievement> newDem = std::dynamic_pointer_cast<DemolisherAchievement>(dem);
-    window->draw(dem->mStatisticsText );  //TODO temporaneo
-    //demolisherAchievement->setString(dem->mStatisticsText.getString());
     if(!textureDisplayArray.empty()) {
         int counter = 0;
         for ( auto iter = textureDisplayArray.begin(); iter != textureDisplayArray.end(); iter++ ) {

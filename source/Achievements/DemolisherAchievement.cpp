@@ -5,7 +5,7 @@
 #include "../../include/Achievements/DemolisherAchievement.h"
 
 DemolisherAchievement::DemolisherAchievement() {
-    mStatisticsText.setPosition(5.f,60.f);
+    mStatisticsText.setPosition(5.f,2.f);
     std::string temp = std::to_string(static_cast<int>(progress)) + "%";
     mStatisticsText.setString("Demolisher:" + temp);
     /*
