@@ -8,7 +8,6 @@
 #include "World.h"
 #include "Menu.h"
 
-
 class Game : private sf::NonCopyable {
 public:
     Game();
@@ -18,6 +17,7 @@ private:
     void processEvents(sf::Clock& shootingClock);
     void update(sf::Time);
     void render();
+    int processMenuEvents();
 
     void updateStatistics(sf::Time elapsedTime);
 
@@ -27,6 +27,7 @@ private:
 private:
     std::shared_ptr<World> world;
     std::shared_ptr<sf::View> view;
+    std::shared_ptr<Menu> startMenu;
     //Menu startMenu;
     /*
     sf::SoundBuffer soundBuffer;

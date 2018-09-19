@@ -6,7 +6,7 @@
 
 DemolisherAchievement::DemolisherAchievement() {
     mStatisticsText.setPosition(5.f,60.f);
-    std::string temp = std::to_string(progress) + "%";
+    std::string temp = std::to_string(static_cast<int>(progress)) + "%";
     mStatisticsText.setString("Demolisher:" + temp);
     /*
     achievementText = std::make_shared<textDisplay>();
@@ -30,7 +30,7 @@ void DemolisherAchievement::update() {
     if(!completed){
         ++counter;
         progress = (counter/target)*100;
-        std::string temp = std::to_string(progress) + "%";
+        std::string temp = std::to_string(static_cast<int>(progress)) + "%";
         mStatisticsText.setString("Demolisher:" + temp);
     }
 

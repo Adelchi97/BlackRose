@@ -60,6 +60,9 @@ public:
 
     std::shared_ptr<DemolisherAchievement> dem;
 
+    sf::Font mainFont;
+
+
 private:
 
     const TextureHolder& textures;
@@ -67,7 +70,7 @@ private:
     std::vector<std::shared_ptr<textDisplay>> textureDisplayArray;
     std::shared_ptr<textDisplay> playerLife;
     std::shared_ptr<textDisplay> demolisherAchievement;
-    sf::Font mainFont;
+
     sf::Clock textureTimer;
 
     std::vector<std::shared_ptr<Enemy>> enemyArray;

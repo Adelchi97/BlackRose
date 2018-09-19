@@ -16,7 +16,7 @@ public:
     float progress = 0.f;
     sf::Text textProgress;
 protected:
-    const float target = 5.f; //after "target" enemies killed the Player gains the achievement
+    const float target = 10.f; //after "target" enemies killed the Player gains the achievement
 
     bool completed = false;
 

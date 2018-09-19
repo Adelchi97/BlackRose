@@ -10,17 +10,20 @@
 
 class Menu {
 public:
-    Menu(float width, float height);
+    Menu(std::shared_ptr<sf::RenderWindow> window);
     ~Menu();
 
-    void draw(std::shared_ptr<sf::RenderWindow> window);
-    void MoveUp();
-    void MoveDown();
+    void draw();
+    void moveUp();
+    void moveDown();
+    int getPressedChoice() {return selectedChoice; };
 
 public:
+    float width, height;
     int selectedChoice;
     sf::Font font; // font utilizzato nel menu
     std::vector<sf::Text> choicesVector; //vettore di possibilità di un menu
+    std::shared_ptr<sf::RenderWindow> window;
 };
 
 

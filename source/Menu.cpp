@@ -4,14 +4,14 @@
 
 #include "../include/Menu.h"
 
-Menu::Menu(float width, float height) {
+Menu::Menu(std::shared_ptr<sf::RenderWindow> window): window(window) {
 }
 
 Menu::~Menu() {
 
 }
 
-void Menu::draw(std::shared_ptr<sf::RenderWindow> window){
+void Menu::draw(){
     int counter = 0;
     for(auto iter = choicesVector.begin(); iter != choicesVector.end(); iter++){
         window->draw(choicesVector[counter]);
@@ -19,7 +19,7 @@ void Menu::draw(std::shared_ptr<sf::RenderWindow> window){
     }
 }
 
-void Menu::MoveUp() {
+void Menu::moveUp() {
     if(selectedChoice -1 >= 0){
         choicesVector[selectedChoice].setFillColor(sf::Color::White);
         selectedChoice--;
@@ -27,7 +27,7 @@ void Menu::MoveUp() {
     }
 }
 
-void Menu::MoveDown() {
+void Menu::moveDown() {
     if(selectedChoice +1 < choicesVector.size()){
         choicesVector[selectedChoice].setFillColor(sf::Color::White);
         selectedChoice++;

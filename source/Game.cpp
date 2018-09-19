@@ -11,25 +11,34 @@ Game::Game() : mWindow(new sf::RenderWindow(sf::VideoMode(1600, 1600), "BlackRos
 
     loadTextures();
     //loadSound();
-    //TODO let the menu ask if u want to play or quit
-/*
-    sf::Text playText;
-    playText.setFont(mFont);
-    playText.setString("Play");
-    playText.setPosition(mWindow->getSize().x/2.f, mWindow->getSize().y/4.f);
-    startMenu.choicesVector.emplace_back(playText);
-    sf::Text quitText;
-    quitText.setFont(mFont);
-    quitText.setString("Quit");
-    quitText.setPosition(mWindow->getSize().x/2.f, mWindow->getSize().y/4.f);
-    startMenu.choicesVector.emplace_back(quitText);
-    startMenu.draw(mWindow);
-*/
+
     view = std::make_shared<sf::View>(sf::Vector2f(0, 0), sf::Vector2f(400,400));
 
     mWindow->setView(*view);
 
+
     world = std::make_shared<World>(mWindow,textureHolder);
+    /*
+    //TODO let the menu ask if u want to play or quit
+    mFont =  world->mainFont;
+    startMenu = std::make_shared<Menu>(mWindow);
+    startMenu->height = mWindow->getSize().y;
+    startMenu->width = mWindow->getSize().x;
+    sf::Text playText;
+    playText.setFont(mFont);
+    playText.setString("Play");
+    playText.setCharacterSize(50);
+    playText.setFillColor(sf::Color::White);
+    playText.setPosition(mWindow->getSize().x/2.f, mWindow->getSize().y/4.f);
+    startMenu->choicesVector.emplace_back(playText);
+    sf::Text quitText;
+    quitText.setFont(mFont);
+    quitText.setString("Quit");
+    quitText.setPosition(mWindow->getSize().x/2.f, mWindow->getSize().y/4.f + 200);
+    startMenu->choicesVector.emplace_back(quitText);
+    */
+
+
 
     //sets the icon
     sf::Image icon;
@@ -62,13 +71,18 @@ void Game::run() {
 
     while (mWindow->isOpen()) {
 
+      //  int choice = processMenuEvents();
+
         sf::Time elapsedTime = clock.restart();
         timeSinceLastUpdate += elapsedTime;
         //If rendering is slow, it may happen that processEvents() and update() are called multiple times before one render()
-        while (timeSinceLastUpdate > TimePerFrame) {
-            timeSinceLastUpdate -= TimePerFrame;
-            processEvents(shootingClock);
-            update(elapsedTime);
+  /*      if(choice == 1) {
+            return;
+        }
+*/      while (timeSinceLastUpdate > TimePerFrame) {
+        timeSinceLastUpdate -= TimePerFrame;
+        processEvents(shootingClock);
+        update(elapsedTime);
         }
 
         //frame of the game
@@ -78,14 +92,76 @@ void Game::run() {
 
 void Game::render() {
     mWindow->clear();
-
     mWindow->setView(*view);
 
+    //startMenu->draw();
     world->draw();
     mWindow->draw(mStatisticsText);
 
     mWindow->display();
 }
+
+int Game::processMenuEvents() {
+    sf::Event event;
+    while(mWindow->pollEvent(event)){
+        switch(event.type){
+            case sf::Event::KeyReleased:
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+                    startMenu->moveUp();
+                }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+                    startMenu->moveDown();
+                }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+                    /*
+                    if (startMenu->getPressedChoice() == 0) {
+                        std::cout << "Play button pressed" << std::endl;
+                        //metto return 1 e poi in Game::run imposto che processEvent viene attivato solo se ha w
+                        return 1;
+                    }
+                    if (startMenu->getPressedChoice() == 1)
+                        return 0;
+                    */
+
+                    return startMenu->getPressedChoice();
+                }
+                break;
+            case sf::Event::Closed:
+                mWindow->close();
+                break;
+            default:
+                break;
+        }
+    }
+    return 0;
+}
+
+/* //TODO event management with menu
+  while(mWindow->pollEvent(event){
+    switch(event.type){
+        case sf::Event::KeyReleased:
+            if(sf::Keyboard::Up)
+                menu.moveUp();
+            if(sf::Keyboard::Down)
+                menu.moveUp();
+            break;
+        case sf::Event::Return:
+            if(getPressedChoice() == 0){
+                std::cout << "Play button pressed" << std::endl;
+                //metto return 1 e poi in Game::run imposto che processEvent viene attivato solo se ha w
+            }
+            if(getPressedChoice() == 1){
+                std::cout << "Play button pressed" << std::endl;
+            }
+            if(getPressedChoice() == 2)
+                mWindow->close();
+            break;
+        case sf::Event::Closed:
+            mWindow->close();
+            break;
+        default:
+            break;
+    }
+  }
+ */
 
 void Game::processEvents(sf::Clock& shootingClock) {
 
