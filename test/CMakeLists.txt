@@ -13,7 +13,7 @@ find_package(SFML REQUIRED system window graphics network audio)
 include_directories(${SFML_INCLUDE_DIR})
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} ../include)
 
-set(SOURCE_TEST_FILES RunAllTests.cpp TestHealPack.cpp)
+set(SOURCE_TEST_FILES RunAllTests.cpp TestHealPack.cpp TestRangedWeapon.cpp)
 
 get_directory_property(output INCLUDE_DIRECTORIES)
 message("Included directories test:" ${output})
