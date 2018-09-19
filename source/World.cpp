@@ -179,12 +179,18 @@ void World::updateEnemies() {
             //if it uses his weapon it adds it to the enemyProjectiles
             auto shooter = std::dynamic_pointer_cast<RobotShooter>(enemyArray[counter]);
             if( shooter != nullptr && shooter->attackAvailable) {
-                projectileEnemyArray.emplace_back(std::make_shared<Projectile>(textures, Projectile::redProjectile));
-                projectileEnemyArray.back()->setPosition(shooter->rect.getPosition(),shooter->direction);
-                projectileEnemyArray.back()->range = shooter->weapon->range;
-                projectileEnemyArray.back()->attackDamage = shooter->weapon->power;
-                //perché never used ??
-                shooter->attackAvailable = false;
+
+                //if it is in seek Strategy
+                auto seek = std::dynamic_pointer_cast<SeekStrategy>(enemyArray[counter]->strategy);
+                if(seek != nullptr) {
+                    projectileEnemyArray.emplace_back(
+                            std::make_shared<Projectile>(textures, Projectile::redProjectile));
+                    projectileEnemyArray.back()->setPosition(shooter->rect.getPosition(), shooter->direction);
+                    projectileEnemyArray.back()->range = shooter->weapon->range;
+                    projectileEnemyArray.back()->attackDamage = shooter->weapon->power;
+                    //perché never used ??
+                    shooter->attackAvailable = false;
+                }
             }
 
             if ( !enemyArray[ counter ]->active ) {
@@ -263,15 +269,43 @@ void World::collisionWithMap() {
                     if(enemy->isMovingUp) {
                         enemy->changeDirection();
                         enemy->setPosition(0,1);
+                        if(enemy->rect.getGlobalBounds().intersects(map->tileMap[counterMap]->rect.getGlobalBounds())) {
+                            enemy->setPosition(2,0);
+                        }
+                        if(enemy->rect.getGlobalBounds().intersects(map->tileMap[counterMap]->rect.getGlobalBounds())) {
+                            enemy->changeDirection();
+                            enemy->setPosition(-4,0);
+                        }
                     } else if(enemy->isMovingDown) {
                         enemy->changeDirection();
                         enemy->setPosition(0,-1);
+                        if(enemy->rect.getGlobalBounds().intersects(map->tileMap[counterMap]->rect.getGlobalBounds())) {
+                            enemy->setPosition(2,0);
+                        }
+                        if(enemy->rect.getGlobalBounds().intersects(map->tileMap[counterMap]->rect.getGlobalBounds())) {
+                            enemy->changeDirection();
+                            enemy->setPosition(-4,0);
+                        }
                     } else if(enemy->isMovingLeft) {
                         enemy->changeDirection();
                         enemy->setPosition(1, 0);
+                        if(enemy->rect.getGlobalBounds().intersects(map->tileMap[counterMap]->rect.getGlobalBounds())) {
+                            enemy->setPosition(0,2);
+                        }
+                        if(enemy->rect.getGlobalBounds().intersects(map->tileMap[counterMap]->rect.getGlobalBounds())) {
+                            enemy->changeDirection();
+                            enemy->setPosition(0,-4);
+                        }
                     } else if(enemy->isMovingRight) {
                         enemy->changeDirection();
                         enemy->setPosition(-1, 0);
+                        if(enemy->rect.getGlobalBounds().intersects(map->tileMap[counterMap]->rect.getGlobalBounds())) {
+                            enemy->setPosition(0,2);
+                        }
+                        if(enemy->rect.getGlobalBounds().intersects(map->tileMap[counterMap]->rect.getGlobalBounds())) {
+                            enemy->changeDirection();
+                            enemy->setPosition(0,-4);
+                        }
                     }
                 }
                 counterEnemy++;

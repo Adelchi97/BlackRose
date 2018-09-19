@@ -21,13 +21,16 @@ int Enemy::getAttackDamage() {
 void Enemy::update() {
 
     //now sprite is linked to rect's position
+    /*
     sprite.setPosition(rect.getPosition());
     position = sprite.getPosition();
-
+*/
     //controls the walking animation
     strategy->animation(isMovingUp,isMovingDown,isMovingLeft,isMovingRight,delayMoreWalk,delayMoreWalk,counterWalk);
 
     strategy->update(isMovingUp, isMovingDown, isMovingLeft, isMovingRight, rect);
+    sprite.setPosition(rect.getPosition());
+    position = sprite.getPosition();
 
     //serve per texture corretta
     setDirection();
